@@ -1,0 +1,74 @@
+<div class="container" ng-controller="editGameController">
+
+    <h1 class="text-center"> {{gameInfo[0].game_date | date}} </h1>
+    <h3 class="text-center" ng-class="gameInfo[0].game_status == 'Open' ? 'price-green' : 'price-red'"> {{gameInfo[0].game_status}} </h3>
+
+
+    <div class="btn-group">
+        <button ng-disabled="gameStatusOpen == 'Close'" ng-click="addRow()" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span> Add new player
+        </button>
+        <button ng-disabled="gameStatusOpen == 'Close'" ng-click="closeGame()" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span> Close game
+        </button>
+        <button ng-disabled="(!addCashInAllEnable) || (!players.length) || (gameStatusOpen == 'Close')" ng-click="addCashInAll()" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span> Add cash in all players
+        </button>
+    </div>
+    
+
+
+ <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Player Name</th>
+                <th class="text-center">Cash in</th>
+                <th class="text-center">Cash out</th>
+                <th class="text-center">Balance</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="player in players track by $index" class="text-center">
+                <td>
+                    <div class="form-group">
+                        <span ng-show="player.name"> {{player.name}} </span>
+                        <select ng-change="setIdToNames($index,player.name)" ng-show="!player.name || player.name == ''" class="form-control" id="player" ng-model="player.name">
+                            <option ng-repeat="name in names" value={{name.username}}>{{name.username}}</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn btn-link" ng-disabled="player.playerName == '' || player.cash_out > 0" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cash_in}} </button>
+                    <!--<p ng-show="player.active==false">{{player.cashIn}}</p>-->
+                    <input ng-model="sumForCashIn" type="number" step="10" ng-show="player.activeCashIn==true" />
+                    <button ng-show="player.activeCashIn==true" ng-click="CashIn($index, sumForCashIn)" class="btn btn-primary">Add</button>
+                </td>
+                <td>
+                    <button class="btn btn-link" ng-disabled="player.name == '' || player.cash_in == 0 || totalCashIn == 0 || balance == 0" ng-click="player.activeCashOut = !player.activeCashOut"> {{player.cash_out}} </button>
+                    <!--<p ng-show="player.active==false">{{player.cashOut}}</p>-->
+                    <input ng-model="sumForCashOut" type="number" step="10" ng-show="player.activeCashOut==true && player.cash_in > 0" />
+                    <button ng-disabled="player.cash_in == 0 || balance == 0" ng-show="player.activeCashOut==true" ng-click="CashOut($index,sumForCashOut)" class="btn btn-primary">Add</button>
+                </td> 
+                <td ng-class="player.total > 0 ? 'price-green' : 'price-red'"> {{player.total}} </td>
+                <td>
+                    <!--<button ng-disabled="gameStatusOpen == 'Close' || player.playerName == ''" class="btn btn-primary" ng-click="EditRow($index)">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>-->
+                    <button ng-disabled="gameStatusOpen == 'Close' || player.cash_in > 0" class="btn btn-danger" ng-click="removeRow(player.id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <h4>Total: {{totalCashIn}} | Balance: {{balance}}</h4>
+    </div>
+
+
+
+</div>
+
+

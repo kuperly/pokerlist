@@ -1,0 +1,30 @@
+<div class="container" ng-controller="GameDetailsController">
+
+    <h1 class="text-center"> {{gameInfo[0].game_date | date}}</h1>
+    <h3 class="text-center" ng-class="gameInfo[0].game_status == 'Open' ? 'price-green' : 'price-red'"> {{gameInfo[0].game_status}}</h3>
+
+ <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Player Name</th>
+                <th class="text-center">Cash in</th>
+                <th class="text-center">Cash out</th>
+                <th class="text-center">Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="player in players | orderBy:['total'] : true" class="text-center">
+                <td> {{player.name}} </td>
+                <td> {{player.cash_in}} </td>
+                <td> {{player.cash_out}} </td> 
+                <td ng-class="player.cash_out - player.cash_in > 0 ? 'price-green' : 'price-red'"> {{player.total}} </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    <div ng-if="totalCashIn >0">
+        <h4>Total: {{totalCashIn}}</h4>
+    </div>
+</div>
+
+

@@ -1,0 +1,16 @@
+﻿.price-red {
+    color: red;
+}
+
+.price-green {
+    color: green;
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}

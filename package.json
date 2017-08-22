@@ -1,0 +1,17 @@
+{
+  "name": "poker-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "angular-animate": "^1.6.5",
+    "angular-toastr": "^2.1.1",
+    "angular-ui-bootstrap": "^2.5.0",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.6"
+  }
+}
