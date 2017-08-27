@@ -1,7 +1,7 @@
-﻿app.controller('homeController', function ($scope) {
-
+﻿app.controller('homeController', function ($scope,$rootScope,$cookies) {
+    
     $scope.controllerName = 'homeController';
-
+    
     $scope.myInterval = 5000;
   $scope.noWrapSlides = false;
   $scope.active = 0;

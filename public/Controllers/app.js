@@ -1,4 +1,14 @@
-var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap'])
+var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies'])
+.controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr){
+    $rootScope.userLogIn = $cookies.getObject('globals');
+    $scope.logout = function(){
+        AuthenticationService.ClearCredentials();
+        $rootScope.userLogIn = {};
+        toastr.options = {"positionClass": "toast-top-center"};
+        toastr.info('Logged out', 'info');
+        $state.go('home');
+    };
+})
 
 .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -41,18 +51,48 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
               url: '/login',
               templateUrl: 'Templates/login.html',
               controller: 'LoginController',
-              //controllerAs: 'vm'
+              controllerAs: 'vm'
           })
           .state('register', {
               url: '/register',
               templateUrl: 'Templates/register.html',
-              controller: 'registerController',
+              controller: 'RegisterController',
+              controllerAs: 'vm'
+          })
+         .state('account', {
+              url: '/account',
+              templateUrl: 'Templates/account.html'
+              //controller: 'accountController'
+              //controllerAs: 'vm'
+          })
+          .state('edit_account', {
+              url: '/edit_account',
+              templateUrl: 'Templates/edit_account.html'
+              //controller: 'accountController'
               //controllerAs: 'vm'
           })
         
 
     $urlRouterProvider.otherwise('/home');
 });
+
+run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
+    function run($rootScope, $location, $cookies, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals = $cookies.getObject('globals') || {};
+        if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
+        }
+ 
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in and trying to access a restricted page
+            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+            var loggedIn = $rootScope.globals.currentUser;
+            if (restrictedPage && !loggedIn) {
+                $location.path('/login');
+            }
+        });
+    }
 
 
 

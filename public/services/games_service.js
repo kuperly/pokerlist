@@ -4,7 +4,7 @@
         newGame: function (date,status,location) { // OK
             return $http({
                 method:'POST',
-                url:'http://localhost:3000/setNewGame',
+                url:'/setNewGame',
                 headers: {'Content-Type' : 'application/json'},
                 data: { 
                     game_date : date,
@@ -19,7 +19,7 @@
 
             return $http({
                 method:'POST',
-                url:'http://localhost:3000/closeGame',
+                url:'/closeGame',
                 headers: {'Content-Type' : 'application/json'},
                 data: {
                     game_id : gameId
@@ -32,7 +32,7 @@
 
             return $http({
                 method:'POST',
-                url:'http://localhost:3000/deleteGame',
+                url:'/deleteGame',
                 headers: {'Content-Type' : 'application/json'},
                 data: {
                     game_id : gameId
@@ -42,7 +42,7 @@
         },
 
         getAllGames: function () { // OK
-            return $http.get('http://localhost:3000/getAllGames');
+            return $http.get('/getAllGames');
 
         },
 
@@ -51,7 +51,7 @@
             var requestParam={
             method:'GET',
             params: {id: ID},
-            url:'http://localhost:3000/getGame'
+            url:'/getGame'
             }
 
             return $http(requestParam);

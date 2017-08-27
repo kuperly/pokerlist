@@ -2,6 +2,14 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
+//test
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bodyParser = require('body-parser');
+var bcrypt = require('bcryptjs');
+//
+
 MongoClient = require('mongodb').MongoClient
 mongoose.Promise = require('bluebird');
 var uri = 'mongodb://kuperly:kuperly@ds113958.mlab.com:13958/pokerprod';
@@ -23,8 +31,12 @@ app.use(bodyParser.json());
 
 // users
 var usersDataScheme = new Schema({
+    Fname: String,
+    Lname: String,
+    email: String,
     username: String,
     password: String,
+    phone: String,
     role: {type:String, require:true}
 },{collection: 'users'});
 
@@ -67,6 +79,87 @@ app.get('/getAllUsers',function(req,res){
         });
     
 });
+
+//register
+app.post('/api/users',function(req,res){
+    console.log(req.body);
+    var user = new userData({
+        Fname: req.body.firstName,
+        Lname: req.body.lastName,
+        email: req.body.email,
+        phone: req.body.phone,
+        username: req.body.username,
+        password: req.body.password,
+        role: 0
+    });
+    
+    user.save(function(err,user_id){
+        res.status(200).json(user_id);
+    })
+});
+
+// login
+app.post('/api/authenticate',function(req,res){
+    
+    var username = req.body.username;
+    var password = req.body.password;
+    
+    userData.find({username,password},
+        function (err, doc) { // callback
+            if (err) {
+                res.json(err);
+            } 
+            res.json(doc);
+        }
+    );
+});
+
+// get user by username
+app.post('/api/username',function(req,res){
+    console.log(req.body);
+    
+    var username = req.body.username;
+    
+    userData.find({username},
+        function (err, doc) { // callback
+            if (err) {
+                res.json(err);
+            } 
+            res.json(doc);
+        }
+    );
+});
+
+// update user
+app.post('/api/updateuser',function(req,res){
+    console.log(req.body);
+    
+
+    var query = req.body['_id'];
+    
+    var update = {$set:{
+        "username": req.body.username,
+        "password" : req.body.password,
+        "phone" : req.body.phone,
+        "email" : req.body.email,
+        "Lname" : req.body.Lname,
+        "Fname" : req.body.Fname
+}};
+    var option = {new:true};
+
+    userData.findByIdAndUpdate(query,update,option,
+        function (err, doc) { // callback
+            if (err) {
+                res.json(err);
+            } 
+            res.json(doc);
+        }
+    );
+
+
+
+});
+
 
 // TODO - by gameId
 app.get('/getAllCashIn/:id',function(req,res){

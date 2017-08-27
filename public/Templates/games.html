@@ -19,13 +19,13 @@
                 <td> {{game.totalCashIn}} </td>
                 <td ng-class="game.game_status == 'Open' ? 'price-green' : 'price-red'"> {{game.game_status}} </td>
                 <th class="text-center">
-                    <button ng-click="gameDetails(game['_id'])" ng-if="game.game_status == 'Close'" ng-disabled="false" class="btn btn-primary">
+                    <button ng-click="gameDetails(game['_id'])" ng-if="game.game_status == 'Close' || !(userLogIn.currentUser) || (userLogIn.currentUser.userRole == 0)" ng-disabled="false" class="btn btn-primary">
                         <span class="glyphicon glyphicon-exclamation-sign"></span>
                     </button>
-                    <button ng-click="editGame(game['_id'])" ng-if="game.game_status == 'Open'" ng-disabled="false" class="btn btn-primary">
+                    <button ng-click="editGame(game['_id'])" ng-if="game.game_status == 'Open' && userLogIn && userLogIn.currentUser.userRole == 1" ng-disabled="false" class="btn btn-primary">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
-                    <button ng-disabled="game.totalPlayers || game.totalCashIn" class="btn btn-danger" ng-click="removeGame(game['_id'])">
+                    <button ng-if="userLogIn && userLogIn.currentUser.userRole == 1" ng-disabled="game.totalPlayers || game.totalCashIn" class="btn btn-danger" ng-click="removeGame(game['_id'])">
                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                     </button>
                 </th>

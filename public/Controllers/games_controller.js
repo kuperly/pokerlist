@@ -1,4 +1,4 @@
-﻿app.controller('gamesController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state) {
+﻿app.controller('gamesController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope) {
     
     console.log("gamesController start");
 

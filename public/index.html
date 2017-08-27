@@ -16,7 +16,7 @@
 
 </head>
 <body ng-app="app">
-    <nav style="margin-bottom: 0px !important" class="navbar navbar-inverse navbar-static-top">
+    <nav ng-controller="mainController" style="margin-bottom: 0px !important" class="navbar navbar-inverse navbar-static-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <!-- <a class="navbar-brand" href="#"> Weekly Poker </a> -->
@@ -36,10 +36,12 @@
                     <!--<li> <a>Logout</a> </li>-->
                 </ul>
                 <!-- TODO - visible to admin (role==1) only -->
-                <button ui-sref="new_game" class="btn btn-success navbar-btn">New Game</button>
+                <button ng-if="userLogIn && userLogIn.currentUser.userRole == 1" ui-sref="new_game" class="btn btn-success navbar-btn">New Game</button>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a ui-sref="register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li ng-if="!userLogIn.currentUser"><a ui-sref="register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li ng-if="userLogIn.currentUser"><a ui-sref="account"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+                    <li ng-if="!userLogIn.currentUser"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li ng-if="userLogIn.currentUser"><a ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -47,11 +49,11 @@
 
     <div class="body-content">
         <div ui-view> </div>
-
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.min.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
@@ -67,10 +69,18 @@
     <script src="Controllers/new_game_controller.js"></script>
     <script src="Controllers/game_details_controller.js"></script>
     <script src="Controllers/edit_game_controller.js"></script>
+    <script src="Controllers/register_controller.js"></script>
+    <script src="Controllers/login_controller.js"></script>
+    <script src="Controllers/account_controller.js"></script>
     <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="services/players_services.js"></script>
     <script src="services/amount_service.js"></script>
     <script src="services/games_service.js"></script>
+    <script src="services/user_service.js"></script>
+    <script src="services/Authentication_service.js"></script>
+    <script src="services/flash_service.js"></script>
+
+    
 
 
 

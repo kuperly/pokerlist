@@ -16,7 +16,7 @@
         <tbody>
             <tr ng-repeat="player in players | orderBy:['balance','totalCashOut','totalCashIn']: true" class="text-center">
                 <td> {{ $index + 1 }} </td>
-                <td> {{player.username}} </td>
+                <td> {{player.Fname}} {{player.Lname}} </td>
                 <td> {{player.totalGames}} </td>
                 <td> {{player.totalCashIn}} </td>
                 <td> {{player.totalCashOut}} </td>
