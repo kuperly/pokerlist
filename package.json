@@ -7,16 +7,17 @@
   "devDependencies": {},
   "dependencies": {
     "angular-animate": "^1.6.5",
+    "angular-messages": "^1.6.5",
     "angular-toastr": "^2.1.1",
     "angular-ui-bootstrap": "^2.5.0",
+    "bcryptjs": "*",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.1",
     "express": "^4.15.4",
     "mongoose": "^4.11.6",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*",
-    "bcryptjs": "*",
-    "cookie-parser": "^1.4.1"
+    "passport-local": "*"
   }
 }

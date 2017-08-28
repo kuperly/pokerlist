@@ -15,14 +15,33 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
         $state.go('account');
     }
 
-    $scope.save = function(){
-        // console.log("to update:",$scope.user);
-        UserService.Update($scope.user)
-        .then(function(res){
-            AuthenticationService.SetCredentials(res.data.username,res.data.password,res.data.role);
-            $rootScope.userLogIn = $cookies.getObject('globals');
-            $state.go('account');
+    $scope.save = function(isValid){
+
+         UserService.GetByUsername($scope.user.username)
+        .then(function(response){
+            
+            if(!response.data.length || (response.data.length == 1 && $scope.user['_id'] == response.data[0]['_id'])){
+                // check if paswword changed
+                if($scope.password){
+                    $scope.user.password = $scope.password;
+                }
+        
+                UserService.Update($scope.user)
+                .then(function(res){
+                    AuthenticationService.SetCredentials(res.data.username,res.data.password,res.data.role);
+                    $rootScope.userLogIn = $cookies.getObject('globals');
+                    $state.go('account');
+                })
+            } else {
+
+                toastr.options = {"positionClass": "toast-top-center"};
+                toastr.error('username alredy exist', 'error');
+                return;
+
+            }
         })
+
+         
         
     }
     

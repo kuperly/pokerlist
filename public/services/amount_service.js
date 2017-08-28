@@ -5,7 +5,7 @@ app.factory('amountService', function ($http) {
 
             return $http({
                 method:'POST',
-                url:'http://localhost:3000/setCashIn',
+                url:'/api/setCashIn',
                 headers: {'Content-Type' : 'application/json'},
                 data: { 
                     user_id: obj.user_id,
@@ -20,7 +20,7 @@ app.factory('amountService', function ($http) {
 
             return $http({
                 method:'POST',
-                url:'http://localhost:3000/setCashOut',
+                url:'/api/setCashOut',
                 headers: {'Content-Type' : 'application/json'},
                 data: { 
                     user_id: obj.user_id,
@@ -33,12 +33,12 @@ app.factory('amountService', function ($http) {
         },
 
         getAllCashIn: function () { // OK
-            return $http.get('http://localhost:3000/getAllCashIn');
+            return $http.get('/api/getAllCashIn');
 
         },
 
         getAllCashOut: function () { // OK
-            return $http.get('http://localhost:3000/getAllCashOut');
+            return $http.get('/api/getAllCashOut');
 
         },
 
@@ -47,7 +47,7 @@ app.factory('amountService', function ($http) {
             var requestParam={
             method:'GET',
             params: {id: ID},
-            url:'http://localhost:3000/getCashInByGameId'
+            url:'/api/getCashInByGameId'
             }
 
             return $http(requestParam);
@@ -58,7 +58,7 @@ app.factory('amountService', function ($http) {
             var requestParam={
             method:'GET',
             params: {id: ID},
-            url:'http://localhost:3000/getCashOutByGameId'
+            url:'/api/getCashOutByGameId'
             }
 
             return $http(requestParam);

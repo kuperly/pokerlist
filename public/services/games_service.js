@@ -42,7 +42,7 @@
         },
 
         getAllGames: function () { // OK
-            return $http.get('/getAllGames');
+            return $http.get('/api/getAllGames');
 
         },
 
@@ -51,7 +51,7 @@
             var requestParam={
             method:'GET',
             params: {id: ID},
-            url:'/getGame'
+            url:'/api/getGame'
             }
 
             return $http(requestParam);

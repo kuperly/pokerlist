@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies'])
+var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages'])
 .controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr){
     $rootScope.userLogIn = $cookies.getObject('globals');
     $scope.logout = function(){

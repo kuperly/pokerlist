@@ -5,16 +5,24 @@
         .module('app')
         .controller('RegisterController', RegisterController);
  
-    RegisterController.$inject = ['UserService', '$location', '$rootScope', 'FlashService'];
-    function RegisterController(UserService, $location, $rootScope, FlashService) {
+    RegisterController.$inject = ['UserService','toastr', '$location', '$rootScope', 'FlashService','$scope'];
+    function RegisterController(UserService, toastr, $location, $rootScope, FlashService, $scope) {
         var vm = this;
  
         vm.register = register;
  
         function register() {
-            vm.dataLoading = true;
+
+
+            UserService.GetByUsername(vm.user.username)
+            .then(function(response){
             
-            UserService.Create(vm.user)
+            if(!response.data.length) {
+                // check if paswword changed
+                
+                vm.dataLoading = true;
+            
+                UserService.Create(vm.user)
                 .then(function (response) {
                     if (response.status == 200) {
                         FlashService.Success('Registration successful', true);
@@ -24,6 +32,20 @@
                         vm.dataLoading = false;
                     }
                 });
+                
+                
+            } else {
+
+                toastr.options = {"positionClass": "toast-top-center"};
+                toastr.error('username alredy exist', 'error');
+                return;
+
+            }
+        })
+
+
+
+            
         }
     }
  

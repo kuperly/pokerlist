@@ -17,7 +17,7 @@
         This is an <strong>.alert</strong>. Use this to show important messages to the user.
       </div> -->
       <h3>Personal info</h3>
-      <form class="form-horizontal" role="form">
+      <form class="form-horizontal" name="reg" ng-submit="save(reg.$valid)">
         <div class="form-group">
           <label class="col-lg-3 control-label">First name:</label>
           <div class="col-lg-8">
@@ -45,25 +45,31 @@
         <div class="form-group">
           <label class="col-md-3 control-label">Username:</label>
           <div class="col-md-8">
-            <input class="form-control" ng-model="user.username" type="text">
+            <input class="form-control" name="username" ng-model="user.username" type="text" required>
+            <div style="color: red; font-size: small" ng-show="reg.username.$error.required">
+        username is required!</div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-md-3 control-label">Password:</label>
           <div class="col-md-8">
-            <input class="form-control" ng-model="user.password" type="password">
+            <input class="form-control" name="password" ng-model="password" type="password" >
           </div>
         </div>
         <div class="form-group">
           <label class="col-md-3 control-label">Confirm password:</label>
           <div class="col-md-8">
-            <input class="form-control" ng-model="user.password" type="password">
+            <input class="form-control" name="passwordconf" ng-model="passwordconf" type="password"  
+        compare-to="password">
+        
+      <div style="color: red; font-size: small" ng-show="reg.passwordconf.$error.compareTo">
+        must confirm password!</div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-md-3 control-label"></label>
           <div class="col-md-8">
-            <input class="btn btn-primary" value="Save Changes" type="button" ng-click="save()">
+            <button ng-disabled="!reg.$valid" class="btn btn-primary" type="submit">Save Changes</button>
             <span></span>
             <input class="btn btn-default" value="Cancel" type="reset" ng-click="cancel()">
           </div>

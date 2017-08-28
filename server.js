@@ -69,7 +69,7 @@ var cashInData = mongoose.model('cashInData', cashInDataScheme);
 var cashOutData = mongoose.model('cashOutData', cashOutDataScheme);
 
 
-app.get('/getAllUsers',function(req,res){
+app.get('/api/getAllUsers',function(req,res){
     userData.find()
         .then(function(doc){
             res.send(doc);
@@ -137,6 +137,7 @@ app.post('/api/updateuser',function(req,res){
 
     var query = req.body['_id'];
     
+    
     var update = {$set:{
         "username": req.body.username,
         "password" : req.body.password,
@@ -144,7 +145,9 @@ app.post('/api/updateuser',function(req,res){
         "email" : req.body.email,
         "Lname" : req.body.Lname,
         "Fname" : req.body.Fname
-}};
+    }};
+    
+    // update['$set'].push("password" : req.body.password);
     var option = {new:true};
 
     userData.findByIdAndUpdate(query,update,option,
@@ -162,16 +165,16 @@ app.post('/api/updateuser',function(req,res){
 
 
 // TODO - by gameId
-app.get('/getAllCashIn/:id',function(req,res){
+app.get('/api/getAllCashIn/:id',function(req,res){
     
 });
 
 // TODO - by gameId
-app.get('/getAllCashOut/:id',function(req,res){
+app.get('/api/getAllCashOut/:id',function(req,res){
     
 });
 
-app.post('/setCashIn',function(req,res){
+app.post('/api/setCashIn',function(req,res){
     
     var cashIn = new cashInData({
         user_id : req.body.user_id,
@@ -185,7 +188,7 @@ app.post('/setCashIn',function(req,res){
     })
 });
 
-app.post('/setCashOut',function(req,res){ 
+app.post('/api/setCashOut',function(req,res){ 
     console.log(req.body);
     var cashOut = new cashOutData({
         user_id : req.body.user_id,
@@ -199,7 +202,7 @@ app.post('/setCashOut',function(req,res){
     })
 });
 
-app.post('/setNewGame',function(req,res){ 
+app.post('/api/setNewGame',function(req,res){ 
 
     var game = new gameData({
         game_date : req.body.game_date,
@@ -212,7 +215,7 @@ app.post('/setNewGame',function(req,res){
     })
 });
 
-app.post('/closeGame',function(req,res){ // ok
+app.post('/api/closeGame',function(req,res){ // ok
     
     var query = req.body.game_id;
     
@@ -230,7 +233,7 @@ app.post('/closeGame',function(req,res){ // ok
     
 });
 
-app.post('/deleteGame',function(req,res){ // OK
+app.post('/api/deleteGame',function(req,res){ // OK
     
     var query = req.body.game_id;
     
@@ -245,7 +248,7 @@ app.post('/deleteGame',function(req,res){ // OK
     
 });
 
-app.get('/getAllGames',function(req,res){
+app.get('/api/getAllGames',function(req,res){
     gameData.find()
         .then(function(doc){
             res.send(doc);
@@ -256,7 +259,7 @@ app.get('/getAllGames',function(req,res){
     
 });
 
-app.get('/getGame',function(req,res){
+app.get('/api/getGame',function(req,res){
 
     var id = req.query.id;
     console.log(id);
@@ -269,7 +272,7 @@ app.get('/getGame',function(req,res){
     
 });
 
-app.get('/getCashInByGameId',function(req,res){
+app.get('/api/getCashInByGameId',function(req,res){
 
     var id = req.query.id;
     cashInData.find({game_id:id})
@@ -281,7 +284,7 @@ app.get('/getCashInByGameId',function(req,res){
     
 });
 
-app.get('/getCashOutByGameId',function(req,res){
+app.get('/api/getCashOutByGameId',function(req,res){
 
     var id = req.query.id;
     cashOutData.find({game_id:id})
@@ -293,7 +296,7 @@ app.get('/getCashOutByGameId',function(req,res){
     
 });
 
-app.get('/getAllCashIn',function(req,res){
+app.get('/api/getAllCashIn',function(req,res){
     cashInData.find()
         .then(function(doc){
             res.send(doc);
@@ -303,7 +306,7 @@ app.get('/getAllCashIn',function(req,res){
     
 });
 
-app.get('/getAllCashOut',function(req,res){
+app.get('/api/getAllCashOut',function(req,res){
     cashOutData.find()
         .then(function(doc){
             res.send(doc);

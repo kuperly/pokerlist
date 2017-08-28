@@ -13,12 +13,12 @@
         </div>
         <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
             <label for="username">Email</label>
-            <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
+            <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" />
             <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">email is required</span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': form.phone.$dirty && form.phone.$error.required }">
             <label for="username">Phone</label>
-            <input type="number" name="phone" id="phone" class="form-control" ng-model="vm.user.phone" required />
+            <input type="number" name="phone" id="phone" class="form-control" ng-model="vm.user.phone" />
             <span ng-show="form.phone.$dirty && form.phone.$error.required" class="help-block">phone is required</span>
         </div>
         <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
@@ -30,6 +30,12 @@
             <label for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required />
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Confirm Password</label>
+            <input type="password" name="confpassword" id="confpassword" class="form-control" ng-model="confpassword" required compare-to="vm.user.password"/>
+            <span ng-show="form.confpassword.$dirty && form.confpassword.$error.required" class="help-block">Password is required</span>
+            <span class="help-block" ng-show="form.confpassword.$error.compareTo">must confirm password!</span>
         </div>
         <div class="form-actions">
             <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Register</button>
