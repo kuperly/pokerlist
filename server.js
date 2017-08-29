@@ -317,8 +317,9 @@ app.get('/api/getAllCashOut',function(req,res){
     
 });
 
-app.get('/*', function(req,res){
-    res.sendfile(path.join(__dirname + '/index.html'));
-})
+// app.get('/*', function(req,res){
+//     res.sendfile(path.join(__dirname + '/index.html'));
+// })
 app.listen(process.env.PORT || 3000);
+
 console.log("Server running from port 3000");

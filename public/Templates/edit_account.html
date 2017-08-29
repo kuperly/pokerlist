@@ -18,16 +18,16 @@
       </div> -->
       <h3>Personal info</h3>
       <form class="form-horizontal" name="reg" ng-submit="save(reg.$valid)">
-        <div class="form-group">
+        <div class="form-group" ng-class="{ 'has-error': reg.Fname.$dirty && reg.Fname.$error.required }">
           <label class="col-lg-3 control-label">First name:</label>
           <div class="col-lg-8">
-            <input class="form-control" ng-model="user.Fname" type="text">
+            <input class="form-control" name="Fname" ng-model="user.Fname" type="text" required>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Last name:</label>
           <div class="col-lg-8">
-            <input class="form-control" ng-model="user.Lname" type="text">
+            <input class="form-control" ng-model="user.Lname" type="text" required>
           </div>
         </div>
         <div class="form-group">

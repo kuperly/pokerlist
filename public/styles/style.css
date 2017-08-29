@@ -15,11 +15,6 @@
   width: auto;
 }
 
-.ng-invalid {
-    border-color: red;
-    outline-color: red;
-}
-
 .messages {
   font-size: smaller;
   padding-top: 5px;
