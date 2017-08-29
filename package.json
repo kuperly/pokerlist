@@ -19,5 +19,8 @@
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*"
-  }
+  },
+    "engiens": {
+        "node": "7.7.1"
+    }
 }
