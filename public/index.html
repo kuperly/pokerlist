@@ -16,6 +16,11 @@
     
     <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
 
+    <!-- Carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.unslider/2.0.3/css/unslider.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.unslider/2.0.3/css/unslider-dots.css" />
+
+
 </head>
 <body ng-app="app">
     <nav ng-controller="mainController" class="navbar navbar-inverse navbar-fixed-top">
@@ -32,25 +37,25 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li> <a ui-sref="home"> home </a> </li>
-                    <li> <a ui-sref="games"> Games </a> </li>
-                    <li> <a ui-sref="balance"> Balance </a> </li>
+                    <li> <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in"> home </a> </li>
+                    <li> <a ui-sref="games" data-toggle="collapse" data-target=".navbar-collapse.in"> Games </a> </li>
+                    <li> <a ui-sref="balance" data-toggle="collapse" data-target=".navbar-collapse.in"> Balance </a> </li>
                     <!--<li> <a>Logout</a> </li>-->
                 </ul>
                 <!-- TODO - visible to admin (role==1) only -->
-                <button ng-if="userLogIn && userLogIn.currentUser.userRole == 1" ui-sref="new_game" class="btn btn-success navbar-btn">New Game</button>
+                <button ng-if="userLogIn && userLogIn.currentUser.userRole == 1" ui-sref="new_game" class="btn btn-success navbar-btn" data-toggle="collapse" data-target=".navbar-collapse.in">New Game</button>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="!userLogIn.currentUser"><a ui-sref="register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li ng-if="userLogIn.currentUser"><a ui-sref="account"><span class="glyphicon glyphicon-user"></span> Account</a></li>
-                    <li ng-if="!userLogIn.currentUser"><a ui-sref="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <li ng-if="userLogIn.currentUser"><a ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    <li ng-if="!userLogIn.currentUser"><a ui-sref="register" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li ng-if="userLogIn.currentUser"><a ui-sref="account" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+                    <li ng-if="!userLogIn.currentUser"><a ui-sref="login" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li ng-if="userLogIn.currentUser"><a ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="body-content">
-        <div style="margin-top:40px;" ui-view> </div>
+        <div style="margin-top:51px;" ui-view> </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
@@ -58,13 +63,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-messages.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 
-  
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    
+    <!-- Carousel -->
+    <script src="https://cdn.jsdelivr.net/jquery.unslider/2.0.3/js/unslider-min.js"></script>
+    
+    
+    
     <script src="Controllers/app.js"></script>
     <script src="Controllers/home_controller.js"></script>
     <script src="Controllers/balance_controller.js"></script>
@@ -83,12 +93,7 @@
     <script src="services/Authentication_service.js"></script>
     <script src="services/flash_service.js"></script>
     <script src="Directives/comperTo_directive.js"></script>
-
     
-
-
-
-
 
 </body>
 </html>

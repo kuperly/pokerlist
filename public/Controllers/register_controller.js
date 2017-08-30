@@ -18,7 +18,6 @@
             .then(function(response){
             
             if(!response.data.length) {
-                // check if paswword changed
                 
                 vm.dataLoading = true;
             

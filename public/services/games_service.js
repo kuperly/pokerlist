@@ -4,7 +4,7 @@
         newGame: function (date,status,location) { // OK
             return $http({
                 method:'POST',
-                url:'/setNewGame',
+                url:'/api/setNewGame',
                 headers: {'Content-Type' : 'application/json'},
                 data: { 
                     game_date : date,
@@ -19,7 +19,7 @@
 
             return $http({
                 method:'POST',
-                url:'/closeGame',
+                url:'/api/closeGame',
                 headers: {'Content-Type' : 'application/json'},
                 data: {
                     game_id : gameId
@@ -32,7 +32,7 @@
 
             return $http({
                 method:'POST',
-                url:'/deleteGame',
+                url:'/api/deleteGame',
                 headers: {'Content-Type' : 'application/json'},
                 data: {
                     game_id : gameId

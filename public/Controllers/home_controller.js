@@ -58,4 +58,18 @@
     return array;
   }
 
+
+  $(function() {
+    $('.banner').unslider({
+      autoplay: true,
+      infinite: true,
+      arrows: false,
+      keys: false,
+      nav: false,
+      speed: 1000,
+      delay: 3500
+
+    });
+  });
+
 });
