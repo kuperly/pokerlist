@@ -3,6 +3,8 @@
 <head>
     <title>Weekly Poker</title>
     <meta charset="utf-8" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
 
     <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -16,7 +18,7 @@
 
 </head>
 <body ng-app="app">
-    <nav ng-controller="mainController" style="margin-bottom: 0px !important" class="navbar navbar-inverse navbar-static-top">
+    <nav ng-controller="mainController" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <!-- <a class="navbar-brand" href="#"> Weekly Poker </a> -->
@@ -48,7 +50,7 @@
     </nav>
 
     <div class="body-content">
-        <div ui-view> </div>
+        <div style="margin-top:40px;" ui-view> </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.5/angular.min.js"></script>
