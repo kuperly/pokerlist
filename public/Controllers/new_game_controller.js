@@ -87,7 +87,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
         if(userName != null) {
 
             var user = findPlayerId($scope.names,'username',userName);
-            $scope.players[id]['_id'] = user["_id"];
+            $scope.players[id]['id'] = user["_id"];
 
         }
     }
