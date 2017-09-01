@@ -45,10 +45,8 @@
             // balace
             player.balance = player.totalCashOut - player.totalCashIn;
 
-        })
 
-        //$scope.players = $filter('orderBy')($scope.players, 'balance',true);
-        console.log("players:",$scope.players);
+        })
 
     };
 
@@ -137,6 +135,15 @@
 
     $scope.getData().then(function(data){
         $scope.setData();
+        var p = [];
+        // remove empty players from array
+        angular.forEach($scope.players,function(player){
+            if(player.totalCashIn != 0){
+                p.push(player);
+            }
+        })
+        $scope.players = p;
+
     })
 
 
