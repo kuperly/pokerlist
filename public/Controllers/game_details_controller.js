@@ -29,6 +29,15 @@ app.controller('GameDetailsController', function ($scope, gamesService, playerSe
         }
     }
 
+    function checkPlayerId(arr, propName, propValue) {
+        for (var i=0; i < arr.length; i++){
+            if (arr[i][propName] == propValue)
+                return false;
+        }
+        return true;
+    }
+    
+
     $scope.GameById = function(id){
         var promise = $q.defer();
         gamesService.getGame(id)
@@ -93,7 +102,9 @@ app.controller('GameDetailsController', function ($scope, gamesService, playerSe
             var user = {name:In.user_name,id:In.user_id,cash_in:0,cash_out:0,total:0};
             if(!$scope.players.length){
                 $scope.players.push(user);
-            }else if(($scope.players.indexOf(user)) == -1 ){
+
+
+            }else if(checkPlayerId($scope.players,'id',In.user_id)){ // return false if exist at players array
                 $scope.players.push(user);
             }
         })

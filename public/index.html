@@ -38,8 +38,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li> <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in"> home </a> </li>
-                    <li> <a ui-sref="games" data-toggle="collapse" data-target=".navbar-collapse.in"> Games </a> </li>
-                    <li> <a ui-sref="balance" data-toggle="collapse" data-target=".navbar-collapse.in"> Balance </a> </li>
+                    <li ng-if="userLogIn.currentUser"> <a ui-sref="games" data-toggle="collapse" data-target=".navbar-collapse.in"> Games </a> </li>
+                    <li ng-if="userLogIn.currentUser" > <a ui-sref="balance" data-toggle="collapse" data-target=".navbar-collapse.in"> Balance </a> </li>
                     <!--<li> <a>Logout</a> </li>-->
                 </ul>
                 <!-- TODO - visible to admin (role==1) only -->
