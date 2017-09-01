@@ -58,15 +58,20 @@
             return true;
         }
 
+        var find = false;
+
         angular.forEach(player.gameId, function(game){
-
-            if(game_id == game){
-                return false;
-            }
             
-            return true;
-
+            if(game_id == game){
+                find = true;
+            }
         });
+        if(!find){
+            return true;
+        } else {
+            return false;
+        }
+        
 
     };
 
