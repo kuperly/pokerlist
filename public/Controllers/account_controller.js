@@ -13,6 +13,8 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
                 $scope.user.gamesID = [];
                 $scope.user.totalGames = 0;
 
+                $scope.roleToShow();
+
                 amountService.getUserCashIn($scope.user['_id'])
                     .then(function(res){
                         
@@ -114,5 +116,14 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
 
     };
     
+    $scope.roleToShow = function(){
+        var role = $scope.user.role;
+
+        switch(role) {
+            case '0': $scope.user.roleS = 'Basic'; break;
+            case '1': $scope.user.roleS = 'mMnager'; break;
+            case '2': $scope.user.roleS = 'Admin'; break;
+        }
+    };
 
 });
