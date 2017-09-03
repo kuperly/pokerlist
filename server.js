@@ -37,7 +37,8 @@ var usersDataScheme = new Schema({
     username: String,
     password: String,
     phone: String,
-    role: {type:String, require:true}
+    role: {type:String, require:true},
+    status: String
 },{collection: 'users'});
 
 // new game
@@ -90,7 +91,8 @@ app.post('/api/users',function(req,res){
         phone: req.body.phone,
         username: req.body.username,
         password: req.body.password,
-        role: 0
+        role: 0,
+        status: 'new'
     });
     
     user.save(function(err,user_id){
@@ -137,6 +139,9 @@ app.post('/api/updateuser',function(req,res){
 
     var query = req.body['_id'];
     
+    if(!req.body.status){
+        req.body.status = 'new';
+    }
     
     var update = {$set:{
         "username": req.body.username,
@@ -144,10 +149,11 @@ app.post('/api/updateuser',function(req,res){
         "phone" : req.body.phone,
         "email" : req.body.email,
         "Lname" : req.body.Lname,
-        "Fname" : req.body.Fname
+        "Fname" : req.body.Fname,
+        "role" : req.body.role,
+        "status": req.body.status
     }};
     
-    // update['$set'].push("password" : req.body.password);
     var option = {new:true};
 
     userData.findByIdAndUpdate(query,update,option,
@@ -158,18 +164,31 @@ app.post('/api/updateuser',function(req,res){
             res.json(doc);
         }
     );
+});
 
-
-
+// delete user
+app.post('/api/deleteUser',function(req,res) { // OK
+    
+    var query = req.body.id;
+    
+    userData.findByIdAndRemove(query,
+        function (err, doc) { // callback
+            if (err) {
+                res.json(err);
+            } 
+            res.json(doc);
+        }
+    );
+    
 });
 
 
-// TODO - by gameId
+// OK - by gameId
 app.get('/api/getAllCashIn/:id',function(req,res){
     
 });
 
-// TODO - by gameId
+// OK - by gameId
 app.get('/api/getAllCashOut/:id',function(req,res){
     
 });
@@ -233,7 +252,7 @@ app.post('/api/closeGame',function(req,res){ // ok
     
 });
 
-app.post('/api/deleteGame',function(req,res){ // OK
+app.post('/api/deleteGame',function(req,res) { // OK
     
     var query = req.body.game_id;
     
@@ -306,6 +325,30 @@ app.get('/api/getAllCashIn',function(req,res){
     
 });
 
+app.get('/api/getUserCashIn',function(req,res){
+
+    var id = req.query.id;
+    cashInData.find({user_id:id})
+        .then(function(doc){
+            res.send(doc);
+        },function(err){
+            res.send(err);
+        });
+    
+});
+
+app.get('/api/getUserCashOut',function(req,res){
+
+    var id = req.query.id;
+    cashOutData.find({user_id:id})
+        .then(function(doc){
+            res.send(doc);
+        },function(err){
+            res.send(err);
+        });
+    
+});
+
 app.get('/api/getAllCashOut',function(req,res){
     cashOutData.find()
         .then(function(doc){
@@ -317,9 +360,15 @@ app.get('/api/getAllCashOut',function(req,res){
     
 });
 
-app.get('/*', function(req,res){
+app.get('*', function(req,res){
     res.sendfile(path.join(__dirname + '/index.html'));
+    //res.sendFile('index.html', { root: __dirname }); 
 })
+
+// app.all('/*', function(req, res) {
+//     res.sendfile('../public/index.html');
+//   });
+
 app.listen(process.env.PORT || 3000);
 
 console.log("Server running from port 3000");

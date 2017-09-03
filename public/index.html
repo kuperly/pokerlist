@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    
     <title>Weekly Poker</title>
     <meta charset="utf-8" />
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
     <link href="styles/style.css" rel="stylesheet" />
+    <link href="/images/favicon.png" rel="shortcut icon" type="icon" />
     
     <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
 
@@ -20,14 +22,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.unslider/2.0.3/css/unslider.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.unslider/2.0.3/css/unslider-dots.css" />
 
-
+    <base href="/">
 </head>
 <body ng-app="app">
     <nav ng-controller="mainController" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <!-- <a class="navbar-brand" href="#"> Weekly Poker </a> -->
-                <a class="navbar-brand" href="#"> <img src="/images/logo.png" alt="Logo"> </a>
+                <a class="navbar-brand" ui-sref="home"> <img src="/images/logo.png" alt="Logo"> </a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -37,13 +39,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li> <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in"> home </a> </li>
+                    <!--<li> <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in"> home </a> </li> -->
                     <li ng-if="userLogIn.currentUser"> <a ui-sref="games" data-toggle="collapse" data-target=".navbar-collapse.in"> Games </a> </li>
                     <li ng-if="userLogIn.currentUser" > <a ui-sref="balance" data-toggle="collapse" data-target=".navbar-collapse.in"> Balance </a> </li>
-                    <!--<li> <a>Logout</a> </li>-->
+                    <li ng-if="userLogIn && userLogIn.currentUser.userRole == 2" > <a ui-sref="manage_users" data-toggle="collapse" data-target=".navbar-collapse.in"> users </a> </li>
+                    
                 </ul>
-                <!-- TODO - visible to admin (role==1) only -->
-                <button ng-if="userLogIn && userLogIn.currentUser.userRole == 1" ui-sref="new_game" class="btn btn-success navbar-btn" data-toggle="collapse" data-target=".navbar-collapse.in">New Game</button>
+                <!-- TODO - visible to admin $ manager (role 1 || 2) only -->
+                <button ng-if="userLogIn && (userLogIn.currentUser.userRole == 1 || userLogIn.currentUser.userRole == 2)" ui-sref="new_game" class="btn btn-success navbar-btn" data-toggle="collapse" data-target=".navbar-collapse.in">New Game</button>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-if="!userLogIn.currentUser"><a ui-sref="register" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                     <li ng-if="userLogIn.currentUser"><a ui-sref="account" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-user"></span> Account</a></li>
@@ -82,6 +85,7 @@
     <script src="Controllers/new_game_controller.js"></script>
     <script src="Controllers/game_details_controller.js"></script>
     <script src="Controllers/edit_game_controller.js"></script>
+    <script src="Controllers/manage_users_controller.js"></script>
     <script src="Controllers/register_controller.js"></script>
     <script src="Controllers/login_controller.js"></script>
     <script src="Controllers/account_controller.js"></script>

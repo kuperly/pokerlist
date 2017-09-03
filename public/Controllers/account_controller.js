@@ -1,11 +1,58 @@
 app.controller('accountController', function ($cookies,AuthenticationService,UserService,$scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope) {
     
     $scope.user = {};
+    $scope.user.totalCashIn = 0;
+    $scope.user.gamesID = {};
 
-    UserService.GetByUsername($rootScope.userLogIn.currentUser.username)
-    .then(function(response){
-        $scope.user = response.data[0];
+    
+
+    $scope.loadData = function(){
+        UserService.GetByUsername($rootScope.userLogIn.currentUser.username)
+            .then(function(response){
+                $scope.user = response.data[0];
+                $scope.user.gamesID = [];
+                $scope.user.totalGames = 0;
+
+                amountService.getUserCashIn($scope.user['_id'])
+                    .then(function(res){
+                        
+                        var sum = 0;
+                        angular.forEach(res.data, function(val) {
+
+                            // sum of cashIn
+                            sum += val.cash_in;
+
+                            // sum of games
+                            if($scope.checkGameArray(val.game_id,$scope.user)) {
+                                $scope.user.totalGames += 1;
+                                $scope.user.gamesID.push(val.game_id);
+                            }
+                        });
+
+                        $scope.user.totalCashIn = sum;
+
+
+                        
+                    
+                
+                    });
+
+                amountService.getUserCashOut($scope.user['_id'])
+                    .then(function(res){
+                        var sum = 0;
+                        angular.forEach(res.data, function(val){
+                            sum += val.cash_out;
+                        })
+
+                        $scope.user.totalCashOut = sum;
+                    });
+
+                console.log($scope.user);
+
     })
+    }
+
+    $scope.loadData();
 
     $scope.edit = function(){
         $state.go('edit_account');
@@ -17,6 +64,7 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
 
     $scope.save = function(isValid){
 
+        console.log("user to save:",$scope.user);
          UserService.GetByUsername($scope.user.username)
         .then(function(response){
             
@@ -40,10 +88,31 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
 
             }
         })
-
-         
-        
     }
+
+
+    $scope.checkGameArray = function(game_id, player) {
+
+        if(!$scope.user.gamesID.length){
+            return true;
+        }
+
+        var find = false;
+
+        angular.forEach($scope.user.gamesID, function(game) {
+            
+            if(game_id == game){
+                find = true;
+            }
+        });
+        if(!find){
+            return true;
+        } else {
+            return false;
+        }
+        
+
+    };
     
 
 });

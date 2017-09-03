@@ -25,16 +25,18 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
 
         // needed??
         angular.forEach($scope.names,function(name) {
-            var obj = {
-                'playerName': name.username,
-                'cashIn': 0,
-                'cashOut': 0,
-                'active': false,
-                'activeCashIn': false,
-                'activeCashOut': false,
-                'id': name['_id']
-            };
-            $scope.players.push(obj);
+            if(name.status == 'active'){
+                var obj = {
+                    'playerName': name.username,
+                    'cashIn': 0,
+                    'cashOut': 0,
+                    'active': false,
+                    'activeCashIn': false,
+                    'activeCashOut': false,
+                    'id': name['_id']
+                };
+                $scope.players.push(obj);
+            }
         });
     });
 

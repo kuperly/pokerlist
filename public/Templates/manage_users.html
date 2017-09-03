@@ -1,0 +1,76 @@
+<div class="container" ng-controller="manageUsersController">
+
+    <h1 class="text-center"> Balances </h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Full Name</th>
+                <th class="text-center">Username</th>
+                <th class="text-center">Password</th>
+                <th class="text-center">Role</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="player in names | orderBy:['Fname']" class="text-center">
+                <td> {{ $index + 1 }} </td>
+                <td>
+                     {{player.Fname}} {{player.Lname}} 
+                </td>
+                <td>
+                    <div class="form-group">
+                        <span ng-if="!player.editable"> {{player.username}}  </span>
+                        <input type="text" placeholder="password" ng-if="player.editable" ng-model="player.username">
+                    </div>
+                </td>
+                <td>
+                     <div class="form-group">
+                        <span ng-if="!player.editable"> {{player.password}}  </span>
+                        <input type="text" placeholder="password" ng-if="player.editable" ng-model="player.password">
+                    </div>
+                </td>
+                <td 
+                    <div class="form-group">
+                        <span ng-if="!player.editable"> {{player.role}} </span>
+                        <select ng-if="player.editable" class="form-control" id="player" ng-model="player.role">
+                            <option ng-repeat="role in availableOptions" value={{role.id}}>{{role.name}}</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                     <div class="form-group">
+                        <span ng-if="!player.editable"> {{player.status}} </span>
+                        <select ng-if="player.editable" class="form-control" id="status" ng-model="player.status">
+                            <option ng-repeat="status in statusOptions" value={{status.name}}>{{status.name}}</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    
+                    <button class="btn btn-primary" ng-click="editRow(player)">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+
+                    <button class="btn btn-primary" ng-click="save(player)">
+                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    </button>
+
+                    <button class="btn btn-danger" ng-click="delete(player)">
+                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+
+
+

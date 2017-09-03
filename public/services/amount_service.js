@@ -37,8 +37,33 @@ app.factory('amountService', function ($http) {
 
         },
 
+        getUserCashIn: function (ID) { // TODO
+
+            var requestParam={
+            method:'GET',
+            params: {id: ID},
+            url:'/api/getUserCashIn'
+            }
+
+            return $http(requestParam);
+
+
+
+        },
+
         getAllCashOut: function () { // OK
             return $http.get('/api/getAllCashOut');
+
+        },
+
+        getUserCashOut: function (ID) { // TODO
+            var requestParam={
+            method:'GET',
+            params: {id: ID},
+            url:'/api/getUserCashOut'
+            }
+
+            return $http(requestParam);
 
         },
 

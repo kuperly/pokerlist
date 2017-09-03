@@ -46,6 +46,17 @@
 
         },
 
+        getUserGames: function(ID){ // TODO
+
+            var requestParam={
+            method:'GET',
+            params: {id: ID},
+            url:'/api/getUserGames'
+            }
+
+            return $http(requestParam);
+        },
+
         getGame: function(ID){ // TODO
 
             var requestParam={
