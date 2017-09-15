@@ -5,6 +5,8 @@
     $scope.cashIn = [];
     $scope.cashOut = [];
 
+    $scope.showGuests = false;
+
     $scope.setData = function(){
 
         // player
@@ -133,18 +135,24 @@
         return promise.promise;
     }
 
-    $scope.getData().then(function(data){
-        $scope.setData();
-        var p = [];
-        // remove empty players from array
-        angular.forEach($scope.players,function(player){
-            if(player.totalCashIn != 0){
-                p.push(player);
-            }
-        })
-        $scope.players = p;
+    // get all data & set it
+    $scope.showGuestchange = function(){
 
-    })
+        $scope.getData().then(function(data) {
+            $scope.setData();
+            var p = [];
+            // remove empty players from array
+            angular.forEach($scope.players,function(player){
+                if((player.status.toLowerCase() == 'guest' && $scope.showGuests) ||  player.status.toLowerCase() != 'guest' && player.totalCashIn != 0){
+                    p.push(player);
+                }
+            })
+            $scope.players = p;
+
+        });
+    }
+
+    $scope.showGuestchange();
 
 
 });

@@ -14,12 +14,15 @@
         function register() {
 
 
-            UserService.GetByUsername(vm.user.username)
+            UserService.GetByUsername(vm.user.username.toLowerCase())
             .then(function(response){
             
             if(!response.data.length) {
                 
                 vm.dataLoading = true;
+
+                // set user name to lower case before save
+                vm.user.username = vm.user.username.toLowerCase();
             
                 UserService.Create(vm.user)
                 .then(function (response) {

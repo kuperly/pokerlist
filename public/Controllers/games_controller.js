@@ -91,8 +91,6 @@
 
     $scope.removeGame = function(id){
 
-        // console.log(id);
-
         if (confirm('Are you sure you want to delete this game?')) {
             gamesService.deleteGame(id)
             .then(function (res) {

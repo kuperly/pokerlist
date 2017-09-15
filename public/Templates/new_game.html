@@ -1,18 +1,18 @@
 ﻿<div class="container" ng-controller="newGameController">
 
     <h1 class="text-center"> {{gameOpenDate | date}} </h1>
-    <h3 class="text-center" ng-class="gameStatusOpen == 'Open' ? 'price-green' : 'price-red'"> {{gameStatusOpen}} </h3>
+    <h3 style="margin-top:0px;" class="text-center" ng-class="gameStatusOpen == 'Open' ? 'price-green' : 'price-red'"> {{gameStatusOpen}} </h3>
 
 
     <div class="btn-group">
         <button ng-disabled="gameStatusOpen == 'Close'" ng-click="addRow()" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span> Add new player
+            <span class="glyphicon glyphicon-plus"></span> Add player
         </button>
         <button ng-disabled="gameStatusOpen == 'Close'" ng-click="closeGame()" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span> Close game
+             Close game
         </button>
         <button ng-disabled="(!addCashInAllEnable) || (!players.length) || (gameStatusOpen == 'Close')" ng-click="addCashInAll()" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span> Add cash in all players
+            <span class="glyphicon glyphicon-plus"></span> Add cash in
         </button>
     </div>
     
@@ -32,9 +32,9 @@
             <tr ng-repeat="player in players track by $index" class="text-center">
                 <td>
                     <div class="form-group">
-                        <span ng-show="player.playerName"> {{player.playerName}} </span>
+                        <span ng-show="player.fullName"> {{player.fullName}} </span>
                         <select ng-change="setIdToNames($index,player.playerName)" ng-show="!player.playerName || player.playerName == ''" class="form-control" id="player" ng-model="player.playerName">
-                            <option ng-repeat="name in names" value={{name.username}}>{{name.username}}</option>
+                            <option ng-repeat="name in names" value={{name.username}}>{{name.Fname}} {{name.Lname}}</option>
                         </select>
                     </div>
                 </td>

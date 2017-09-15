@@ -8,11 +8,11 @@
         
         <div class="span8">
             <h2>{{user.Fname}} {{user.Lname}}</h2>
-            <h5>username: {{user.username}}</<h5>
+            <h5>username: {{user.username}}<h5>
             <h5>email: {{user.email}}</h5>
             <h5>phone: {{user.phone}}</h5>
             <h5>role: {{user.roleS}}</h5>
-            <h5>status: {{user.status}}</h5>
+            <h5>status: <span ng-class="user.status.toLowerCase() == 'active' ? 'price-green' : user.status.toLowerCase() == 'guest' ? 'price-orange' :'price-red'" >{{user.status}}</span></h5>
         </div>
         
         
@@ -25,19 +25,19 @@
 </div>
     <div class="twPc-divStats">
 			<ul class="twPc-Arrange">
-				<li class="twPc-ArrangeSizeFit">
+				<li class="twPc-ArrangeSizeFit" style="width:30%">
 					<a ui-sref="games" title="Games">
 						<span class="twPc-StatLabel twPc-block">Games</span>
 						<span class="twPc-StatValue">{{user.totalGames}}</span>
 					</a>
 				</li>
-				<li class="twPc-ArrangeSizeFit">
+				<li class="twPc-ArrangeSizeFit" style="width:30%">
 					<a ui-sref="balance" title="Cash In">
 						<span class="twPc-StatLabel twPc-block">Cash In</span>
 						<span class="twPc-StatValue">{{user.totalCashIn}}</span>
 					</a>
 				</li>
-				<li class="twPc-ArrangeSizeFit">
+				<li class="twPc-ArrangeSizeFit" style="width:30%">
 					<a ui-sref="balance" title="Cash Out">
 						<span class="twPc-StatLabel twPc-block">Cash Out</span>
 						<span class="twPc-StatValue">{{user.totalCashOut}}</span>

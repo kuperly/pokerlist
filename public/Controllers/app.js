@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages'])
+var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','ngMaterial','angularjs-dropdown-multiselect'])
 .controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr){
     $rootScope.userLogIn = $cookies.getObject('globals');
     $scope.logout = function(){
@@ -18,6 +18,12 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
               url: '/',
               templateUrl: 'Templates/home.html'
               //controller: 'Ctrl'
+          })
+            .state('groups', {
+              url: '/groups',
+              templateUrl: 'Templates/groups.html'
+              //controller: 'accountController'
+              //controllerAs: 'vm'
           })
             .state('games', {
                 url: '/games',

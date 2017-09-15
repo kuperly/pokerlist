@@ -67,7 +67,7 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
     $scope.save = function(isValid){
 
         console.log("user to save:",$scope.user);
-         UserService.GetByUsername($scope.user.username)
+         UserService.GetByUsername($scope.user.username.toLowerCase())
         .then(function(response){
             
             if(!response.data.length || (response.data.length == 1 && $scope.user['_id'] == response.data[0]['_id'])){
@@ -75,10 +75,13 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
                 if($scope.password){
                     $scope.user.password = $scope.password;
                 }
+
+                // set user name to lower case before save
+                $scope.user.username = $scope.user.username.toLowerCase();
         
                 UserService.Update($scope.user)
                 .then(function(res){
-                    AuthenticationService.SetCredentials(res.data.username,res.data.password,res.data.role);
+                    AuthenticationService.SetCredentials(res.data.username,res.data.password,res.data['_id'],res.data.role);
                     $rootScope.userLogIn = $cookies.getObject('globals');
                     $state.go('account');
                 })

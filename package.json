@@ -10,6 +10,7 @@
     "angular-messages": "^1.6.5",
     "angular-toastr": "^2.1.1",
     "angular-ui-bootstrap": "^2.5.0",
+    "angularjs-dropdown-multiselect": "^2.0.0-beta.10",
     "bcryptjs": "*",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
@@ -20,7 +21,7 @@
     "passport-http": "*",
     "passport-local": "*"
   },
-    "engiens": {
-        "node": "7.7.1"
-    }
+  "engiens": {
+    "node": "7.7.1"
+  }
 }

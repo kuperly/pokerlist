@@ -33,7 +33,6 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         // });
     });
     
-    // TODO
     $scope.addRow = function () {
         
         var obj = {
@@ -49,7 +48,6 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         
     };
 
-    // TODO
     $scope.removeRow = function (id) {
         if (confirm('Are you sure you want to remove '+ name + '?')) {
             var index = -1;
@@ -64,12 +62,10 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         }
     };
 
-    // TODO
     $scope.EditRow = function (index) { 
         $scope.players[index].active = !$scope.players[index].active;
     }
 
-    // OK
     $scope.closeGame = function() {
 
         if (confirm('Are you sure you want to close the game?')) {
@@ -80,18 +76,17 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         }
     }
 
-    // TODO
     $scope.setIdToNames = function(id,userName) {
 
         if(userName != null) {
 
             var user = findPlayerId($scope.names,'username',userName);
             $scope.players[id]['id'] = user["_id"];
+            $scope.players[id]['name'] = user.Fname + " " + user.Lname ;
 
         }
     }
 
-    // OK
     function findNameIndex(arr, propName, propValue) {
         for (var i=0; i < arr.length; i++){
             if (arr[i][propName] == propValue)
@@ -99,7 +94,6 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         }
     }
 
-    //OK
     function findPlayerId(arr, propName, propValue) {
         for (var i=0; i < arr.length; i++){
             if (arr[i][propName] == propValue)
@@ -115,7 +109,6 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         return true;
     }
 
-    // OK
     $scope.CashIn = function (id,sum) {
         
         var obj = {

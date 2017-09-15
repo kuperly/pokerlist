@@ -20,9 +20,10 @@ app.controller('manageUsersController', function ($scope,$state,$cookies,UserSer
 
     // status values
     $scope.statusOptions = [
-        {name: 'new', id:0},
-        {name: 'not active', id:1},
-        {name: 'active', id:2}
+        {name: 'New', id:0},
+        {name: 'Not active', id:1},
+        {name: 'Active', id:2},
+        {name: 'Guest', id:3}
     ];
 
     // TODO - delete user

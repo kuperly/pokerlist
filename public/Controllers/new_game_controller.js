@@ -25,9 +25,10 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
 
         // needed??
         angular.forEach($scope.names,function(name) {
-            if(name.status == 'active'){
+            if(name.status.toLowerCase() == 'active'){
                 var obj = {
                     'playerName': name.username,
+                    'fullName': name.Fname +" "+ name.Lname,
                     'cashIn': 0,
                     'cashOut': 0,
                     'active': false,
@@ -90,6 +91,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
 
             var user = findPlayerId($scope.names,'username',userName);
             $scope.players[id]['id'] = user["_id"];
+            $scope.players[id]['fullName'] = user.Fname + " " + user.Lname; // add full name to player
 
         }
     }
@@ -127,7 +129,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
         
         var obj = {
             user_id: $scope.players[id]['id'],
-            user_name: $scope.players[id]['playerName'],
+            user_name: $scope.players[id]['fullName'],
             game_id: $scope.gameId,
             cash_in: sum
         }

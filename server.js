@@ -2,13 +2,12 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-//test
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
-//
+
 
 MongoClient = require('mongodb').MongoClient
 mongoose.Promise = require('bluebird');
@@ -28,6 +27,16 @@ var Schema = mongoose.Schema;
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
+
+// groups
+var groupsDataScheme = new Schema({
+    groupName: String,
+    country: String,
+    city: String,
+    adminName: String,
+    adminId: String,
+    days:[]
+},{collection: 'groups'});
 
 // users
 var usersDataScheme = new Schema({
@@ -64,12 +73,43 @@ var cashOutDataScheme = new Schema({
     cash_out: Number
 },{collection: 'cashOut'});
 
+groupsDataScheme
+var groupData = mongoose.model('groupData', groupsDataScheme);
 var userData = mongoose.model('userData', usersDataScheme);
 var gameData = mongoose.model('gameData', gameDataScheme);
 var cashInData = mongoose.model('cashInData', cashInDataScheme);
 var cashOutData = mongoose.model('cashOutData', cashOutDataScheme);
 
+// get all groups
+app.get('/api/getAllGroups',function(req,res){
+    groupData.find()
+        .then(function(doc){
+            res.send(doc);
+            console.log(doc);
+        },function(err){
+            res.send(err);
+        });
+    
+});
 
+// set new group
+app.post('/api/setNewGroup',function(req,res){ 
+
+    var group = new groupData({
+        groupName: req.body.groupName,
+        country : req.body.country,
+        city : req.body.city,
+        adminName: req.body.adminName,
+        adminId: req.body.adminId,
+        days: req.body.days
+    });
+    
+    group.save(function(err,group_id){
+        res.status(200).json(group_id);
+    })
+});
+
+// get all users
 app.get('/api/getAllUsers',function(req,res){
     userData.find()
         .then(function(doc){
@@ -362,12 +402,9 @@ app.get('/api/getAllCashOut',function(req,res){
 
 app.get('*', function(req,res){
     res.sendfile(path.join(__dirname + '/index.html'));
-    //res.sendFile('index.html', { root: __dirname }); 
 })
 
-// app.all('/*', function(req, res) {
-//     res.sendfile('../public/index.html');
-//   });
+
 
 app.listen(process.env.PORT || 3000);
 

@@ -1,0 +1,111 @@
+<div class="container" ng-controller="groupsController as vm">
+
+    <h1 class="text-center"> Groups </h1>
+    
+    <div class="col-sm-12">
+    <div class="col-sm-6">
+  <md-content class="md-padding">
+     <!-- <md-autocomplete
+        ng-disabled="false"
+        md-no-cache="true"
+        md-selected-item="vm.selectedItem"
+          md-search-text-change="vm.searchTextChange(vm.searchText)"
+          md-search-text="vm.searchText"
+          md-selected-item-change="vm.selectedItemChange(item)"
+          md-items="item in vm.querySearch(vm.searchText)"
+          md-item-text="item.groupName"
+          md-min-length="2"
+          placeholder="search for new groups"
+          md-menu-class="autocomplete-custom-template">
+        <md-item-template>
+          <span class="item-title glyphicon glyphicon-knight">
+            <span> {{item.groupName}} </span>
+          </span>
+          <span class="item-metadata">
+            <span>
+              <strong>{{item.city}}</strong> City
+            </span>
+            <span>
+              <strong>{{item.country}}</strong> Country
+            </span>
+          </span>
+        </md-item-template>
+          <md-not-found>
+          No group matching "{{vm.searchText}}" were found.
+          <a ng-click="vm.showAdvanced($event)">Create a new one!</a>
+        </md-not-found>  
+      </md-autocomplete>   -->
+
+       <md-autocomplete flex
+            md-input-name="autocompleteField"
+            md-input-minlength="2"
+            md-input-maxlength="18"
+            md-no-cache="true"
+            md-selected-item-change="vm.searchTextChange(vm.searchText)"
+            md-selected-item="vm.selectedItem"
+            md-search-text="vm.searchText"
+            md-items="item in vm.querySearch(vm.searchText)"
+            md-item-text="item.groupName"
+            md-floating-label="Search new group"
+            md-menu-class="autocomplete-custom-template">
+         <md-item-template>
+          <span class="item-title glyphicon glyphicon-knight">
+            <span> {{item.groupName}} </span>
+          </span>
+          <span class="item-metadata">
+            <span>
+              <strong>{{item.city}}</strong> City
+            </span>
+            <span>
+              <strong>{{item.country}}</strong> Country
+            </span>
+          </span>
+        </md-item-template>
+        <md-not-found>
+          No "{{vm.searchText}}" were found.
+          <a ng-click="vm.showAdvanced($event)">Create a new one!</a>
+        </md-not-found>  
+          
+        </md-autocomplete> 
+
+     </md-content> 
+    </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Group Name</th>
+                <th class="text-center">location</th>
+                <th class="text-center">Days</th>
+                <th class="text-center">Status</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="group in vm.groups" class="text-center">
+                <td> {{ $index + 1 }} </td>
+                <td> {{group.groupName}} </td>
+                <td> {{group.city}} <i><small>({{group.country}})</small></i> </td>
+                <td> {{group.daysToShow}} </td>
+                <td> Approved </td>
+                <td>
+                    <button ng-click="vm.goToGroup(group['_id'])" ng-disabled="false" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-log-in"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" ng-click="vm.showAdvanced($event)">new group</button>
+</div>
+
+
+
+
+
+
+
+

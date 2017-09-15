@@ -1,7 +1,10 @@
 ﻿<div class="container" ng-controller="balanceController">
 
     <h1 class="text-center"> Balances </h1>
-
+    <div>
+        <label for="showGuests">Show Guests </label>
+        <md-checkbox class="md-primary" ng-model="showGuests" ng-change="showGuestchange()"> </md-checkbox>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>

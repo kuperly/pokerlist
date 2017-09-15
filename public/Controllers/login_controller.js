@@ -18,9 +18,9 @@
  
         function login() {
             vm.dataLoading = true;
-            AuthenticationService.Login(vm.username, vm.password, function (response) {
+            AuthenticationService.Login(vm.username.toLowerCase(), vm.password, function (response) {
                 if (response.data.length) {
-                    AuthenticationService.SetCredentials(response.data[0].username, response.data[0].password, response.data[0].role);
+                    AuthenticationService.SetCredentials(response.data[0].username, response.data[0].password,response.data[0]['_id'], response.data[0].role);
                     $rootScope.userLogIn = $cookies.getObject('globals');
                     $location.path('/');
                 } else {
