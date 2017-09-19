@@ -36,8 +36,8 @@
                         <!-- <select ng-change="setIdToNames($index,player.playerName)" ng-show="!player.playerName || player.playerName == ''" class="form-control" id="player" ng-model="player.playerName">
                             <option ng-repeat="name in names" value={{name.username}}>{{name.Fname}} {{name.Lname}}</option>
                         </select>  -->
-                         <md-input-container ng-show="!player.playerName || player.playerName == ''">
-                            <label>player name</label>
+                         <md-input-container style="margin-top: 0px;" ng-if="!player.playerName || player.playerName == ''">
+                            <!-- <label>player name</label> -->
                             <md-select ng-change="setIdToNames($index,player.playerName)" ng-model="player.playerName">
                                <md-option ng-repeat="name in names" ng-value="name.username">
                                     {{name.Fname}} {{name.Lname}}
@@ -47,13 +47,13 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn btn-link" ng-disabled="player.playerName == '' || player.cashOut > 0 || gameStatusOpen == 'Close'" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cashIn}} </button>
+                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || player.cashOut > 0 || gameStatusOpen == 'Close'" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cashIn}} </button>
                     <!--<p ng-show="player.active==false">{{player.cashIn}}</p>-->
                     <input ng-model="sumForCashIn" type="number" step="10" ng-show="player.activeCashIn==true" />
                     <button ng-show="player.activeCashIn==true" ng-click="CashIn($index, sumForCashIn)" class="btn btn-primary">Add</button>
                 </td>
                 <td>
-                    <button class="btn btn-link" ng-disabled="player.playerName == '' || player.cashIn == 0 || totalCashIn == 0" ng-click="player.activeCashOut = !player.activeCashOut"> {{player.cashOut}} </button>
+                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || player.cashIn == 0 || totalCashIn == 0" ng-click="player.activeCashOut = !player.activeCashOut"> {{player.cashOut}} </button>
                     <!--<p ng-show="player.active==false">{{player.cashOut}}</p>-->
                     <input ng-model="sumForCashOut" type="number" step="10" ng-show="player.activeCashOut==true && player.cashIn > 0" />
                     <button ng-disabled="player.cashIn == 0" ng-show="player.activeCashOut==true" ng-click="CashOut($index,sumForCashOut)" class="btn btn-primary">Add</button>
