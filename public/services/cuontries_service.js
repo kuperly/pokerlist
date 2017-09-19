@@ -28,13 +28,22 @@ app.factory('coutryService', function ($http) {
                 
             });
         }
-        // getCities1:
-        // function (city,countryid) {
+
+        // getCities: function (city,countryid) { // OK
         //     var API_KEY = 'AIzaSyA-4-WrZZ5xCwyhTPvVTiq0SMGXnr_r_P4';
-        //     $http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:'+countryid+'&key='+API_KEY).then(function(res){
-        //         return res.data.predictions;
-        //     })   
-        // }  
+        //     return $http({
+        //         method:'POST',
+        //         url:'/api/getGoogleCitys',
+        //         headers: {'Content-Type' : 'application/json'},
+        //         data: {
+        //             city : city,
+        //             countryid: countryid,
+        //             API_KEY: API_KEY
+        //         }
+                
+        //     });
+        // }
+        
 
     };
 });

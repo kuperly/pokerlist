@@ -8,6 +8,11 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
     vm.groups = [];
     //vm.cashIn = [];
 
+    //test
+    groupService.getUsersByGroupId('598b8420f36d285bd4912b34').then(function(res){
+        console.log("user by id:",res);
+    })
+
     groupService.getAllPlayers()
     .then(function(res){
         vm.groups = res.data;

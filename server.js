@@ -7,6 +7,9 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
+var http = require('http');
+var https = require('https');
+
 
 
 MongoClient = require('mongodb').MongoClient
@@ -24,6 +27,16 @@ db.once('open', function(){
 
 var app = express();
 var Schema = mongoose.Schema;
+
+// var cors = require('cors');
+// app.options('*', cors()); // include before other routes
+
+// app.all("/*", function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+//   return next();
+// });
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
@@ -43,8 +56,8 @@ var usersDataScheme = new Schema({
     Fname: String,
     Lname: String,
     email: String,
-    username: String,
-    password: String,
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
     phone: String,
     role: {type:String, require:true},
     status: String
@@ -73,7 +86,7 @@ var cashOutDataScheme = new Schema({
     cash_out: Number
 },{collection: 'cashOut'});
 
-groupsDataScheme
+
 var groupData = mongoose.model('groupData', groupsDataScheme);
 var userData = mongoose.model('userData', usersDataScheme);
 var gameData = mongoose.model('gameData', gameDataScheme);
@@ -158,7 +171,6 @@ app.post('/api/authenticate',function(req,res){
 
 // get user by username
 app.post('/api/username',function(req,res){
-    console.log(req.body);
     
     var username = req.body.username;
     
@@ -399,6 +411,39 @@ app.get('/api/getAllCashOut',function(req,res){
         });
     
 });
+
+// app.post('/api/getGoogleCitys',function(req,res){
+
+//     var city = req.body.city;
+//     var countryid = req.body.countryid;
+//     var API_KEY = req.body.API_KEY;
+
+//     var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:'+countryid+'&key='+API_KEY;
+
+//     https.get(url,function(response){
+//         res.send(response);
+        
+//     })
+// });  
+
+
+// TODO - get user by group id
+
+app.post('/api/getUsersByGroupId',function(req,res){
+    
+    var groupId = req.body.groupID;
+    
+    userData.find({groupId},
+        function (err, doc) { // callback
+            if (err) {
+                res.json(err);
+            } 
+            res.json(doc);
+        }
+    );
+});
+
+
 
 app.get('*', function(req,res){
     res.sendfile(path.join(__dirname + '/index.html'));

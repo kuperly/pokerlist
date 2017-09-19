@@ -22,7 +22,19 @@ app.factory('groupService', function ($http) {
 
                 }
             });
+        },
 
+        // test
+        getUsersByGroupId: function (id) { // TODO
+            return $http({
+                method:'POST',
+                url:'/api/getUsersByGroupId',
+                headers: {'Content-Type' : 'application/json'},
+                data: { 
+                    groupID: id
+
+                }
+            });
         }
 
     }

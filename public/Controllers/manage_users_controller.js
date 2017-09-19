@@ -1,6 +1,6 @@
 app.controller('manageUsersController', function ($scope,$state,$cookies,UserService,AuthenticationService,gamesService,playerService,amountService, $q,$filter,$rootScope,toastr) {
 
-    // players
+    // get all players
     playerService.getAllPlayers()
     .then(function (res) {
         $scope.names = res.data;
@@ -11,14 +11,14 @@ app.controller('manageUsersController', function ($scope,$state,$cookies,UserSer
 
     });
 
-    // role values
+    // value's role 
     $scope.availableOptions = [
         {name: 'admin', id:2},
         {name: 'manager', id:1},
         {name: 'basic', id:0}
     ];
 
-    // status values
+    //  value's status 
     $scope.statusOptions = [
         {name: 'New', id:0},
         {name: 'Not active', id:1},
@@ -26,14 +26,17 @@ app.controller('manageUsersController', function ($scope,$state,$cookies,UserSer
         {name: 'Guest', id:3}
     ];
 
-    // TODO - delete user
+    // delete user
     $scope.delete = function(player) {
-        UserService.Delete(player['_id'])
-        .then(function(res){
-            toastr.options = {"positionClass": "toast-top-center"};
-            toastr.success('user deleted', 'info');
-            $state.reload();
-        });
+        
+        if (confirm('Are you sure you want to delete the account of '+ player.Fname + ' '+ player.Lname + '?')) {
+            UserService.Delete(player['_id'])
+            .then(function(res){
+                toastr.options = {"positionClass": "toast-top-center"};
+                toastr.success('user deleted', 'info');
+                $state.reload();
+            });
+        }
     }
 
     // TODO - aprrove user 
@@ -44,12 +47,11 @@ app.controller('manageUsersController', function ($scope,$state,$cookies,UserSer
 
     // edit mode
     $scope.editRow = function(player) {
-        console.log(player);
         player.editable = !player.editable;
     }
 
 
-    // TODO - updete user
+    // updete user
     $scope.save = function(player){
 
         console.log("player to save:",player);
@@ -62,9 +64,6 @@ app.controller('manageUsersController', function ($scope,$state,$cookies,UserSer
                 
                 UserService.Update(player)
                 .then(function(res){
-                    //AuthenticationService.SetCredentials(res.data.username,res.data.password,res.data.role);
-                    //$rootScope.userLogIn = $cookies.getObject('globals');
-                    //$state.go('account');
                     $state.reload();
                 })
             } else {
