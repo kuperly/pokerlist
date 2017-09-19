@@ -429,7 +429,7 @@ app.get('/api/getAllCashOut',function(req,res){
 
 // TODO - get user by group id
 
-app.post('/api/getUsersByGroupId',function(req,res){
+app.post('/api/getUsersByGroupId',function(req,res) {
     
     var groupId = req.body.groupID;
     
