@@ -25,22 +25,28 @@
 </div>
     <div class="twPc-divStats">
 			<ul class="twPc-Arrange">
-				<li class="twPc-ArrangeSizeFit" style="width:30%">
+				<li class="twPc-ArrangeSizeFit">
 					<a ui-sref="games" title="Games">
 						<span class="twPc-StatLabel twPc-block">Games</span>
 						<span class="twPc-StatValue">{{user.totalGames}}</span>
 					</a>
 				</li>
-				<li class="twPc-ArrangeSizeFit" style="width:30%">
+				<li class="twPc-ArrangeSizeFit">
 					<a ui-sref="balance" title="Cash In">
 						<span class="twPc-StatLabel twPc-block">Cash In</span>
 						<span class="twPc-StatValue">{{user.totalCashIn}}</span>
 					</a>
 				</li>
-				<li class="twPc-ArrangeSizeFit" style="width:30%">
+				<li class="twPc-ArrangeSizeFit">
 					<a ui-sref="balance" title="Cash Out">
 						<span class="twPc-StatLabel twPc-block">Cash Out</span>
 						<span class="twPc-StatValue">{{user.totalCashOut}}</span>
+					</a>
+				</li>
+				<li class="twPc-ArrangeSizeFit">
+					<a ui-sref="balance" title="Cash Out">
+						<span class="twPc-StatLabel twPc-block">Avarge</span>
+						<span class="twPc-StatValue">{{(user.totalCashOut - user.totalCashIn)/ user.totalGames | number:0}}</span>
 					</a>
 				</li>
 			</ul>

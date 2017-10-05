@@ -10,6 +10,8 @@ var bcrypt = require('bcryptjs');
 var http = require('http');
 var https = require('https');
 
+var cities = require('cities');
+
 
 
 MongoClient = require('mongodb').MongoClient
@@ -412,19 +414,22 @@ app.get('/api/getAllCashOut',function(req,res){
     
 });
 
-// app.post('/api/getGoogleCitys',function(req,res){
+app.post('/api/getByCitysAndState',function(req,res) { // not used! 
 
-//     var city = req.body.city;
-//     var countryid = req.body.countryid;
-//     var API_KEY = req.body.API_KEY;
+     var city = req.body.city;
+     var state = req.body.countryid;
+     var API_KEY = req.body.API_KEY;
 
-//     var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:'+countryid+'&key='+API_KEY;
+    var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:'+state+'&key='+API_KEY;
 
-//     https.get(url,function(response){
-//         res.send(response);
+    console.log('google');
+
+    https.get(url,function(response) {
+        console.log(response);
+        // res.send(response);
         
-//     })
-// });  
+    })
+});  
 
 
 // TODO - get user by group id
@@ -447,7 +452,7 @@ app.post('/api/getUsersByGroupId',function(req,res) {
 
 app.get('*', function(req,res){
     res.sendfile(path.join(__dirname + '/index.html'));
-})
+});
 
 
 

@@ -19,31 +19,42 @@ app.factory('coutryService', function ($http) {
             return allCouries;
 
         },
-        getCities: function (city,countryid) { // OK
-            var API_KEY = 'AIzaSyA-4-WrZZ5xCwyhTPvVTiq0SMGXnr_r_P4';
-            return $http({
+        getCities: function (city,countryid) { // OK - CORS problem
+            var API_KEY ='AIzaSyDFf6Svz1iKjoskIjL8PF5tp7LmB_uVcT0';
+
+           var URL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:'+countryid+'&key='+API_KEY
+                      https://maps.googleapis.com/maps/api/place/autocomplete/json?input=tel&types=(cities)&key=AIzaSyDFf6Svz1iKjoskIjL8PF5tp7LmB_uVcT0
+           return $http({
                 method:'GET',
-                url:'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+city+'&types=(cities)&components=country:'+countryid+'&key='+API_KEY,
-                headers: {'Content-Type' : 'application/json'},
+                url: URL,
+                headers: {  'Content-Type' : 'application/json',
+                            'Access-Control-Allow-Headers':'authorization,x-goog-authuser',
+                            'Access-Control-Allow-Methods':'POST, GET, OPTIONS, PUT, DELETE',
+                            'Access-Control-Allow-Origin':'*',
+                            'Allow':'POST, GET, OPTIONS, PUT, DELETE'
+                            }
                 
             });
+
+            // return $http.jsonp(URL);
         }
 
         // getCities: function (city,countryid) { // OK
         //     var API_KEY = 'AIzaSyA-4-WrZZ5xCwyhTPvVTiq0SMGXnr_r_P4';
+
+           
         //     return $http({
         //         method:'POST',
-        //         url:'/api/getGoogleCitys',
-        //         headers: {'Content-Type' : 'application/json'},
-        //         data: {
-        //             city : city,
-        //             countryid: countryid,
+        //         url:'/api/getByCitysAndState',
+        //         headers: {  'Content-Type' : 'application/json'},
+        //         data: { 
+        //             city: city,
+        //             state: countryid,
         //             API_KEY: API_KEY
         //         }
                 
         //     });
         // }
-        
 
     };
 });

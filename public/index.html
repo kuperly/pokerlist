@@ -31,8 +31,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.unslider/2.0.3/css/unslider.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.unslider/2.0.3/css/unslider-dots.css" />
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
     <!-- Angular Material CSS now available via Google CDN; version 0.9.4 used here -->
-     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css"> 
+   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.css">
 
 
     <base href="/">
@@ -61,12 +63,27 @@
                 </ul>
                 <!-- TODO - visible to admin & manager (role 1 || 2) only -->
                 <button ng-if="userLogIn && (userLogIn.currentUser.userRole == 1 || userLogIn.currentUser.userRole == 2)" ui-sref="new_game" class="btn btn-success navbar-btn" data-toggle="collapse" data-target=".navbar-collapse.in">New Game</button>
+                
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-if="!userLogIn.currentUser"><a ui-sref="register" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                     <li ng-if="userLogIn.currentUser"><a ui-sref="account" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-user"></span> Account</a></li>
                     <li ng-if="!userLogIn.currentUser"><a ui-sref="login" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li ng-if="userLogIn.currentUser"><a ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <!-- <md-input-container>
+                        <label>Group</label>
+                            <md-select name="days" placeholder="Days" ng-model="selectedGroupID" >
+                                <md-option ng-value="group['_id']" ng-repeat="group in groups">{{group.groupName}}</md-option>
+                            </md-select>
+                        </md-input-container>  -->
+                        
+                         <select class="form-control" ng-model="selectedGroupID" >
+                            <option ng-repeat="group in groups" value={{group['_id']}}>{{group.groupName}}</option>
+                        </select> 
+                    </div>
+                </form>
             </div>
         </div>
     </nav>
@@ -80,12 +97,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-cookies.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-messages.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+
+    
     
     <!-- Angular Material Javascript now available via Google CDN; version 0.9.4 used here -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/angularjs-dropdown-multiselect@2.0.0-beta.10/dist/angularjs-dropdown-multiselect.min.js"></script>  
 
 
+     <!-- Google Maps JavaScript API -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
@@ -98,7 +120,6 @@
 
     
     <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
-    
     
     
     <script src="Controllers/app.js"></script>
@@ -121,7 +142,10 @@
     <script src="services/cuontries_service.js"></script>
     <script src="services/Authentication_service.js"></script>
     <script src="services/flash_service.js"></script>
+    <script src="services/vs-google-autocomplete.js"></script>
     <script src="Directives/comperTo_directive.js"></script>
+
+    
     
 
 </body>

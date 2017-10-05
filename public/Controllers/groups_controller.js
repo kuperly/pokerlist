@@ -4,6 +4,12 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
 
     var vm = this;
 
+    // Table - sort & filter
+    vm.sortType     = ['balance','totalCashOut','totalCashIn']; // set the default sort type
+    vm.sortReverse  = true;  // set the default sort order
+    vm.searchAtTable   = '';     // set the default 
+
+
     //vm.users = [];
     vm.groups = [];
     //vm.cashIn = [];
@@ -13,7 +19,7 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         console.log("user by id:",res);
     })
 
-    groupService.getAllPlayers()
+    groupService.getAllGroups()
     .then(function(res){
         vm.groups = res.data;
         // angular.forEach(vm.groups.days,function(day){
@@ -93,6 +99,7 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
   function DialogController($rootScope,$scope, $mdDialog,groupService,coutryService,$q) {
     
     $scope.user = {};
+
     $scope.hide = function() {
       $mdDialog.hide();
     };
@@ -106,6 +113,12 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         group.admin_name = $rootScope.userLogIn.currentUser.username;
         group.admin_id = $rootScope.userLogIn.currentUser.id;
         console.log(group);
+
+        group.country = group.city.split(',')[1].trim();
+        group.city = group.city.split(',')[0];
+
+        console.log(group.country + " " + group.city);
+
         groupService.postNewGroup(group).then(function(res){
             $mdDialog.hide(res);
         });
@@ -121,11 +134,12 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
     };
 
     $scope.selectedCountryChange = function (item) {
-      //$log.info('Item changed to ' + JSON.stringify(item));
       $scope.user.country = item.name;
+      
     }
 
-    $scope.findCity = function (serch){
+    
+    $scope.findCity = function (serch) {
 
         var Promise = $q.defer();
 
@@ -139,10 +153,8 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         return Promise.promise;
     };
 
-    // $scope.getCities('rehovot','il');
 
     $scope.selectedCityChange = function (item) {
-      //$log.info('Item changed to ' + JSON.stringify(item));
       $scope.user.city = item.terms[0].value;
     }
 

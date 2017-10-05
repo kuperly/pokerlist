@@ -5,36 +5,6 @@
     <div class="col-sm-12">
     <div class="col-sm-6">
   <md-content class="md-padding">
-     <!-- <md-autocomplete
-        ng-disabled="false"
-        md-no-cache="true"
-        md-selected-item="vm.selectedItem"
-          md-search-text-change="vm.searchTextChange(vm.searchText)"
-          md-search-text="vm.searchText"
-          md-selected-item-change="vm.selectedItemChange(item)"
-          md-items="item in vm.querySearch(vm.searchText)"
-          md-item-text="item.groupName"
-          md-min-length="2"
-          placeholder="search for new groups"
-          md-menu-class="autocomplete-custom-template">
-        <md-item-template>
-          <span class="item-title glyphicon glyphicon-knight">
-            <span> {{item.groupName}} </span>
-          </span>
-          <span class="item-metadata">
-            <span>
-              <strong>{{item.city}}</strong> City
-            </span>
-            <span>
-              <strong>{{item.country}}</strong> Country
-            </span>
-          </span>
-        </md-item-template>
-          <md-not-found>
-          No group matching "{{vm.searchText}}" were found.
-          <a ng-click="vm.showAdvanced($event)">Create a new one!</a>
-        </md-not-found>  
-      </md-autocomplete>   -->
 
        <md-autocomplete flex
             md-input-name="autocompleteField"
@@ -77,20 +47,53 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">Group Name</th>
+                <!-- <th class="text-center">Group Name</th>
                 <th class="text-center">location</th>
                 <th class="text-center">Days</th>
-                <th class="text-center">Status</th>
+                <th class="text-center">Status</th> -->
+                
+
+                <th class="text-center">
+                    <a href="" ng-click="vm.sortType = 'groupName'; vm.sortReverse = !vm.sortReverse">
+                        Group Name
+                        <span ng-show="vm.sortType == 'groupName' && !vm.sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="vm.sortType == 'groupName' && vm.sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="vm.sortType = 'city'; vm.sortReverse = !vm.sortReverse">
+                        Location
+                        <span ng-show="vm.sortType == 'city' && !vm.sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="vm.sortType == 'city' && vm.sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="vm.sortType = 'daysToShow'; vm.sortReverse = !vm.sortReverse">
+                        Days
+                        <span ng-show="vm.sortType == 'daysToShow' && !vm.sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="vm.sortType == 'daysToShow' && vm.sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="vm.sortType = 'status'; vm.sortReverse = !vm.sortReverse">
+                        Status
+                        <span ng-show="vm.sortType == 'status' && !vm.sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="vm.sortType == 'status' && vm.sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+
                 <th class="text-center"></th>
+
+
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="group in vm.groups" class="text-center">
+            <tr ng-repeat="group in vm.groups | orderBy:vm.sortType:vm.sortReverse" class="text-center">
                 <td> {{ $index + 1 }} </td>
                 <td> {{group.groupName}} </td>
                 <td> {{group.city}} <i><small>({{group.country}})</small></i> </td>
                 <td> {{group.daysToShow}} </td>
-                <td> Approved </td>
+                <td> Approved </td> <!--change to dinamic Status -->
                 <td>
                     <button ng-click="vm.goToGroup(group['_id'])" ng-disabled="false" class="btn btn-primary">
                         <span class="glyphicon glyphicon-log-in"></span>

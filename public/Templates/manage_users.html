@@ -2,20 +2,69 @@
 
     <h1 class="text-center"> Users Manager </h1>
 
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                <input type="text" class="form-control" placeholder="Search in table" ng-model="searchAtTable">
+            </div>      
+        </div>
+    </form>
+
     <table class="table table-striped">
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">Full Name</th>
+                <!-- <th class="text-center">Full Name</th>
                 <th class="text-center">Username</th>
                 <th class="text-center">Password</th>
                 <th class="text-center">Role</th>
-                <th class="text-center">Status</th>
+                <th class="text-center">Status</th> -->
+                
+
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'Fname'; sortReverse = !sortReverse">
+                        Full Name
+                        <span ng-show="sortType == 'Fname' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'Fname' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'username'; sortReverse = !sortReverse">
+                        Username
+                        <span ng-show="sortType == 'username' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'username' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'password'; sortReverse = !sortReverse">
+                        Password
+                        <span ng-show="sortType == 'password' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'password' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'role'; sortReverse = !sortReverse">
+                        Role
+                        <span ng-show="sortType == 'role' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'role' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'status'; sortReverse = !sortReverse">
+                        Status
+                        <span ng-show="sortType == 'status' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'status' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+
                 <th class="text-center">options</th>
+
+
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="player in names | orderBy:['Fname']" class="text-center">
+            <tr ng-repeat="player in names | orderBy:sortType:sortReverse | filter:searchAtTable" class="text-center">
                 <td> {{ $index + 1 }} </td>
                 <td>
                      {{player.Fname}} {{player.Lname}} 

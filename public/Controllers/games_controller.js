@@ -1,6 +1,10 @@
 ﻿app.controller('gamesController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope) {
     
-    console.log("gamesController start");
+
+    // Table - sort & filter
+    $scope.sortType     = ['game_status','game_date']; // set the default sort type
+    $scope.sortReverse  = true;  // set the default sort order
+    $scope.searchAtTable   = '';     // set the default 
 
     $scope.players = [];
     $scope.games = [];

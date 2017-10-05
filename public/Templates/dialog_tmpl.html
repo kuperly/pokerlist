@@ -11,88 +11,60 @@
     </md-toolbar>
 
     <md-content layout-padding>
-    <form name="userForm" ng-click="vm.newGroup(user)" >
+    <form name="userForm" ng-click="vm.newGroup(group)" >
 
       <div class="col-sm-12">
+        <!-- Name -->
         <div class="col-sm-6">
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Name</label>
-          <input md-maxlength="30" required name="name" ng-model="user.name" />
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Name</label>
+            <input md-maxlength="30" required name="name" ng-model="group.name" />
 
-          <div ng-messages="userForm.name.$error">
-            <div ng-message="required">Name is required.</div>
-            <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-          </div>
-        </md-input-container>
+            <div ng-messages="userForm.name.$error">
+              <div ng-message="required">Name is required.</div>
+              <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+            </div>
+          </md-input-container>
         </div>
 
-         <div flex="5" hide-xs hide-sm> 
-          <!-- Spacer //-->
-         </div> 
-
-        <!-- Country -->
+        <!-- City -->
         <div class="col-sm-6">
-        <md-autocomplete flex required
-            md-input-name="autocompleteField"
-            md-input-minlength="2"
-            md-input-maxlength="18"
-            md-no-cache="true"
-            md-selected-item-change="selectedCountryChange(item)"
-            md-selected-item="selectedCounty"
-            md-search-text="searchCountry"
-            md-items="item in findCountry(searchCountry)"
-            md-item-text="item.name"
-            md-floating-label="Country">
-          <md-item-template>
-            <span md-highlight-text="searchCountry">{{item.name}}</span>
-          </md-item-template>
-          <div ng-messages="searchForm.autocompleteField.$error" ng-if="userForm.autocompleteField.$touched">
-            <div ng-message="required">You <b>must</b> have a favorite state.</div>
-            <div ng-message="md-require-match">Please select an existing state.</div>
-            <div ng-message="minlength">Your entry is not long enough.</div>
-            <div ng-message="maxlength">Your entry is too long.</div>
+           
+          <!-- vs-google-autocomplete="{ types:['(cities)'] }" -->
+
+          <md-input-container class="md-block" flex-gt-sm>
+           <label for="city"></label> 
+
+          <input vs-google-autocomplete="{ types:['(cities)'] }"
+                 ng-model="group.city"
+                 name="city"
+                 id="city">
+
+          <div ng-messages="userForm.city.$error">
+            <div ng-message="required">City is required.</div>
           </div>
-        </md-autocomplete>
+        </md-input-container>
+
+          <!-- <label for="city">City</label>
+          
+          <input vs-google-autocomplete="{ types:['(cities)'] }"
+                 ng-model="city" 
+                 type="text" 
+                 name="city"
+                 id="city"
+                 class="form-control" 
+                 placeholder="Enter city name"> -->
         </div>
 
       </div>
 
       <div class="col-sm-12">
 
-        <!-- City -->
-        <div class="col-sm-6">
-          <md-autocomplete flex required
-            ng-disabled="!user.country"
-            md-input-name="autocompleteField1"
-            md-input-minlength="2"
-            md-input-maxlength="18"
-            md-no-cache="true"
-            md-selected-item-change="selectedCityChange(item)"
-            md-selected-item="selectedCity"
-            md-search-text="searchCity"
-            md-items="item in findCity(searchCity)"
-            md-item-text="item.terms[0].value"
-            md-floating-label="City">
-          <md-item-template>
-            <span md-highlight-text="searchCity">{{item.terms[0].value}}</span>
-          </md-item-template>
-          <div ng-messages="searchForm.autocompleteField.$error" ng-if="userForm.autocompleteField1.$touched">
-            <div ng-message="required">You <b>must</b> have a favorite state.</div>
-            <div ng-message="md-require-match">Please select an existing state.</div>
-            <div ng-message="minlength">Your entry is not long enough.</div>
-            <div ng-message="maxlength">Your entry is too long.</div>
-          </div>
-        </md-autocomplete>
-        </div>
-        <div flex="5" hide-xs hide-sm>
-          <!-- Spacer //-->
-        </div>
-
         <!-- Days -->
         <div class="col-sm-6">
            <md-input-container style="width:100%;">
             <label>Days</label> 
-            <md-select name="days" multiple placeholder="Days" required ng-model="user.days" >
+            <md-select name="days" multiple placeholder="Days" required ng-model="group.days" >
               <md-option ng-value="day" ng-repeat="day in example1data">{{day}}</md-option>
             </md-select>
             <div ng-messages="userForm.days.$error">
@@ -104,7 +76,7 @@
 
       <md-dialog-actions layout="row">
 
-      <button class="btn btn-primary" ng-disabled="!userForm.$valid" ng-click="newGroup(user)">
+      <button class="btn btn-primary" ng-disabled="!userForm.$valid" ng-click="newGroup(group)">
        Create
       </button>
       
@@ -112,8 +84,6 @@
 
     </form>
   </md-content>
-
-    {{city}}
 
 </md-dialog>
 

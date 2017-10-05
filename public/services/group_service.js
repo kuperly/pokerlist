@@ -2,7 +2,7 @@ app.factory('groupService', function ($http) {
 
     return {
         
-        getAllPlayers: function () { // OK
+        getAllGroups: function () { // OK
             return $http.get('/api/getAllGroups');
 
         },

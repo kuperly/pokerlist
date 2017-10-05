@@ -124,7 +124,7 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
 
         switch(role) {
             case '0': $scope.user.roleS = 'Basic'; break;
-            case '1': $scope.user.roleS = 'mMnager'; break;
+            case '1': $scope.user.roleS = 'Manager'; break;
             case '2': $scope.user.roleS = 'Admin'; break;
         }
     };

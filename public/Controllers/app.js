@@ -1,6 +1,9 @@
-var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','ngMaterial','angularjs-dropdown-multiselect'])
-.controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr){
+var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','ngMaterial','angularjs-dropdown-multiselect','vsGoogleAutocomplete'])
+.controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr,groupService){
     $rootScope.userLogIn = $cookies.getObject('globals');
+
+    // $rootScope.selectedGroupID = selectedGroupID;
+
     $scope.logout = function(){
         AuthenticationService.ClearCredentials();
         $rootScope.userLogIn = {};
@@ -9,6 +12,19 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
         $state.go('login');
     };
 
+    groupService.getAllGroups()
+    .then(function(res){
+        
+        $scope.groups = res.data;
+
+        if($scope.groups.length){
+            $scope.selectedGroupID = $scope.groups[0]['_id'];
+        } else {
+            $scope.selectedGroupID = "Select group";
+        }
+        
+       
+    });
     
 })
 

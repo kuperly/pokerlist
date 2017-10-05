@@ -1,5 +1,12 @@
 app.controller('manageUsersController', function ($scope,$state,$cookies,UserService,AuthenticationService,gamesService,playerService,amountService, $q,$filter,$rootScope,toastr) {
 
+
+    
+    // Table - sort & filter
+    $scope.sortType     = 'status'; // set the default sort type
+    $scope.sortReverse  = false;  // set the default sort order
+    $scope.searchAtTable   = '';     // set the default 
+
     // get all players
     playerService.getAllPlayers()
     .then(function (res) {

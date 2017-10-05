@@ -5,6 +5,11 @@
     $scope.cashIn = [];
     $scope.cashOut = [];
 
+    // Table - sort & filter
+    $scope.sortType     = ['balance','totalCashOut','totalCashIn']; // set the default sort type
+    $scope.sortReverse  = true;  // set the default sort order
+    $scope.searchAtTable   = '';     // set the default 
+
     $scope.showGuests = false;
 
     $scope.setData = function(){
