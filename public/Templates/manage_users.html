@@ -14,7 +14,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-center">#</th>
+                <!-- <th class="text-center">#</th> -->
                 <!-- <th class="text-center">Full Name</th>
                 <th class="text-center">Username</th>
                 <th class="text-center">Password</th>
@@ -24,7 +24,7 @@
 
                 <th class="text-center">
                     <a href="" ng-click="sortType = 'Fname'; sortReverse = !sortReverse">
-                        Full Name
+                        Name
                         <span ng-show="sortType == 'Fname' && !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'Fname' && sortReverse" class="fa fa-caret-up"></span>
                     </a>
@@ -65,7 +65,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="player in names | orderBy:sortType:sortReverse | filter:searchAtTable" class="text-center">
-                <td> {{ $index + 1 }} </td>
+                <!-- <td> {{ $index + 1 }} </td> -->
                 <td>
                      {{player.Fname}} {{player.Lname}} 
                 </td>
@@ -73,6 +73,7 @@
                     <div class="form-group">
                         <span ng-if="!player.editable"> {{player.username}}  </span>
                         <input type="text" placeholder="password" ng-if="player.editable" ng-model="player.username">
+                        
                     </div>
                 </td>
                 <td>
@@ -84,17 +85,39 @@
                 <td 
                     <div class="form-group">
                         <span ng-if="!player.editable"> {{player.role}} </span>
-                        <select ng-if="player.editable" class="form-control" id="player" ng-model="player.role">
+                        <!-- <select ng-if="player.editable" class="form-control" id="player" ng-model="player.role">
                             <option ng-repeat="role in availableOptions" value={{role.id}}>{{role.name}}</option>
-                        </select>
+                        </select> -->
+
+
+                        <md-input-container style="margin-top: 0px;" ng-if="player.editable">
+                            <!-- <label>Role</label> -->
+                            <md-select ng-model="player.role">
+                               <md-option ng-repeat="role in availableOptions" ng-value="role.id">
+                                    {{role.name}}
+                                </md-option>
+                            </md-select>
+                        <md-input-container> 
+
+
                     </div>
                 </td>
                 <td>
-                     <div class="form-group">
+                     <div class="form-group" id="manageUsersStatus">
                         <span ng-if="!player.editable"> {{player.status}} </span>
-                        <select ng-if="player.editable" class="form-control" id="status" ng-model="player.status">
+                        <!-- <select ng-if="player.editable" class="form-control" id="status" ng-model="player.status">
                             <option ng-repeat="status in statusOptions" value={{status.name}}>{{status.name}}</option>
-                        </select>
+                        </select> -->
+
+                        <md-input-container style="margin-top: 0px;" ng-if="player.editable">
+                            <!-- <label>Role</label> -->
+                            <md-select ng-model="player.status">
+                               <md-option ng-repeat="status in statusOptions" ng-value="status.name">
+                                    {{status.name}}
+                                </md-option>
+                            </md-select>
+                        <md-input-container> 
+
                     </div>
                 </td>
                 <td>
