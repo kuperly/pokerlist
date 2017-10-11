@@ -4,6 +4,8 @@
     $scope.games = [];
     $scope.cashIn = [];
     $scope.cashOut = [];
+    $scope.allTotalCashOut = 0;
+    $scope.allTotalCashIn = 0;
 
     // Table - sort & filter
     $scope.sortType     = ['average','balance','totalCashOut','totalCashIn']; // set the default sort type
@@ -28,6 +30,7 @@
                 // sum of cashIn
                 if(cashin.user_id == player['_id']){
                     player.totalCashIn += cashin.cash_in;
+                    $scope.allTotalCashIn += cashin.cash_in;
                 }
 
                 // sum of games
@@ -46,6 +49,7 @@
             angular.forEach($scope.cashOut,function(cashout){
                 if(cashout.user_id == player['_id']){
                     player.totalCashOut += cashout.cash_out;
+                    $scope.allTotalCashOut += cashout.cash_out;
                 }
             })
 
