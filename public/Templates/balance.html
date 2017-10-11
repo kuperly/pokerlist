@@ -16,14 +16,14 @@
                 <th class="text-center">Balance</th> -->
                 <th class="text-center">
                     <a href="" ng-click="sortType = 'Fname'; sortReverse = !sortReverse">
-                        Player Name 
+                        Name 
                         <span ng-show="sortType == 'Fname' && !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'Fname' && sortReverse" class="fa fa-caret-up"></span>
                     </a>
                 </th>
                 <th class="text-center"> 
                     <a href="" ng-click="sortType = 'totalGames'; sortReverse = !sortReverse">
-                        Total Games 
+                        Games 
                         <span ng-show="sortType == 'totalGames' && !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'totalGames' && sortReverse" class="fa fa-caret-up"></span>
                     </a>
@@ -49,6 +49,13 @@
                         <span ng-show="sortType == 'balance' && sortReverse" class="fa fa-caret-up"></span>
                     </a>
                 </th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'average'; sortReverse = !sortReverse">
+                        AVG
+                        <span ng-show="sortType == 'average' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'average' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
 
 
 
@@ -68,6 +75,7 @@
                 <td> {{player.totalCashIn}} </td>
                 <td> {{player.totalCashOut}} </td>
                 <td ng-class="player.balance > 0 ? 'price-green' : 'price-red'">{{player.balance}} </td>
+                <td ng-class="player.average > 0 ? 'price-green' : 'price-red'">{{player.average}} </td>
             </tr>
         </tbody>
     </table>

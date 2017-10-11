@@ -6,7 +6,7 @@
     $scope.cashOut = [];
 
     // Table - sort & filter
-    $scope.sortType     = ['balance','totalCashOut','totalCashIn']; // set the default sort type
+    $scope.sortType     = ['average','balance','totalCashOut','totalCashIn']; // set the default sort type
     $scope.sortReverse  = true;  // set the default sort order
     $scope.searchAtTable   = '';     // set the default 
 
@@ -51,6 +51,9 @@
 
             // balace
             player.balance = player.totalCashOut - player.totalCashIn;
+
+            // average
+            player.average = parseInt(player.balance / player.totalGames);
 
 
         })

@@ -72,16 +72,21 @@
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
-                        <!-- <md-input-container>
-                        <label>Group</label>
-                            <md-select name="days" placeholder="Days" ng-model="selectedGroupID" >
-                                <md-option ng-value="group['_id']" ng-repeat="group in groups">{{group.groupName}}</md-option>
-                            </md-select>
-                        </md-input-container>  -->
                         
-                         <select class="form-control" ng-model="selectedGroupID" >
+                        
+                          <select class="form-control" ng-model="selectedGroupID" >
                             <option ng-repeat="group in groups" value={{group['_id']}}>{{group.groupName}}</option>
-                        </select> 
+                        </select>  
+
+                        <!-- <md-input-container style="color:aliceblue;">
+                            <label></label>
+                            <md-select style="color:aliceblue;" ng-model="selectedGroupID">
+                                <md-optgroup label="selectedGroupID">
+                                    <md-option ng-value="group['_id']" ng-repeat="group in groups">{{group.groupName}}</md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container> -->
+
                     </div>
                 </form>
             </div>

@@ -16,19 +16,13 @@
             md-search-text="vm.searchText"
             md-items="item in vm.querySearch(vm.searchText)"
             md-item-text="item.groupName"
-            md-floating-label="Search new group"
-            md-menu-class="autocomplete-custom-template">
+            md-floating-label="Search group">
          <md-item-template>
-          <span class="item-title glyphicon glyphicon-knight">
-            <span> {{item.groupName}} </span>
+          <span class="item-title">
+            <span> <strong>{{item.groupName}}</strong> </span>
           </span>
           <span class="item-metadata">
-            <span>
-              <strong>{{item.city}}</strong> City
-            </span>
-            <span>
-              <strong>{{item.country}}</strong> Country
-            </span>
+              <small>{{item.city}}, {{item.country}}</small>
           </span>
         </md-item-template>
         <md-not-found>
@@ -46,7 +40,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th class="text-center">#</th>
+                <!-- <th class="text-center">#</th> -->
                 <!-- <th class="text-center">Group Name</th>
                 <th class="text-center">location</th>
                 <th class="text-center">Days</th>
@@ -89,7 +83,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="group in vm.groups | orderBy:vm.sortType:vm.sortReverse" class="text-center">
-                <td> {{ $index + 1 }} </td>
+                <!-- <td> {{ $index + 1 }} </td> -->
                 <td> {{group.groupName}} </td>
                 <td> {{group.city}} <i><small>({{group.country}})</small></i> </td>
                 <td> {{group.daysToShow}} </td>
@@ -102,7 +96,7 @@
             </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary" ng-click="vm.showAdvanced($event)">new group</button>
+    <button type="button" class="btn btn-primary" ng-click="vm.showAdvanced($event)">Create group</button>
 </div>
 
 
