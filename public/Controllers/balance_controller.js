@@ -4,7 +4,6 @@
     $scope.games = [];
     $scope.cashIn = [];
     $scope.cashOut = [];
-    $scope.allTotalCashOut = 0;
     $scope.allTotalCashIn = 0;
 
     // Table - sort & filter
@@ -15,6 +14,7 @@
     $scope.showGuests = false;
 
     $scope.setData = function(){
+        $scope.allTotalCashIn = 0;
 
         // player
         angular.forEach($scope.players,function(player) {
@@ -22,6 +22,7 @@
             player.totalCashIn = 0;
             player.totalCashOut = 0;
             player.gameId = [];
+            
 
 
             // sum of cashIn
@@ -30,7 +31,9 @@
                 // sum of cashIn
                 if(cashin.user_id == player['_id']){
                     player.totalCashIn += cashin.cash_in;
-                    $scope.allTotalCashIn += cashin.cash_in;
+
+                    if($scope.showGuests || (!$scope.showGuests && player.status != 'Guest'))
+                        $scope.allTotalCashIn += cashin.cash_in;
                 }
 
                 // sum of games
