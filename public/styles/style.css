@@ -147,3 +147,64 @@ ul.twPc-Arrange {
     background-color: #fff;
 }
 
+/* .not-visible {
+  visibility: hidden;
+} */
+
+
+
+
+
+
+/* TEST */
+
+.btnn-primary {
+  background: #1e94cc;
+  color: #fff;
+  border: 2px solid #1e94cc
+}
+
+.btnn-primary.btnn-outline:hover, .btnn-primary.btnn-outline:focus, .btnn-primary.btnn-outline:active {
+  background: #1e94cc;
+  color: #fff;
+}
+
+.btnn-outline {
+  background: none;
+  border: 2px solid #1e94cc;
+  font-size: 16px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+/* animate */
+
+
+
+
+.parallax {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.parallax__layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.parallax__layer--base {
+  transform: translateZ(0);
+}
+.parallax__layer--back {
+  transform: translateZ(-1px) scale(2);;
+}
+
+.parallax__group {
+  position: relative;
+  height: 100vh;
+  transform-style: preserve-3d;
+}

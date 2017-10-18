@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','ngMaterial','angularjs-dropdown-multiselect','vsGoogleAutocomplete'])
+var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','angularjs-dropdown-multiselect','vsGoogleAutocomplete','angular-scroll-animate','counter'])
 .controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr,groupService){
     $rootScope.userLogIn = $cookies.getObject('globals');
 
@@ -34,6 +34,11 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
               url: '/',
               templateUrl: 'Templates/home.html'
               //controller: 'Ctrl'
+          })
+            .state('newHome', {
+              url: '/newHome',
+              templateUrl: 'Templates/newHome.html',
+              controller: 'homeController'
           })
             .state('groups', {
               url: '/groups',

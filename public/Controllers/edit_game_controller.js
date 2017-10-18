@@ -1,5 +1,7 @@
 app.controller('editGameController', function ($scope, gamesService, playerService,amountService,$http,$q, toastr,$state,$stateParams) {
 
+    console.log('editGameController');
+    
     //$scope.gameStatusOpen = 'Open';
     //$scope.gameOpenDate = new Date();
     //$scope.gameLocation = '';

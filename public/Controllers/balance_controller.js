@@ -1,5 +1,7 @@
 ﻿app.controller('balanceController', function ($scope,gamesService,playerService,amountService, $q,$filter) {
 
+    
+
     $scope.players = [];
     $scope.games = [];
     $scope.cashIn = [];

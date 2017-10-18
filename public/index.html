@@ -15,6 +15,9 @@
     <link rel="apple-touch-icon-precomposed" sizes="128x128" href="/images/icon128.png">
     <link href="/images/favicon.png" rel="shortcut icon" type="icon" />
 
+    <!-- homepage style -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 
     <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -23,6 +26,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
     <link href="styles/style.css" rel="stylesheet" />
+    <link href="styles/animate.css" rel="stylesheet" />
     
     
     <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
@@ -40,10 +44,9 @@
     <base href="/">
 </head>
 <body ng-app="app">
-    <nav ng-controller="mainController" class="navbar navbar-inverse navbar-fixed-top">
+     <nav ng-controller="mainController" class="navbar navbar-fixed-top" ng-class="{'navbar-inverse': true}">
         <div class="container-fluid">
             <div class="navbar-header">
-                <!-- <a class="navbar-brand" href="#"> Weekly Poker </a> -->
                 <a class="navbar-brand" ui-sref="home"> <img src="/images/logo.png" alt="Logo"> </a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -54,14 +57,14 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <!--<li> <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in"> home </a> </li> -->
+                    
                     <li ng-if="userLogIn.currentUser"> <a ui-sref="games" data-toggle="collapse" data-target=".navbar-collapse.in"> Games </a> </li>
                     <li ng-if="userLogIn.currentUser" > <a ui-sref="balance" data-toggle="collapse" data-target=".navbar-collapse.in"> Balance </a> </li>
                     <li ng-if="userLogIn && userLogIn.currentUser.userRole == 2" > <a ui-sref="manage_users" data-toggle="collapse" data-target=".navbar-collapse.in"> users </a> </li>
                     <li ng-if="userLogIn && userLogIn.currentUser.userRole == 2" > <a ui-sref="groups" data-toggle="collapse" data-target=".navbar-collapse.in"> groups </a> </li>
 
                 </ul>
-                <!-- TODO - visible to admin & manager (role 1 || 2) only -->
+
                 <button ng-if="userLogIn && (userLogIn.currentUser.userRole == 1 || userLogIn.currentUser.userRole == 2)" ui-sref="new_game" class="btn btn-success navbar-btn" data-toggle="collapse" data-target=".navbar-collapse.in">New Game</button>
                 
                 <ul class="nav navbar-nav navbar-right">
@@ -70,28 +73,19 @@
                     <li ng-if="!userLogIn.currentUser"><a ui-sref="login" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li ng-if="userLogIn.currentUser"><a ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
-                <form class="navbar-form navbar-right" role="search">
+                <form ng-if="userLogIn && userLogIn.currentUser.userRole == 2" class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         
                         
-                          <select class="form-control" ng-model="selectedGroupID" >
+                        <select class="form-control" ng-model="selectedGroupID" >
                             <option ng-repeat="group in groups" value={{group['_id']}}>{{group.groupName}}</option>
                         </select>  
-
-                        <!-- <md-input-container style="color:aliceblue;">
-                            <label></label>
-                            <md-select style="color:aliceblue;" ng-model="selectedGroupID">
-                                <md-optgroup label="selectedGroupID">
-                                    <md-option ng-value="group['_id']" ng-repeat="group in groups">{{group.groupName}}</md-option>
-                                </md-optgroup>
-                            </md-select>
-                        </md-input-container> -->
 
                     </div>
                 </form>
             </div>
         </div>
-    </nav>
+    </nav> 
 
     <div class="body-content">
         <div style="padding-top:51px;" ui-view> </div>
@@ -103,6 +97,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-messages.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
 
+    <!-- Homepage Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/angular-scroll-animate@0.9.9/dist/angular-scroll-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-inview/2.3.0/angular-inview.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/angular-counter@0.2.1/js/angular-counter.js"></script>
+    <script src="//oblador.github.io/angular-scroll/0.6.2/angular-scroll.min.js"></script>
+    
+    <!-- -->
     
     
     <!-- Angular Material Javascript now available via Google CDN; version 0.9.4 used here -->
@@ -114,7 +115,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgYppGYUIEWhd_6yi690IekYP0JF21ZqQ&libraries=places"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

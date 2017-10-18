@@ -1,4 +1,4 @@
-﻿app.controller('homeController', function ($scope,$rootScope,$cookies) {
+﻿app.controller('homeController', function ($scope,$rootScope,$cookies,$location) {
     
     $scope.controllerName = 'homeController';
     
@@ -72,4 +72,52 @@
     });
   });
 
+
+
+  // *** START - Amination *** //
+
+  $scope.animation = {};
+  $scope.animation.current = 'fadeInUp';
+  $scope.animation.previous = $scope.animation.current;
+
+  // only required for dynamic animations
+
+	$scope.animateElementIn = function($el) {
+
+		$el.removeClass('hidden');
+    $el.addClass('animated ' + $scope.animation.current);
+    
+	};
+
+	$scope.animateElementOut = function($el) {
+		$el.addClass('hidden');
+    $el.removeClass('animated ' + $scope.animation.current);
+    
+  };
+  // *** END - Amination *** //
+
+  
+
+  $scope.backToTop = function() {
+    $("html, body").animate({ scrollTop: 0 }, 1000);
+  }
+
+  $scope.getStarted = function(){
+    // if login
+    if($rootScope.userLogIn){
+      $location.path('/games');
+    }
+    else{
+      $location.path('/login');
+    }
+    
+  }
+
+    if($rootScope.userLogIn){
+      $scope.btnText = 'Go to Balanes'
+    } else{
+      $scope.btnText = 'Get started now!';
+    }
+  
+    
 });
