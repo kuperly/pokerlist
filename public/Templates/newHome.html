@@ -45,32 +45,46 @@
     }
 }
 
+/* 3w CSS */
+.w3-opacity-off,.w3-hover-opacity-off:hover{opacity:1}
+.w3-opacity,.w3-hover-opacity:hover{opacity:0.60}
+.w3-opacity-min{opacity:0.75}
+.w3-display-container{position:relative}
+.w3-display-container:hover .w3-display-hover{display:block}
+.w3-display-container:hover span.w3-display-hover{display:inline-block}
+.w3-content{max-width:980px;margin:auto}.w3-rest{overflow:hidden}
+.w3-display-middle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%)}
+.w3-center{text-align:center!important}
+.w3-center .w3-bar{display:inline-block;width:auto}
+.w3-center .w3-bar-item{text-align:center}
+.w3-container:after,.w3-container:before,.w3-panel:after,.w3-panel:before,.w3-row:after,.w3-row:before,.w3-row-padding:after,.w3-row-padding:before,
+.w3-cell-row:before,.w3-cell-row:after,.w3-clear:after,.w3-clear:before,.w3-bar:before,.w3-bar:after{content:"";display:table;clear:both}
+.w3-container,.w3-panel{padding:0.01em 16px}.w3-panel{margin-top:16px;margin-bottom:16px}
+.w3-padding-64{padding-top:64px!important;padding-bottom:64px!important}
+.w3-row:after,.w3-row:before,.w3-row-padding:after,.w3-row-padding:before,
+.w3-cell-row:before,.w3-cell-row:after,.w3-clear:after,.w3-clear:before,.w3-bar:before,.w3-bar:after{content:"";display:table;clear:both}
+.w3-row-padding,.w3-row-padding>.w3-half,.w3-row-padding>.w3-third,.w3-row-padding>.w3-twothird,.w3-row-padding>.w3-threequarter,.w3-row-padding>.w3-quarter,.w3-row-padding>.w3-col{padding:0 8px}
+.w3-dark-grey,.w3-hover-dark-grey:hover,.w3-dark-gray,.w3-hover-dark-gray:hover{color:#fff!important;background-color:#616161!important}
+.w3-padding-16{padding-top:16px!important;padding-bottom:16px!important}
+.w3-quarter{float:left;width:100%}
+.w3-col.m3,.w3-quarter{width:24.99999%}
+.w3-row-padding,.w3-row-padding>.w3-half,.w3-row-padding>.w3-third,.w3-row-padding>.w3-twothird,.w3-row-padding>.w3-threequarter,.w3-row-padding>.w3-quarter,.w3-row-padding>.w3-col{padding:0 8px}
+.w3-section,.w3-code{margin-top:16px!important;margin-bottom:16px!important}
+.w3-black,.w3-hover-black:hover{color:#fff!important;background-color:#000!important}
+.w3-light-grey,.w3-hover-light-grey:hover,.w3-light-gray,.w3-hover-light-gray:hover{color:#000!important;background-color:#f1f1f1!important}
+.w3-button{border:none;display:inline-block;outline:0;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap}
+.w3-btn,.w3-button{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}   
+.w3-disabled,.w3-btn:disabled,.w3-button:disabled{cursor:not-allowed;opacity:0.3}.w3-disabled *,:disabled *{pointer-events:none}
+.w3-dropdown-hover:hover > .w3-button:first-child,.w3-dropdown-click:hover > .w3-button:first-child{background-color:#ccc;color:#000}
+.w3-bar-block .w3-dropdown-hover .w3-button,.w3-bar-block .w3-dropdown-click .w3-button{width:100%;text-align:left;padding:8px 16px}
+.w3-bar .w3-button{white-space:normal}
+.w3-button:hover{color:#000!important;background-color:#ccc!important}
+.w3-margin-right{margin-right:16px!important}
+.w3-xlarge{font-size:24px!important}
+
+
+
 </style>
-
-<!-- Navbar (sit on top) -->
- <!-- <div class="w3-top">
-  <div class="w3-bar" id="myNavbar" >
-    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
-      <i class="fa fa-bars"></i>
-    </a>
-    <a href="#home" class="w3-bar-item w3-button">HOME</a>
-    <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
-    <a href="#portfolio" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-th"></i> PORTFOLIO</a>
-    <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">
-      <i class="fa fa-search"></i>
-    </a>
-  </div> -->
-
-  <!-- Navbar on small screens -->
-   <!-- <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-    <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
-    <a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PORTFOLIO</a>
-    <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
-    <a href="#" class="w3-bar-item w3-button">SEARCH</a>
-  </div>
-</div>  -->
-
 <!-- First Parallax Image with Logo Text -->
 <div id="home-page">
 <div class="bgimg-1 parallax-window w3-display-container w3-opacity-min" data-parallax="scroll" data-image-src="/images/cover1.jpg" id="home">
@@ -78,13 +92,11 @@
     <!-- <span class="w3-center w3-wide w3-animate-opacity"><img src="/images/logo.png"></span> -->
 
     <div class="w3-center">
-      <div when-visible="animateElementIn"
-      when-not-visible="animateElementOut" style="display:block !important">
-      <h1 style="color: #1e94cc;">Weekly <strong>Poker</strong></h1>
+      <div id="title" when-visible="animateElementIn" style="display:block !important">
+      <h1 style="font-size:50px; padding-bottom: 5%; color: #1e94cc;">Weekly <strong>Poker</strong></h1>
       </div>
       
-		<p when-visible="animateElementIn"
-    when-not-visible="animateElementOut" style="display:block !important"><a ng-click="getStarted()" class="btn btnn-primary btnn-outline with-arrow">{{btnText}} <i class="icon-arrow-right"></i></a></p>
+		<p when-visible="animateElementIn" id="titlebtn" style="display:block !important"><a ng-click="getStarted()" class="btn btnn-primary btnn-outline with-arrow">{{btnText}} <i class="icon-arrow-right"></i></a></p>
     </div>
     
   </div>
@@ -93,10 +105,9 @@
 <!-- Container (About Section) -->
 <div class="w3-content w3-container w3-padding-64" id="about"
       when-visible="animateElementIn"
-      when-not-visible="animateElementOut" style="display:block !important">
-  <h3 class="w3-center">ABOUT US</h3>
-  <p class="w3-center"><em>Weekly Pokers</em></p>
-  <p>We have created a fictional "personal" website/blog, and our fictional character is a hobby photographer. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+      style="display:block !important">
+  <h3 class="title-home-text-center" style="margin-bottom:40px; font-weight:bold">ABOUT US</h3>
+  <p class="p-style" style="text-align:center;">We have created a fictional "personal" website/blog, and our fictional character is a hobby photographer. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
     quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
     qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
   <div class="w3-row">
@@ -115,30 +126,24 @@
   
 </div>
 
-
-<div class="w3-row w3-center w3-dark-grey w3-padding-16">
-  <div  class="w3-quarter w3-section"
-        when-visible="animateElementIn"
-        when-not-visible="animateElementOut" style="display:block !important">
-    <div class="w3-xlarge"> 350 {{ groupsTo | number:0 }}</div>
+<button id="demo" ng-show="false" ng-click="reCount()">count</button>
+<div class="w3-row w3-center w3-dark-grey w3-padding-16" id="number-count" 
+     when-visible="animateElementIn"
+     style="display:block !important">
+  <div  class="w3-quarter w3-section" id="Groups">
+    <div class="w3-xlarge" count-to="{{groupsTo}}" duration="2" value="{{groupsFrom}}"> {{ groupsTo | number:0 }}</div>
     Groups
   </div>
-  <div  class="w3-quarter w3-section"
-        when-visible="animateElementIn"
-        when-not-visible="animateElementOut" style="display:block !important">
-    <div class="w3-xlarge"> 6K {{ cashinTo | number:0 }}</div>
+  <div  class="w3-quarter w3-section" id="CashIn">
+    <div class="w3-xlarge" count-to="{{cashinTo}}" duration="2" value="{{cashinFrom}}"> {{ cashinFrom | number:0 }}</div>
     CashIn's
   </div>
-  <div  class="w3-quarter w3-section"
-        when-visible="animateElementIn"
-        when-not-visible="animateElementOut" style="display:block !important">
-    <div class="w3-xlarge"> 14 {{ playersTo | number:0 }}</div>
+  <div  class="w3-quarter w3-section" id="players">
+    <div class="w3-xlarge" count-to="{{playersTo}}" duration="2" value="{{playersFrom}}"> {{ playersTo | number:0 }}</div>
     players
   </div>
-  <div  class="hidden w3-quarter w3-section"
-        when-visible="animateElementIn"
-        when-not-visible="animateElementOut" style="display:block !important">
-    <div class="w3-xlarge"> 30 {{ gamesTo | number:0 }}</div>
+  <div  class="w3-quarter w3-section" id="games">
+    <div class="w3-xlarge" count-to="{{gamesTo}}" duration="2" value="{{gamesFrom}}"> {{ gamesTo | number:0 }}</div>
     Games
   </div>
 </div>
@@ -146,21 +151,55 @@
 <!-- Second Parallax Image with Portfolio Text -->
 <div class="bgimg-2 w3-display-container w3-opacity-min">
   <div class="w3-display-middle">
-    <span class="w3-xxlarge w3-text-white w3-wide">Passion</span>
+    <!-- <span class="w3-xxlarge w3-text-white w3-wide">Passion</span> -->
   </div>
 </div>
 
-<!-- Container (Portfolio Section) -->
-<div class="w3-content w3-container w3-padding-64" id="portfolio"
-     when-visible="animateElementIn"
-     when-not-visible="animateElementOut" style="display:block !important">
-  <h3 class="w3-center">TODO</h3>    
-  <p class="w3-center"><em>put some icons.<br> That will be with text</em></p><br>
-</div>
+  <div id="fh5co-programs-section" class="w3-container w3-padding-64" when-visible="animateElementIn" style="display:block !important">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="heading-section text-center animate-box">
+							<h2 style="margin-bottom:40px; font-weight:bold">Our Programs</h2>
+							<p class="p-style" style="margin-bottom:60px;">Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+						</div>
+					</div>
+				</div>
+				<div class="row text-center title-home-text-center">
+					<div class="col-md-4 col-sm-6">
+						<div class="animate-box">
+							<img src="images/fit-dumbell.svg" alt="">
+							<h3>Body Combat</h3>
+							<p class="p-style">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+							<!-- <span><a href="#" class="btn btn-default">Join Now</a></span> -->
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6">
+						<div class="animate-box">
+							<img src="images/fit-yoga.svg" alt="">
+							<h3>Yoga Programs</h3>
+							<p class="p-style">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+							<!-- <span><a href="#" class="btn btn-default">Join Now</a></span> -->
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6">
+						<div class="animate-box">
+							<img src="images/fit-cycling.svg" alt="">
+							<h3>Cycling Program</h3>
+							<p class="p-style">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+							<!-- <span><a href="#" class="btn btn-default">Join Now</a></span> -->
+						</div>
+					</div>
+					
+					
+				</div>
+			</div>
+    </div>
+    
 <!-- Third Parallax Image with Portfolio Text -->
 <div class="bgimg-3 w3-display-container w3-opacity-min">
   <div class="w3-display-middle" >
-     <span class="w3-xxlarge w3-text-white w3-wide">TODO - Add CONTACT</span>
+     <!-- <span class="w3-xxlarge w3-text-white w3-wide">TODO - Add CONTACT</span> -->
   </div>
 </div>
 </div>
@@ -168,10 +207,10 @@
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64 w3-opacity" >
-  <a ng-click="backToTop()" class="w3-button w3-light-grey" when-visible="animateElementIn"
-  when-not-visible="animateElementOut"><i class="fa fa-arrow-up w3-margin-right" ></i>To the top</a>
-  <div class="w3-xlarge w3-section" when-visible="animateElementIn"
-  when-not-visible="animateElementOut" style="display:block !important">
+  <a ng-click="backToTop()" class="w3-button w3-light-grey" when-visible="animateElementIn" id="totop"
+  ><i class="fa fa-arrow-up w3-margin-right" ></i>To the top</a>
+  <div class="w3-xlarge w3-section" when-visible="animateElementIn" id="mediaicons"
+       style="display:block !important">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
      <i class="fa fa-instagram w3-hover-opacity"></i>
     <i class="fa fa-snapchat w3-hover-opacity"></i>

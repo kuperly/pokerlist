@@ -1,6 +1,29 @@
-﻿app.controller('homeController', function ($scope,$rootScope,$cookies,$location) {
+﻿app.controller('homeController', function ($scope,$rootScope,$cookies,$location,amountService,groupService,gamesService,playerService) {
     
     $scope.controllerName = 'homeController';
+
+    amountService.getAllCashIn()
+    .then(function(res){
+      $scope.totalCashIn = 0;
+      for(var i = 0; i< res.data.length; i++){
+        $scope.totalCashIn += res.data[i].cash_in;
+      }
+    });
+
+    playerService.getAllPlayers()
+    .then(function (res) {
+        $scope.totalPlayers = res.data.length;
+    });
+
+    gamesService.getAllGames()
+    .then(function(res){
+        $scope.totalGames = res.data.length;
+    });
+
+    groupService.getAllGroups()
+    .then(function(res){
+        $scope.totalGroups = res.data.length;
+    });
     
     $scope.myInterval = 5000;
   $scope.noWrapSlides = false;
@@ -75,7 +98,7 @@
 
 
   // *** START - Amination *** //
-
+  $scope.elements = [];
   $scope.animation = {};
   $scope.animation.current = 'fadeInUp';
   $scope.animation.previous = $scope.animation.current;
@@ -83,12 +106,29 @@
   // only required for dynamic animations
 
 	$scope.animateElementIn = function($el) {
-
-		$el.removeClass('hidden');
-    $el.addClass('animated ' + $scope.animation.current);
     
+      $el.removeClass('hidden');
+      $el.addClass('animated ' + $scope.animation.current);  
+      if($el[0].id == 'number-count' && !$scope.run){
+        $scope.run = true;  
+        document.getElementById("demo").click();
+      }
 	};
 
+  $scope.reCount = function () {
+    $scope.cashinFrom = 0;
+    $scope.cashinTo = $scope.totalCashIn;
+
+    $scope.gamesFrom = 0;
+    $scope.gamesTo = $scope.totalGames;
+
+    $scope.groupsFrom = 0;
+    $scope.groupsTo = $scope.totalGroups;
+
+    $scope.playersFrom = 0;
+    $scope.playersTo = $scope.totalPlayers;
+};
+  
 	$scope.animateElementOut = function($el) {
 		$el.addClass('hidden');
     $el.removeClass('animated ' + $scope.animation.current);

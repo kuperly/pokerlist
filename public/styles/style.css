@@ -180,9 +180,6 @@ ul.twPc-Arrange {
 
 /* animate */
 
-
-
-
 .parallax {
   perspective: 1px;
   height: 100vh;
@@ -207,4 +204,20 @@ ul.twPc-Arrange {
   position: relative;
   height: 100vh;
   transform-style: preserve-3d;
+}
+
+.p-style {
+  color: #848484; 
+  font-size: 20px;
+}
+
+.title-home-text-center{
+  line-height: 1.8; 
+  text-align: center; 
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.title-home-text-center img {
+  width: 70px;
+  margin-bottom: 30px;
 }
