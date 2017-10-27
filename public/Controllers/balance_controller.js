@@ -9,7 +9,7 @@
     $scope.allTotalCashIn = 0;
 
     // Table - sort & filter
-    $scope.sortType     = ['average','balance','totalCashOut','totalCashIn']; // set the default sort type
+    $scope.sortType     = ['balance','average','totalCashOut','totalCashIn']; // set the default sort type
     $scope.sortReverse  = true;  // set the default sort order
     $scope.searchAtTable   = '';     // set the default 
 
