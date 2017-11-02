@@ -46,7 +46,7 @@
                     </div>
                 </td>
                 <td>
-                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || player.cashOut > 0 || gameStatusOpen == 'Close'" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cashIn}} </button>
+                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || (player.cashOut > 0 && userLogIn.currentUser.userRole != 2) || gameStatusOpen == 'Close'" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cashIn}} </button>
                     
                     <input ng-model="sumForCashIn" type="number" step="10" ng-show="player.activeCashIn==true" />
                     <button ng-show="player.activeCashIn==true" ng-click="CashIn($index, sumForCashIn)" class="btn btn-primary">Add</button>
