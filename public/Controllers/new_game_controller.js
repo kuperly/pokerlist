@@ -36,6 +36,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
                     'activeCashOut': false,
                     'id': name['_id']
                 };
+                name.show = false;
                 $scope.players.push(obj);
             }
         });
@@ -67,6 +68,16 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
                     break;
                 }
             }
+            if (id){
+                
+                for(var i = 0; i < $scope.names.length; i++){
+                    if(id == $scope.names[i]["_id"]){
+                        $scope.names[i].show = true;
+                    }
+                }
+
+            }
+            
             $scope.players.splice(index, 1);
         }
     };
@@ -93,6 +104,12 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             $scope.players[id]['id'] = user["_id"];
             $scope.players[id]['fullName'] = user.Fname + " " + user.Lname; // add full name to player
 
+            for(var i = 0; i < $scope.names.length; i++){
+                if($scope.players[id]['id'] == $scope.names[i]["_id"]) {
+                    $scope.names[i].show = false;
+                }
+            }
+
         }
     }
 
@@ -105,8 +122,11 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
 
     function findPlayerId(arr, propName, propValue) {
         for (var i=0; i < arr.length; i++){
-            if (arr[i][propName] == propValue)
+            if (arr[i][propName] == propValue){
+                //arr[i].show = false;
                 return arr[i];
+            }
+                
         }
     }
 

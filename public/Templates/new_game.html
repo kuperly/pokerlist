@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <span ng-show="player.fullName"> {{player.fullName}} </span>
                          <select ng-change="setIdToNames($index,player.playerName)" ng-show="!player.playerName || player.playerName == ''" class="form-control" id="player" ng-model="player.playerName">
-                            <option ng-repeat="name in names" value={{name.username}}>{{name.Fname}} {{name.Lname}}</option>
+                            <option ng-repeat="name in names" ng-show="name.show" value={{name.username}}>{{name.Fname}} {{name.Lname}}</option>
                         </select>  
                          <!-- <md-input-container style="margin-top: 0px;" ng-if="!player.playerName || player.playerName == ''">
                             <md-select ng-change="setIdToNames($index,player.playerName)" ng-model="player.playerName">

@@ -92,18 +92,18 @@
     <!-- <span class="w3-center w3-wide w3-animate-opacity"><img src="/images/logo.png"></span> -->
 
     <div class="w3-center">
-      <div id="title" when-visible="animateElementIn" style="display:block !important">
+      <div id="title" when-visible="animateElementIn" style="display:block !important" class="hidden">
       <h1 style="font-size:50px; padding-bottom: 5%; color: #1e94cc;">Weekly <strong>Poker</strong></h1>
       </div>
       
-		<p when-visible="animateElementIn" id="titlebtn" style="display:block !important"><a ng-click="getStarted()" class="btn btnn-primary btnn-outline with-arrow">{{btnText}} <i class="icon-arrow-right"></i></a></p>
+		<p when-visible="animateElementIn" id="titlebtn" style="display:block !important" class="hidden"><a ng-click="getStarted()" class="btn btnn-primary btnn-outline with-arrow">{{btnText}} <i class="icon-arrow-right"></i></a></p>
     </div>
     
   </div>
 </div>
 
 <!-- Container (About Section) -->
-<div class="w3-content w3-container w3-padding-64" id="about"
+<div class="w3-content w3-container w3-padding-64 hidden" id="about"
       when-visible="animateElementIn"
       style="display:block !important">
   <h3 class="title-home-text-center" style="margin-bottom:40px; font-weight:bold">ABOUT US</h3>
@@ -127,9 +127,8 @@
 </div>
 
 <button id="demo" ng-show="false" ng-click="reCount()">count</button>
-<div class="w3-row w3-center w3-dark-grey w3-padding-16" id="number-count" 
-     when-visible="animateElementIn"
-     style="display:block !important">
+<div class="w3-row w3-center w3-dark-grey w3-padding-16 hidden" id="number-count" 
+     when-visible="animateElementIn" style="display:block !important">
   <div  class="w3-quarter w3-section" id="Groups">
     <div class="w3-xlarge" count-to="{{groupsTo}}" duration="2" value="{{groupsFrom}}"> {{ groupsTo | number:0 }}</div>
     Groups
@@ -155,7 +154,7 @@
   </div>
 </div>
 
-  <div id="fh5co-programs-section" class="w3-container w3-padding-64" when-visible="animateElementIn" style="display:block !important">
+  <div id="fh5co-programs-section" class="w3-container w3-padding-64 hidden" when-visible="animateElementIn" style="display:block !important">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
@@ -209,7 +208,7 @@
 <footer class="w3-center w3-black w3-padding-64 w3-opacity" >
   <a ng-click="backToTop()" class="w3-button w3-light-grey" when-visible="animateElementIn" id="totop"
   ><i class="fa fa-arrow-up w3-margin-right" ></i>To the top</a>
-  <div class="w3-xlarge w3-section" when-visible="animateElementIn" id="mediaicons"
+  <div class="w3-xlarge w3-section hidden" when-visible="animateElementIn" id="mediaicons"
        style="display:block !important">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
      <i class="fa fa-instagram w3-hover-opacity"></i>

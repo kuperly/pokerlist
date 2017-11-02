@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','angularjs-dropdown-multiselect','vsGoogleAutocomplete','angular-scroll-animate','countTo'])
+var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','angularjs-dropdown-multiselect','vsGoogleAutocomplete','angular-scroll-animate','countTo','ngDialog'])
 .controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr,groupService){
     $rootScope.userLogIn = $cookies.getObject('globals');
 

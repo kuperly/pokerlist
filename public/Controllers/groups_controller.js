@@ -1,4 +1,4 @@
-app.controller('groupsController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope,$filter,$log, $mdDialog, groupService,coutryService) {
+app.controller('groupsController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope,$filter,$log, groupService,coutryService,ngDialog) {
     
     console.log("groupsController start");
 
@@ -84,28 +84,28 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         if(vm.searchText){
             vm.searchText = "";
         }
-        $mdDialog.show({
-            templateUrl: 'Templates/dialog_tmpl.html',
-            controller: DialogController,
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose:true
-        })
-        .then(function(answer) {
-            $state.reload();
+        ngDialog.open({
+            template: 'Templates/dialog_tmpl.html',
+            controller: 'DialogController'
+            // parent: angular.element(document.body),
+            // targetEvent: ev,
+            // clickOutsideToClose:true
         });
+        // .then(function(answer) {
+        //     $state.reload();
+        // });
   };
 
-  function DialogController($rootScope,$scope, $mdDialog,groupService,coutryService,$q) {
+  function DialogController($rootScope,$scope, ngDialog,groupService,coutryService,$q) {
     
     $scope.user = {};
 
     $scope.hide = function() {
-      $mdDialog.hide();
+    //   $mdDialog.hide();
     };
 
     $scope.cancel = function() {
-      $mdDialog.cancel();
+    //   $mdDialog.cancel();
     };
 
     $scope.newGroup = function(group) {
@@ -120,7 +120,7 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         console.log(group.country + " " + group.city);
 
         groupService.postNewGroup(group).then(function(res){
-            $mdDialog.hide(res);
+            // ngDialog.hide(res);
         });
         
     };
