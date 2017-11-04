@@ -64,6 +64,9 @@
             // average
             player.average = parseInt(player.balance / player.totalGames);
 
+            // present
+            player.present = (player.balance / player.totalCashIn * 100);
+
 
         })
 
