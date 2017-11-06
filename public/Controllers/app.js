@@ -127,7 +127,25 @@ app.run(function ($rootScope, $cookies,$location,$state) {
             }
     });
 
+// Safely instantiate dataLayer
+var dataLayer = window.dataLayer = window.dataLayer || [];
+
+$rootScope.$on('$stateChangeSuccess', function() {
+
+        var userId = undefined;
+        if($cookies.getObject('globals')){
+            userId = $cookies.getObject('globals').currentUser.id;
+        }
+    
+          dataLayer.push({
+            event: 'ngRouteChange',
+            attributes: {
+              route: $location.path(),
+              dl_uid: userId
+            }
+          });
+    
+        });
+
 });
-
-
 

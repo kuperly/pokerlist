@@ -84,9 +84,12 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         if(vm.searchText){
             vm.searchText = "";
         }
-        ngDialog.open({
+        var dialog = ngDialog.open({
             template: 'Templates/dialog_tmpl.html',
-            controller: 'DialogController'
+            controller: DialogController,
+            className: 'ngdialog-theme-plain',
+            scope: $scope,
+            $event: ev,
             // parent: angular.element(document.body),
             // targetEvent: ev,
             // clickOutsideToClose:true
