@@ -86,10 +86,12 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         }
         var dialog = ngDialog.open({
             template: 'Templates/dialog_tmpl.html',
-            controller: DialogController,
+            // controller: 'DialogController',
+
             className: 'ngdialog-theme-plain',
             scope: $scope,
             $event: ev,
+            
             // parent: angular.element(document.body),
             // targetEvent: ev,
             // clickOutsideToClose:true
@@ -97,88 +99,88 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
         // .then(function(answer) {
         //     $state.reload();
         // });
-  };
-
-  function DialogController($rootScope,$scope, ngDialog,groupService,coutryService,$q) {
-    
-    $scope.user = {};
-
-    $scope.hide = function() {
-    //   $mdDialog.hide();
     };
 
-    $scope.cancel = function() {
-    //   $mdDialog.cancel();
-    };
 
-    $scope.newGroup = function(group) {
+
+
+        // Dialod func
+        $scope.user = {};
+
+            $scope.newGroup = function(group) {
+                
+                group.admin_name = $rootScope.userLogIn.currentUser.username;
+                group.admin_id = $rootScope.userLogIn.currentUser.id;
+                console.log(group);
         
-        group.admin_name = $rootScope.userLogIn.currentUser.username;
-        group.admin_id = $rootScope.userLogIn.currentUser.id;
-        console.log(group);
-
-        group.country = group.city.split(',')[1].trim();
-        group.city = group.city.split(',')[0];
-
-        console.log(group.country + " " + group.city);
-
-        groupService.postNewGroup(group).then(function(res){
-            // ngDialog.hide(res);
-        });
+                var split = group.city.split(',');
+                group.country = split[split.length - 1].trim();
+                // group.city.split(',')[1].trim();
+                
+                group.city = split[0];
+                if(split.length > 2){
+                    group.city += ", " + split[1]; 
+                }
         
-    };
-
-    $scope.allCountries = coutryService.getCountries();
-
-    $scope.findCountry = function(query) {
-        var results = $filter('filter')($scope.allCountries,query);
-        console.log(results);
-        return results;
-    };
-
-    $scope.selectedCountryChange = function (item) {
-      $scope.user.country = item.name;
-      
-    }
-
-    
-    $scope.findCity = function (serch) {
-
-        var Promise = $q.defer();
-
-        coutryService.getCities(serch,$scope.selectedCounty.alpha_2)
-        .then(function(res){
-            // coutryService.getCities(name,id).then(function(res){
-            // $scope.city = res.data.predictions[0].terms[0].value;
-            // console.log(res.data.predictions);
-            Promise.resolve(res.data.predictions);
-        });
-        return Promise.promise;
-    };
-
-
-    $scope.selectedCityChange = function (item) {
-      $scope.user.city = item.terms[0].value;
-    }
-
-
-    // multi select
-    $scope.user.days = []; 
-    $scope.example1data = [ "Sunday", "Monday", "Tuesday" , "Wednesday", "Thursday", "Friday", "Saturday"];
-    $scope.settings = {
-        scrollable:true,
-        styleActive:true,
-        // smartButtonTextProvider(selectionArray) { return selectionArray },
-        scrollableHeight:100,
-        buttonClasses: 'btn btn-primary',
-        displayProp:'name',
-        template: '{{option}}',
-        smartButtonTextConverter(skip, option) {
-             return option; 
+                console.log(group.country + " " + group.city);
+        
+                groupService.postNewGroup(group).then(function(res){
+                    ngDialog.close();
+                    $state.reload();
+                });
+                
+            };
+        
+            $scope.allCountries = coutryService.getCountries();
+        
+            $scope.findCountry = function(query) {
+                var results = $filter('filter')($scope.allCountries,query);
+                console.log(results);
+                return results;
+            };
+        
+            $scope.selectedCountryChange = function (item) {
+              $scope.user.country = item.name;
+              
             }
-    }  
-
-  }
+        
+            
+            $scope.findCity = function (serch) {
+        
+                var Promise = $q.defer();
+        
+                coutryService.getCities(serch,$scope.selectedCounty.alpha_2)
+                .then(function(res){
+                    // coutryService.getCities(name,id).then(function(res){
+                    // $scope.city = res.data.predictions[0].terms[0].value;
+                    // console.log(res.data.predictions);
+                    Promise.resolve(res.data.predictions);
+                });
+                return Promise.promise;
+            };
+        
+        
+            $scope.selectedCityChange = function (item) {
+              $scope.user.city = item.terms[0].value;
+            }
+        
+        
+            // multi select
+            $scope.user.days = []; 
+            $scope.days = [ "Sunday", "Monday", "Tuesday" , "Wednesday", "Thursday", "Friday", "Saturday"];
+            $scope.settings = {
+                scrollable:true,
+                styleActive:true,
+                // smartButtonTextProvider(selectionArray) { return selectionArray },
+                scrollableHeight:100,
+                buttonClasses: 'btn btn-primary',
+                displayProp:'name',
+                template: '{{option}}',
+                smartButtonTextConverter(skip, option) {
+                     return option; 
+                    }
+            }
+  
   
 });
 

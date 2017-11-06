@@ -151,6 +151,17 @@ ul.twPc-Arrange {
   visibility: hidden;
 }
 
+.ngdialog-content{
+  padding: 0px !important;
+  width: 80% !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .ngdialog-content{
+    width: 100% !important;
+  }
+}
+
 
 
 

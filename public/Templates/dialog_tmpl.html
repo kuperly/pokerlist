@@ -1,89 +1,61 @@
-<md-dialog aria-label="Add Group" style="width:100%;">
-  
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Add Group</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon aria-label="Close dialog"></md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
+<div class="panel panel-primary" style="border-radius:0px;" >
+    <div class="panel-heading" style="border-radius:0px;">
+        Add Group
+    </div>
 
-    <md-content layout-padding>
-    <form name="userForm" ng-click="vm.newGroup(group)" >
+  <div class="panel-body">
+    <form name="userForm" >
 
-      <div class="col-sm-12">
+      <div class="col-md-12">
         <!-- Name -->
-        <div class="col-sm-6">
-          <md-input-container class="md-block" flex-gt-sm>
+        <div class="col-md-6">
             <label>Name</label>
-            <input md-maxlength="30" required name="name" ng-model="group.name" />
+            <input required class="form-control" name="name" ng-model="group.name" />
 
-            <div ng-messages="userForm.name.$error">
-              <div ng-message="required">Name is required.</div>
-              <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+            <div ng-if="!userForm.name.$valid">
+              <small class="form-text text-muted" style="color:red">Group name is required</small>
             </div>
-          </md-input-container>
         </div>
 
         <!-- City -->
-        <div class="col-sm-6">
-           
-          <!-- vs-google-autocomplete="{ types:['(cities)'] }" -->
+        <div class="col-md-6">
 
-          <md-input-container class="md-block" flex-gt-sm>
-           <label for="city"></label> 
-
-          <input vs-google-autocomplete="{ types:['(cities)'] }"
-                 ng-model="group.city"
-                 name="city"
-                 id="city">
-
-          <div ng-messages="userForm.city.$error">
-            <div ng-message="required">City is required.</div>
-          </div>
-        </md-input-container>
-
-          <!-- <label for="city">City</label>
+          <label for="city">City</label>
           
           <input vs-google-autocomplete="{ types:['(cities)'] }"
-                 ng-model="city" 
+                 ng-model="group.city" 
+                 required
                  type="text" 
                  name="city"
                  id="city"
                  class="form-control" 
-                 placeholder="Enter city name"> -->
+                 placeholder="Enter city name">
+                <div ng-if="!userForm.city.$valid">
+                    <small class="form-text text-muted" style="color:red">City is required</small>
+                </div>
         </div>
-
       </div>
 
-      <div class="col-sm-12">
+      <div class="col-md-12">
 
         <!-- Days -->
-        <div class="col-sm-6">
-           <md-input-container style="width:100%;">
+        <div class="col-md-6">
             <label>Days</label> 
-            <md-select name="days" multiple placeholder="Days" required ng-model="group.days" >
-              <md-option ng-value="day" ng-repeat="day in example1data">{{day}}</md-option>
-            </md-select>
-            <div ng-messages="userForm.days.$error">
-              <div ng-message="required">Days is required.</div>
+            <select name="days" class="form-control" placeholder="Days" required ng-model="group.days" >
+              <option ng-value="day" ng-repeat="day in days">{{day}}</option>
+            </select>
+            <div ng-if="!userForm.days.$valid">
+              <small class="form-text text-muted" style="color:red">Days is required</small>
+              
             </div>
-         </md-input-container> 
         </div>
       </div>
 
-      <md-dialog-actions layout="row">
-
-      <button class="btn btn-primary" ng-disabled="!userForm.$valid" ng-click="newGroup(group)">
-       Create
-      </button>
-      
-    </md-dialog-actions>
-
     </form>
-  </md-content>
-
-</md-dialog>
-
+  </div>
+  <div class="panel-footer">
+      <button class="btn btn-primary" ng-disabled="!userForm.$valid" ng-click="newGroup(group)">
+          Create
+      </button>
+  </div>
+</div>

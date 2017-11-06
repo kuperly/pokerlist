@@ -90,16 +90,15 @@
                     <li ng-if="!userLogIn.currentUser"><a ui-sref="login" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li ng-if="userLogIn.currentUser"><a ng-click="logout()" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
-                <form ng-if="userLogIn && userLogIn.currentUser.userRole == 2" class="navbar-form navbar-right" role="search">
+                <!-- <form ng-if="userLogIn && userLogIn.currentUser.userRole == 2" class="navbar-form navbar-right" role="search">
                     <div class="form-group">
-                        
                         
                         <select class="form-control" ng-model="selectedGroupID" >
                             <option ng-repeat="group in groups" value={{group['_id']}}>{{group.groupName}}</option>
                         </select>  
 
                     </div>
-                </form>
+                </form> -->
             </div>
         </div>
     </nav> 
