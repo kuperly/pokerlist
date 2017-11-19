@@ -162,6 +162,14 @@ ul.twPc-Arrange {
   }
 }
 
+.ngdialog.ngdialog-theme-plain .ngdialog-close {
+  background: none;
+  border: none;
+}
+
+.pac-container {
+  z-index: 9999999999999 !important;
+}
 
 
 

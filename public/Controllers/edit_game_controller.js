@@ -1,13 +1,14 @@
-app.controller('editGameController', function ($scope, gamesService, playerService,amountService,$http,$q, toastr,$state,$stateParams) {
+app.controller('editGameController', function ($scope, gamesService, playerService,amountService,$http,$q, toastr,$state,$stateParams,ngDialog) {
 
     console.log('editGameController');
     
     //$scope.gameStatusOpen = 'Open';
     //$scope.gameOpenDate = new Date();
     //$scope.gameLocation = '';
+    var defaultCashIn = 50;
     $scope.gameID = $stateParams.id;
     $scope.addCashInAllEnable = false;
-    $scope.sumForCashIn = 50;
+    $scope.sumForCashIn = defaultCashIn;
     $scope.sumForCashOut = 0;
     $scope.totalCashIn = 0;
     $scope.balance = 0;
@@ -16,30 +17,20 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
 
     playerService.getAllPlayers()
     .then(function (res) {
-        // angular.forEach(res.data,function(name){
-        //     name.show = true;
-        // })
+        
+        angular.forEach(res.data,function(name) {
+            name.show = true;
+        });
+
         $scope.names = res.data;
 
-        // needed??
-        // angular.forEach($scope.names,function(name) {
-        //     var obj = {
-        //         'name': name.username,
-        //         'cash_in': 0,
-        //         'cash_out': 0,
-        //         'activeCashIn': false,
-        //         'activeCashOut': false,
-        //         'id': name['_id']
-        //     };
-        //     $scope.players.push(obj);
-        // });
     });
     
     $scope.addRow = function () {
         
         var obj = {
-            'name': '',
-            'cash_in': 0,
+            'fullName': '',
+            'cashIn': 0,
             'cash_out': 0,
             'total':0,
             'activeCashIn': false,
@@ -61,6 +52,15 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
                 }
             }
             $scope.players.splice(index, 1);
+
+            // add player name to names DD
+            index = -1;
+            for (var i = 0; i < $scope.names.length; i++) {
+                if ($scope.names[i]['_id'] === id) {
+                    $scope.names[i].show = true;
+                    break;
+                }
+            }
         }
     };
 
@@ -84,7 +84,7 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
 
             var user = findPlayerId($scope.names,'username',userName);
             $scope.players[id]['id'] = user["_id"];
-            $scope.players[id]['name'] = user.Fname + " " + user.Lname ;
+            $scope.players[id]['fullName'] = user.Fname + " " + user.Lname ;
 
         }
     }
@@ -98,8 +98,11 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
 
     function findPlayerId(arr, propName, propValue) {
         for (var i=0; i < arr.length; i++){
-            if (arr[i][propName] == propValue)
+            if (arr[i][propName] == propValue){
+                arr[i].show = false;
                 return arr[i];
+            }
+                
         }
     }
 
@@ -115,7 +118,7 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         
         var obj = {
             user_id: $scope.players[id]['id'],
-            user_name: $scope.players[id]['name'],
+            user_name: $scope.players[id]['fullName'],
             game_id: $scope.gameID,
             cash_in: sum
         }
@@ -123,10 +126,11 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         amountService.setCashIn(obj)
         .then(function (res) {
             $scope.players[id].activeCashIn = false;
-            $scope.players[id].cash_in += sum;
+            $scope.players[id].cashIn += sum;
             $scope.players[id].total -= sum;
             $scope.totalCashIn += sum;
             $scope.balance += sum;
+            $scope.sumForCashIn = defaultCashIn;
         });
     };
 
@@ -141,7 +145,7 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
 
         var obj = {
             user_id: $scope.players[id]['id'],
-            user_name: $scope.players[id]['name'],
+            user_name: $scope.players[id]['fullName'],
             game_id: $scope.gameID,
             cash_out: sum
         }
@@ -220,10 +224,19 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         
         // players from cashIn
         angular.forEach($scope.cashIn,function(In) {
-            var user = {name:In.user_name,id:In.user_id,cash_in:0,cash_out:0,total:0,activeCashIn:false,activeCashIn:false};
+            var user = {fullName:In.user_name,id:In.user_id,cashIn:0,cash_out:0,total:0,activeCashIn:false,activeCashIn:false};
+            var index = -1;
+            for(var i=0 ; i < $scope.names.length; i++){
+                if($scope.names[i]['_id'] == user.id ){
+                    index = i;
+                }
+            }
+
             if(!$scope.players.length){
+                $scope.names[index].show = false;
                 $scope.players.push(user);
             }else if(checkPlayerId($scope.players,'id',In.user_id)){ // return false if exist at players array
+                $scope.names[index].show = false;
                 $scope.players.push(user);
             }
         })
@@ -233,7 +246,7 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
             angular.forEach($scope.cashIn,function(In) {
 
                 if(player.id == In.user_id){
-                    player.cash_in += In.cash_in;
+                    player.cashIn += In.cash_in;
                     player.total -= In.cash_in;
                     $scope.totalCashIn += In.cash_in;
                     $scope.balance += In.cash_in;
@@ -252,7 +265,29 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         console.log("gameInfo:",$scope.gameInfo);
     }
 
+    var destroy = $scope.$on('$destroy', function () {
+        
+        if (!$scope.totalCashIn) {
+            gamesService.deleteGame($scope.gameID)
+            .then(function (res) {
+                toastr.options = {"positionClass": "toast-top-center"};
+                toastr.info('game deleted', 'info');
+            });
+        }
+    });
 
+    // Dialog
+    $scope.showCash = function(ev,user) {
+        
+        var dialog = ngDialog.open({
+            template: 'Templates/dialog_cash_tmpl.html',
+            controller: 'userCashinDialog',
+            className: 'ngdialog-theme-plain',
+            scope: $scope,
+            $event: ev,
+            data:{'gameID':$scope.gameID,'user': user}
+        });
+    };
     
 
 });

@@ -37,7 +37,7 @@ app.factory('amountService', function ($http) {
 
         },
 
-        getUserCashIn: function (ID) { // TODO
+        getUserCashIn: function (ID) { // OK
 
             var requestParam={
             method:'GET',
@@ -50,13 +50,33 @@ app.factory('amountService', function ($http) {
 
 
         },
+        getUserCashInByGame: function (game,user) { // TODO
+            
+                        var requestParam={
+                        method:'GET',
+                        params: {id: game,uid:user},
+                        url:'/api/getCashInByGameIdAndUID'
+                        }
+            
+                        return $http(requestParam);
+                    },
 
         getAllCashOut: function () { // OK
             return $http.get('/api/getAllCashOut');
 
         },
+        deleteUserCashIn: function (cashIn_id) { // OK
+            
+                        return $http({
+                            method:'POST',
+                            url:'/api/deleteUserCashIn',
+                            headers: {'Content-Type' : 'application/json'},
+                            data: { id: cashIn_id }
+                        });
+            
+                    },
 
-        getUserCashOut: function (ID) { // TODO
+        getUserCashOut: function (ID) { // OK
             var requestParam={
             method:'GET',
             params: {id: ID},
@@ -78,7 +98,7 @@ app.factory('amountService', function ($http) {
             return $http(requestParam);
         },
 
-        getCashOutByGameId: function(ID){ // TODO
+        getCashOutByGameId: function(ID){ // OK
 
             var requestParam={
             method:'GET',

@@ -357,6 +357,37 @@ app.get('/api/getCashInByGameId',function(req,res){
     
 });
 
+app.get('/api/getCashInByGameIdAndUID',function(req,res) { // OK
+    
+    console.log(req.query);
+        var gameID = req.query.id;
+        var userID = req.query.uid;
+        cashInData.find({game_id:gameID, user_id:userID})
+            .then(function(doc) {
+                console.log(doc);
+                res.send(doc);
+            },function(err){
+                res.send(err);
+            });
+        
+    });
+
+app.post('/api/deleteUserCashIn',function(req,res) { // OK
+    
+    // console.log(req.body['id']);
+    var query = req.body['id'];
+    
+    cashInData.findByIdAndRemove(query,
+        function (err, doc) { // callback
+            if (err) {
+                res.json(err);
+            } 
+            res.json(doc);
+        }
+    );
+    
+});
+
 app.get('/api/getCashOutByGameId',function(req,res){
 
     var id = req.query.id;

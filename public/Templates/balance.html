@@ -3,18 +3,20 @@
     <h1 class="text-center"> Balances </h1>
     <div>
         <label for="showGuests">Show Guests </label>
+        
         <!-- <md-checkbox class="md-primary" ng-model="showGuests" ng-change="showGuestchange()"> </md-checkbox> -->
         <input type="checkbox" class="btn btn-default" ng-model="showGuests" ng-change="showGuestchange()">
+        <!-- <button class="btn btn-link" ng-if="showGuests" ng-model="showGuests" ng-click="showGuests = !showGuests" ng-change="showGuestchange()">
+            <span class="glyphicon glyphicon-check"></span>
+        </button>
+        <button class="btn btn-link" ng-if="!showGuests" ng-model="showGuests" ng-click="showGuests = !showGuests" ng-change="showGuestchange()">
+                <span class="glyphicon glyphicon-unchecked"></span>
+        </button> -->
     </div>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <!-- <th class="text-center" >Player Name</th> 
-                <th class="text-center">Total Games</th>
-                <th class="text-center">Buy in</th>
-                <th class="text-center">Cesh out</th>
-                <th class="text-center">Balance</th> -->
                 <th class="text-center">
                     <a href="" ng-click="sortType = 'Fname'; sortReverse = !sortReverse">
                         Name 

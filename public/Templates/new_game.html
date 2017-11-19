@@ -1,17 +1,17 @@
 ﻿<div class="container" ng-controller="newGameController">
 
-    <h1 class="text-center"> {{gameOpenDate | date}} </h1>
-    <h3 style="margin-top:0px;" class="text-center" ng-class="gameStatusOpen == 'Open' ? 'price-green' : 'price-red'"> {{gameStatusOpen}} </h3>
+    <h1 class="text-center"> {{::gameOpenDate | date}} </h1>
+    <h3 style="margin-top:0px;" class="text-center" ng-class="gameStatusOpen.toLowerCase() == 'open' ? 'price-green' : 'price-red'"> {{gameStatusOpen}} </h3>
 
 
     <div class="btn-group">
-        <button ng-disabled="gameStatusOpen == 'Close'" ng-click="addRow()" class="btn btn-primary">
+        <button ng-disabled="gameStatusOpen.toLowerCase() == 'close'" ng-click="addRow()" class="btn btn-primary">
             <span class="glyphicon glyphicon-plus"></span> Add player
         </button>
-        <button ng-disabled="gameStatusOpen == 'Close'" ng-click="closeGame()" class="btn btn-primary">
+        <button ng-disabled="gameStatusOpen.toLowerCase() == 'close'" ng-click="closeGame()" class="btn btn-primary">
              Close game
         </button>
-        <button ng-disabled="(!addCashInAllEnable) || (!players.length) || (gameStatusOpen == 'Close')" ng-click="addCashInAll()" class="btn btn-primary">
+        <button ng-disabled="(!addCashInAllEnable) || (!players.length) || (gameStatusOpen.toLowerCase() == 'close')" ng-click="addCashInAll()" class="btn btn-primary">
             <span class="glyphicon glyphicon-plus"></span> Add cash in
         </button>
     </div>
@@ -32,35 +32,28 @@
             <tr ng-repeat="player in players track by $index" class="text-center">
                 <td>
                     <div class="form-group">
-                        <span ng-show="player.fullName"> {{player.fullName}} </span>
+                        <a ng-show="player.fullName" ng-click="showCash($event,player)"> {{player.fullName}} </a>
                          <select ng-change="setIdToNames($index,player.playerName)" ng-show="!player.playerName || player.playerName == ''" class="form-control" id="player" ng-model="player.playerName">
-                            <option ng-repeat="name in names" ng-show="name.show" value={{name.username}}>{{name.Fname}} {{name.Lname}}</option>
-                        </select>  
-                         <!-- <md-input-container style="margin-top: 0px;" ng-if="!player.playerName || player.playerName == ''">
-                            <md-select ng-change="setIdToNames($index,player.playerName)" ng-model="player.playerName">
-                               <md-option ng-repeat="name in names" ng-value="name.username">
-                                    {{name.Fname}} {{name.Lname}}
-                                </md-option>
-                            </md-select>
-                        <md-input-container>  -->
+                            <option ng-repeat="name in names" ng-show="name.show && name.status.toLowerCase() != 'new'" value={{name.username}}>{{name.Fname}} {{name.Lname}}</option>
+                        </select>
                     </div>
                 </td>
                 <td>
-                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || (player.cashOut > 0 && userLogIn.currentUser.userRole != 2) || gameStatusOpen == 'Close'" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cashIn}} </button>
-                    
+                    <!-- CashIn -->
+                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || (player.cashOut > 0 && userLogIn.currentUser.userRole != 2) || gameStatusOpen.toLowerCase() == 'close'" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cashIn}} </button>
                     <input ng-model="sumForCashIn" type="number" step="10" ng-show="player.activeCashIn==true" />
                     <button ng-show="player.activeCashIn==true" ng-click="CashIn($index, sumForCashIn)" class="btn btn-primary">Add</button>
                 </td>
                 <td>
-                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || player.cashIn == 0 || totalCashIn == 0" ng-click="player.activeCashOut = !player.activeCashOut"> {{player.cashOut}} </button>
-                    
+                    <!-- CashOut -->
+                    <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.playerName == '' || player.cashIn == 0 || totalCashIn == 0 || gameStatusOpen.toLowerCase()  == 'close'" ng-click="player.activeCashOut = !player.activeCashOut"> {{player.cashOut}} </button>
                     <input ng-model="sumForCashOut" type="number" step="10" ng-show="player.activeCashOut==true && player.cashIn > 0" />
-                    <button ng-disabled="player.cashIn == 0" ng-show="player.activeCashOut==true" ng-click="CashOut($index,sumForCashOut)" class="btn btn-primary">Add</button>
+                    <button ng-disabled="player.cashIn == 0 || balance == 0 || gameStatusOpen.toLowerCase()  == 'close'" ng-show="player.activeCashOut==true" ng-click="CashOut($index,sumForCashOut)" class="btn btn-primary">Add</button>
                 </td> 
                 <td ng-class="player.cashOut - player.cashIn > 0 ? 'price-green' : 'price-red'"> {{player.cashOut - player.cashIn}} </td>
                 <td>
-                    
-                    <button ng-disabled="gameStatusOpen == 'Close' || player.cashIn > 0" class="btn btn-danger" ng-click="removeRow(player.id)">
+                    <!-- Delete Row -->
+                    <button ng-disabled="gameStatusOpen.toLowerCase()  == 'close' || player.cashIn > 0" class="btn btn-link" style="color:red" ng-click="removeRow(player.id)">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                     

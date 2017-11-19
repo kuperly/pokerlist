@@ -1,10 +1,10 @@
-app.controller('newGameController', function ($scope, gamesService, playerService,amountService,$http, toastr) {
-
+app.controller('newGameController', function ($scope, gamesService, playerService,amountService,$http, toastr,ngDialog) {
+    var defaultCashIn = 50;
     $scope.gameStatusOpen = 'Open';
     $scope.gameOpenDate = new Date();
     $scope.gameLocation = '';
     $scope.addCashInAllEnable = true;
-    $scope.sumForCashIn = 50;
+    $scope.sumForCashIn = defaultCashIn;
     $scope.sumForCashOut = 0;
     $scope.totalCashIn = 0;
     $scope.balance = 0;
@@ -161,6 +161,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             $scope.players[id].cashIn += sum;
             $scope.totalCashIn += sum;
             $scope.balance += sum;
+            $scope.sumForCashIn = defaultCashIn;
         });
     };
 
@@ -201,14 +202,53 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
         }
     });
 
-    // function checkTotalCashIn(){
-    //     var total = 0;
-    //     angular.forEach($scope.players,function(player){
-    //         total += player.cashIn;
-    //     })
-    //     return total;
-    // }
 
-    
+        // Dialog
+        $scope.showCash = function(ev,user) {
+            
+            var dialog = ngDialog.open({
+                template: 'Templates/dialog_cash_tmpl.html',
+                controller: 'userCashinDialog',
+                className: 'ngdialog-theme-plain',
+                scope: $scope,
+                $event: ev,
+                data:{'gameID':$scope.gameId,'user': user}
+            });
+        };
 
 });
+
+
+// app.controller('userCashinDialog', function($scope,amountService,ngDialog) {
+    
+//     var user = $scope.ngDialogData.user;
+//     var game = $scope.ngDialogData.gameID;
+    
+//     amountService.getUserCashInByGame($scope.gameId,user.id).then (function(res) {
+        
+//         $scope.userCash = res.data;
+
+//     });
+
+//     $scope.daleteCashIn = function (id,index) {
+
+//         amountService.deleteUserCashIn (id).then(function(res){
+
+//             // TODO - Add popup message
+//             if(res.status == 200){
+
+//                 $scope.$parent.players[$scope.players.indexOf(user)].cashIn -= res.data.cash_in;
+//                 $scope.$parent.totalCashIn -= res.data.cash_in;
+//                 $scope.$parent.balance -= res.data.cash_in;
+//                 $scope.userCash.splice(index,1);
+
+//                 console.log('totalCashIn from dialog',$scope.$parent.totalCashIn);
+
+
+//             }
+            
+//         });
+
+//     }
+    
+//   });
