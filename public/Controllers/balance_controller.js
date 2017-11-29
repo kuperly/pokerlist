@@ -1,7 +1,5 @@
 ﻿app.controller('balanceController', function ($scope,gamesService,playerService,amountService, $q,$filter) {
 
-    
-
     $scope.players = [];
     $scope.games = [];
     $scope.cashIn = [];
@@ -163,7 +161,7 @@
             var p = [];
             // remove empty players from array
             angular.forEach($scope.players,function(player){
-                if((player.status.toLowerCase() == 'guest' && $scope.showGuests) ||  player.status.toLowerCase() != 'guest' && player.totalCashIn != 0){
+                if((player.status.toLowerCase() == 'guest' && $scope.showGuests) ||  player.status.toLowerCase() != 'guest' &&  player.status.toLowerCase() == 'active' && player.totalCashIn != 0){
                     p.push(player);
                 }
             })

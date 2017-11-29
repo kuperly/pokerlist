@@ -1,37 +1,37 @@
-app.controller('editGameController', function ($scope, gamesService, playerService,amountService,$http,$q, toastr,$state,$stateParams,ngDialog) {
-
-    console.log('editGameController');
+app.controller('editGameController', function ($scope, gamesService, playerService,amountService,$q, toastr,$state,$stateParams,ngDialog) {
     
     //$scope.gameStatusOpen = 'Open';
     //$scope.gameOpenDate = new Date();
     //$scope.gameLocation = '';
     var defaultCashIn = 50;
     $scope.gameID = $stateParams.id;
-    $scope.addCashInAllEnable = false;
+    $scope.addCashInAllEnable = true; // enable only at the begin, before cash in.
     $scope.sumForCashIn = defaultCashIn;
     $scope.sumForCashOut = 0;
     $scope.totalCashIn = 0;
     $scope.balance = 0;
 
+    // will hold all the player for current game
     $scope.players = [];
 
+    // Get all players list from DB
     playerService.getAllPlayers()
     .then(function (res) {
-        
         angular.forEach(res.data,function(name) {
             name.show = true;
+            name.id = name['_id'];
         });
-
         $scope.names = res.data;
 
     });
     
+    // Add new player for current game
     $scope.addRow = function () {
         
         var obj = {
             'fullName': '',
             'cashIn': 0,
-            'cash_out': 0,
+            'cashOut': 0,
             'total':0,
             'activeCashIn': false,
             'activeCashOut': false,
@@ -41,10 +41,13 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         
     };
 
+    // Remove row
     $scope.removeRow = function (id) {
-        if (confirm('Are you sure you want to remove '+ name + '?')) {
+        if (confirm('Are you sure you want to remove player?')) {
             var index = -1;
             var comArr = eval($scope.players);
+
+            // find player index in players Array
             for (var i = 0; i < comArr.length; i++) {
                 if (comArr[i].id === id) {
                     index = i;
@@ -53,67 +56,91 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
             }
             $scope.players.splice(index, 1);
 
-            // add player name to names DD
+            // return to names DD the current player
             index = -1;
-            for (var i = 0; i < $scope.names.length; i++) {
-                if ($scope.names[i]['_id'] === id) {
-                    $scope.names[i].show = true;
-                    break;
+            if (id) {
+
+                for (var i = 0; i < $scope.names.length; i++) {
+                    if ($scope.names[i]['_id'] === id) {
+                        $scope.names[i].show = true;
+                        break;
+                    }
                 }
+
             }
+            
+
         }
     };
 
-    $scope.EditRow = function (index) { 
-        $scope.players[index].active = !$scope.players[index].active;
-    }
-
+    // Close game in DB
     $scope.closeGame = function() {
 
         if (confirm('Are you sure you want to close the game?')) {
             gamesService.closeGame($scope.gameID)
             .then(function (res) {
-                $scope.gameInfo[0].game_status = res.data['game_status'];
+                $scope.gameStatusOpen = res.data['game_status'];
             });
         }
     }
 
+    // search userID and set it to player & set full name
     $scope.setIdToNames = function(id,userName) {
 
         if(userName != null) {
 
-            var user = findPlayerId($scope.names,'username',userName);
-            $scope.players[id]['id'] = user["_id"];
-            $scope.players[id]['fullName'] = user.Fname + " " + user.Lname ;
+            var user = findNameIndex($scope.names,'id',userName);
+            // $scope.players[id]['id'] = userName["_id"];
+            $scope.players[id]['fullName'] = $scope.names[user].Fname + " " + $scope.names[user].Lname; // add full name to player
+            $scope.names[user].show = false;
+
+            // Hide player from names DD
+            // for(var i = 0; i < $scope.names.length; i++){
+            //     if($scope.players[id]['id'] == $scope.names[i]["_id"]) {
+            //         $scope.names[i].show = false;
+            //     }
+            // }
 
         }
     }
 
+    // return players index
     function findNameIndex(arr, propName, propValue) {
         for (var i=0; i < arr.length; i++){
-            if (arr[i][propName] == propValue)
-                return i;
-        }
-    }
-
-    function findPlayerId(arr, propName, propValue) {
-        for (var i=0; i < arr.length; i++){
             if (arr[i][propName] == propValue){
-                arr[i].show = false;
-                return arr[i];
+                return i;
             }
                 
         }
     }
 
-    function checkPlayerId(arr, propName, propValue) {
+    // Check if value exist in current Array (EDIT ONLY)
+    function existInArr(arr, propName, propValue) {
         for (var i=0; i < arr.length; i++){
             if (arr[i][propName] == propValue)
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 
+
+    // Add cashIn for all players that have no cashIn already in DB & UI
+    $scope.addCashInAll = function () {
+        var sum = defaultCashIn;
+
+        if (confirm('You will Add ' + sum +' chips to all players, continue?')) {
+
+            $scope.addCashInAllEnable = false; // disable CashInAllPlayers Button
+            angular.forEach($scope.players, function (player,key) {
+                if(player.cashIn == 0) {
+                    $scope.CashIn(key,sum);
+                }
+                
+            });
+        }
+    };
+
+    // Set Cash In DB & UI
     $scope.CashIn = function (id,sum) {
         
         var obj = {
@@ -130,11 +157,10 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
             $scope.players[id].total -= sum;
             $scope.totalCashIn += sum;
             $scope.balance += sum;
-            $scope.sumForCashIn = defaultCashIn;
         });
     };
 
-    // OK
+    // Set Cash Out DB & UI
     $scope.CashOut = function (id,sum) {
 
         if($scope.totalCashIn < sum){
@@ -153,7 +179,7 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         amountService.setCashOut(obj)
         .then(function (res) {
             $scope.players[id].activeCashOut = false;
-            $scope.players[id].cash_out += sum;
+            $scope.players[id].cashOut += sum;
             $scope.players[id].total += sum;
             $scope.balance -= sum;
         });
@@ -161,110 +187,7 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
     };
 
 
-    // ***** RESTORE DATA ***** //
-
-    
-
-
-    $scope.GameById = function(id){
-        var promise = $q.defer();
-        gamesService.getGame(id)
-        .then(function(res){
-            $scope.gameInfo = res.data;
-            promise.resolve();
-        });
-        return promise.promise;
-    }
-
-    $scope.CashInByGameId = function(id){
-        var promise = $q.defer();
-        amountService.getCashInByGameId(id)
-        .then(function(res){
-            $scope.cashIn = res.data;
-            promise.resolve();
-        });
-        return promise.promise;
-    }
-
-    $scope.CashOutByGameId = function(id){
-        var promise = $q.defer();
-        amountService.getCashOutByGameId(id)
-        .then(function(res){
-            $scope.cashOut = res.data;
-            promise.resolve();
-        });
-        return promise.promise;
-    }
-    
-
-
-    $scope.getData = function(id) {
-
-        var promise = $q.defer();
-        var allGetsArray = [];
-
-        allGetsArray.push($scope.GameById(id));
-        allGetsArray.push($scope.CashInByGameId(id));
-        allGetsArray.push($scope.CashOutByGameId(id));
-
-        $q.all(allGetsArray).then(function(){
-            promise.resolve();
-        })
-
-        return promise.promise;
-
-    }
-
-
-    $scope.getData($scope.gameID).then(function(data){
-        $scope.setData();
-    });
-
-    $scope.setData = function() {
-        
-        // players from cashIn
-        angular.forEach($scope.cashIn,function(In) {
-            var user = {fullName:In.user_name,id:In.user_id,cashIn:0,cash_out:0,total:0,activeCashIn:false,activeCashIn:false};
-            var index = -1;
-            for(var i=0 ; i < $scope.names.length; i++){
-                if($scope.names[i]['_id'] == user.id ){
-                    index = i;
-                }
-            }
-
-            if(!$scope.players.length){
-                $scope.names[index].show = false;
-                $scope.players.push(user);
-            }else if(checkPlayerId($scope.players,'id',In.user_id)){ // return false if exist at players array
-                $scope.names[index].show = false;
-                $scope.players.push(user);
-            }
-        })
-
-        // set cashIn to player
-        angular.forEach($scope.players,function(player) {
-            angular.forEach($scope.cashIn,function(In) {
-
-                if(player.id == In.user_id){
-                    player.cashIn += In.cash_in;
-                    player.total -= In.cash_in;
-                    $scope.totalCashIn += In.cash_in;
-                    $scope.balance += In.cash_in;
-                }
-            })
-            angular.forEach($scope.cashOut,function(Out) {
-
-                if(player.id == Out.user_id){
-                    player.cash_out += Out.cash_out;
-                    player.total += Out.cash_out;
-                    $scope.balance -= Out.cash_out;
-                }
-            })
-        })
-        console.log("Players:",$scope.players);
-        console.log("gameInfo:",$scope.gameInfo);
-    }
-
+    // On destroy - delete empty game
     var destroy = $scope.$on('$destroy', function () {
         
         if (!$scope.totalCashIn) {
@@ -276,7 +199,7 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         }
     });
 
-    // Dialog
+    // Dialog - Show player cash in for delete functionality
     $scope.showCash = function(ev,user) {
         
         var dialog = ngDialog.open({
@@ -288,6 +211,117 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
             data:{'gameID':$scope.gameID,'user': user}
         });
     };
+
+
+
+        // ***** RESTORE DATA ***** //
+
+        $scope.GameById = function(id){
+            var promise = $q.defer();
+            gamesService.getGame(id)
+            .then(function(res){
+                $scope.gameInfo = res.data;
+                $scope.gameStatusOpen = $scope.gameInfo[0].game_status;
+                promise.resolve();
+            });
+            return promise.promise;
+        }
+    
+        $scope.CashInByGameId = function(id){
+            var promise = $q.defer();
+            amountService.getCashInByGameId(id)
+            .then(function(res){
+                $scope.cashIn = res.data;
+                promise.resolve();
+            });
+            return promise.promise;
+        }
+    
+        $scope.CashOutByGameId = function(id){
+            var promise = $q.defer();
+            amountService.getCashOutByGameId(id)
+            .then(function(res){
+                $scope.cashOut = res.data;
+                promise.resolve();
+            });
+            return promise.promise;
+        }
+        
+    
+        // get Data for current game (cashIn & cashOut & game info)
+        $scope.getData = function(id) {
+    
+            var promise = $q.defer();
+            var allGetsArray = [];
+    
+            allGetsArray.push($scope.GameById(id));
+            allGetsArray.push($scope.CashInByGameId(id));
+            allGetsArray.push($scope.CashOutByGameId(id));
+    
+            $q.all(allGetsArray).then(function(){
+                promise.resolve();
+            })
+    
+            return promise.promise;
+    
+        }
+    
+
+    // Play GetData function
+    $scope.getData($scope.gameID).then(function(data) {
+        $scope.setData();
+    });
+
+    // Set data that recived from DB
+    $scope.setData = function() {
+        
+        // players from cashIn
+        angular.forEach($scope.cashIn,function(In) {
+            var user = {fullName:In.user_name,id:In.user_id,cashIn:0,cashOut:0,total:0,activeCashIn:false,activeCashOut:false};
+            var index = -1;
+            for(var i=0 ; i < $scope.names.length; i++){
+                if($scope.names[i]['_id'] == user.id ){
+                    index = i;
+                }
+            }
+
+            // add to players Array names that already in the game & hide from names DD
+            if(!$scope.players.length){
+                $scope.names[index].show = false;
+                $scope.players.push(user);
+            }else if(!(existInArr($scope.players,'id',In.user_id))){ // return true if exist at players array
+                $scope.names[index].show = false;
+                $scope.players.push(user);
+            }
+        })
+
+        // set cashIn & cashOut to players
+        angular.forEach($scope.players,function(player) {
+
+            // set cashIn
+            angular.forEach($scope.cashIn,function(In) {
+
+                if(player.id == In.user_id){
+                    player.cashIn += In.cash_in;
+                    player.total -= In.cash_in;
+                    $scope.totalCashIn += In.cash_in;
+                    $scope.balance += In.cash_in;
+                }
+            })
+
+            // set cashOnt
+            angular.forEach($scope.cashOut,function(Out) {
+
+                if(player.id == Out.user_id){
+                    player.cashOut += Out.cash_out;
+                    player.total += Out.cash_out;
+                    $scope.balance -= Out.cash_out;
+                }
+            })
+        })
+        console.log("Players:",$scope.players);
+        console.log("gameInfo:",$scope.gameInfo);
+    }
     
 
 });
