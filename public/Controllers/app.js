@@ -30,13 +30,13 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
 
 .config(function ($stateProvider, $urlRouterProvider,$locationProvider) {
     $stateProvider
-          .state('home', {
+        //   .state('home', {
+        //       url: '/',
+        //       templateUrl: 'Templates/home.html'
+        //       //controller: 'Ctrl'
+        //   })
+            .state('home', {
               url: '/',
-              templateUrl: 'Templates/home.html'
-              //controller: 'Ctrl'
-          })
-            .state('newHome', {
-              url: '/newHome',
               templateUrl: 'Templates/newHome.html',
               controller: 'homeController'
           })
@@ -119,9 +119,10 @@ app.run(function ($rootScope, $cookies,$location,$state) {
         var user = $cookies.getObject('globals');
         console.log(user);
         // redirect to login page if not logged in and trying to access a restricted page
-        var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+        var restrictedPage = $.inArray($location.path(), ['/login', '/register',]) === -1;
+        var isHome = $location.path() === "" || $location.path() === "/";
         var loggedIn = $cookies.getObject('globals');
-            if (restrictedPage && !loggedIn) {
+            if (restrictedPage && !isHome && !loggedIn) {
                 event.preventDefault();
                 $state.go('login');
             }

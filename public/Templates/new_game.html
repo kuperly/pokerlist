@@ -33,9 +33,9 @@
                 <td>
                     <!-- Player name -->
                     <div class="form-group">
-                        <a ng-show="player.fullName" ng-click="showCash($event,player)"> {{player.fullName}} </a>
-                         <select ng-change="setIdToNames($index,player.id)" ng-show="!player.fullName || player.fullName == ''" class="form-control" id="player" ng-model="player.id">
-                            <option ng-repeat="name in names" ng-show="name.show && name.status.toLowerCase() != 'new'" value={{name.id}}>{{name.Fname}} {{name.Lname}}</option>
+                        <a ng-if="player.fullName" ng-click="showCash($event,player)"> {{player.fullName}} </a>
+                         <select ng-change="setIdToNames($index,player.id)" ng-if="!player.fullName || player.fullName == ''" class="form-control" id="player" ng-model="player.id">
+                            <option ng-repeat="name in names" ng-show="name.show && name.status.toLowerCase() != 'new'" value={{name._id}}>{{name.Fname}} {{name.Lname}}</option>
                         </select>
                     </div>
                 </td>

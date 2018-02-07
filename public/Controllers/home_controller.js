@@ -145,7 +145,7 @@
   $scope.getStarted = function(){
     // if login
     if($rootScope.userLogIn){
-      $location.path('/games');
+      $location.path('/balance');
     }
     else{
       $location.path('/login');
@@ -154,7 +154,7 @@
   }
 
     if($rootScope.userLogIn){
-      $scope.btnText = 'Go to Balanes'
+      $scope.btnText = 'Go to Balance'
     } else{
       $scope.btnText = 'Get started now!';
     }

@@ -13,7 +13,6 @@ var https = require('https');
 var cities = require('cities');
 
 
-
 MongoClient = require('mongodb').MongoClient
 mongoose.Promise = require('bluebird');
 var uri = 'mongodb://kuperly:kuperly@ds113958.mlab.com:13958/pokerprod';
@@ -257,6 +256,7 @@ app.post('/api/setCashIn',function(req,res){
     });
     
     cashIn.save(function(err,cashIn_id){
+        
         res.status(200).json(cashIn_id);
     })
 });
@@ -484,8 +484,6 @@ app.post('/api/getUsersByGroupId',function(req,res) {
 app.get('*', function(req,res){
     res.sendfile(path.join(__dirname + '/index.html'));
 });
-
-
 
 app.listen(process.env.PORT || 3000);
 

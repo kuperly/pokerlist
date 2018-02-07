@@ -70,6 +70,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             var comArr = eval($scope.players);
 
             // find player index in players Array
+            _.remove(comArr, {id: id})
             for (var i = 0; i < comArr.length; i++) {
                 if (comArr[i].id === id) {
                     index = i;
@@ -143,10 +144,9 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
 
             $scope.addCashInAllEnable = false; // disable CashInAllPlayers Button
             angular.forEach($scope.players, function (player,key) {
-                if(player.cashIn == 0) {
+                if(player.cashIn === 0) {
                     $scope.CashIn(key,sum);
                 }
-                
             });
         }
     };
@@ -218,7 +218,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             template: 'Templates/dialog_cash_tmpl.html',
             controller: 'userCashinDialog',
             className: 'ngdialog-theme-plain',
-            scope: $scope,
+            // scope: $scope.new(),
             $event: ev,
             data:{'gameID':$scope.gameID,'user': user}
         });
