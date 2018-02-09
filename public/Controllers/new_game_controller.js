@@ -1,4 +1,4 @@
-app.controller('newGameController', function ($scope, gamesService, playerService,amountService,$http, toastr,ngDialog, UserService) {
+app.controller('newGameController', function ($scope, gamesService, playerService,amountService,$http, toastr,ngDialog, UserService,$rootScope,$state) {
     
     var defaultCashIn = 50;
     $scope.gameStatusOpen = 'Open';
@@ -207,18 +207,41 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
     };
 
     // On destroy - delete empty game
-    var destroy = $scope.$on('$destroy', function () {
+    // var destroy = $scope.$on('$destroy', function () {
                     
-        if (!$scope.totalCashIn) {
-            gamesService.deleteGame($scope.gameID)
-            .then(function (res) {
-                toastr.options = {"positionClass": "toast-top-center"};
-                toastr.info('game deleted', 'Info');
-                UserService.UpdateUsersStatus();
-            });
+    //     if (!$scope.totalCashIn) {
+    //         gamesService.deleteGame($scope.gameID)
+    //         .then(function (res) {
+    //             toastr.options = {"positionClass": "toast-top-center"};
+    //             toastr.info('game deleted', 'Info');
+    //             UserService.UpdateUsersStatus();
+    //         });
             
-        }
-    });
+    //     }
+    // });
+
+    $scope.$on('$stateChangeStart',
+        function (event, toState, toParams, fromState, fromParams, options) {
+            if($scope.stateRun) {
+                return;
+            }
+            event.preventDefault();
+            
+            if (!$scope.totalCashIn) {
+
+                gamesService.deleteGame($scope.gameID)
+                    .then(function (res) {
+                        toastr.options = { "positionClass": "toast-top-center" };
+                        toastr.info('game deleted', 'Info');
+                        UserService.UpdateUsersStatus();
+                        $scope.stateRun = true;
+                        $state.go(toState);
+                    });
+            } else {
+                $scope.stateRun = true;
+                $state.go(toState);
+            }
+        });
 
     // $scope.destroy = function (e, toState, toParams, fromState, fromParams) {
     //     e.preventDefault();
