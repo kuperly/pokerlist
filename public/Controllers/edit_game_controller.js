@@ -1,4 +1,4 @@
-app.controller('editGameController', function ($scope, gamesService, playerService,amountService,$q, toastr,$state,$stateParams,ngDialog) {
+app.controller('editGameController', function ($scope, gamesService, playerService,amountService,$q, toastr,$state,$stateParams,ngDialog, UserService) {
     
     //$scope.gameStatusOpen = 'Open';
     //$scope.gameOpenDate = new Date();
@@ -76,11 +76,28 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
     // Close game in DB
     $scope.closeGame = function() {
 
+        if($scope.balance) {
+
+            // alert("Can't close game with money in cashier");
+
+            toastr.options = {"positionClass": "toast-top-center"};
+            toastr.info("Can't close game with money in cashier", 'info');
+            return;
+
+        } else if( !$scope.totalCashIn ) {
+            // alert("Can't close game with no deposits");
+
+            toastr.options = {"positionClass": "toast-top-center"};
+            toastr.info("Can't close game with no deposits", 'info');
+            return;
+        }
+
         if (confirm('Are you sure you want to close the game?')) {
             gamesService.closeGame($scope.gameID)
             .then(function (res) {
                 $scope.gameStatusOpen = res.data['game_status'];
             });
+            UserService.UpdateUsersStatus();
         }
     }
 
@@ -194,10 +211,28 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
             gamesService.deleteGame($scope.gameID)
             .then(function (res) {
                 toastr.options = {"positionClass": "toast-top-center"};
-                toastr.info('game deleted', 'info');
+                toastr.info('game deleted', 'Info');
+                UserService.UpdateUsersStatus();
             });
         }
     });
+    // function destroy (e, toState, toParams, fromState, fromParams) {
+    //     e.preventDefault();
+    //     if (!$scope.totalCashIn) {
+
+    //         gamesService.deleteGame($scope.gameID)
+    //         .then(function (res) {
+    //             toastr.options = {"positionClass": "toast-top-center"};
+    //             toastr.info('game deleted', 'Info');
+    //             UserService.UpdateUsersStatus();
+    //             $state.go(toState);
+    //         });
+    //     } else{
+    //         $state.go(toState);
+    //     }
+    // };
+
+    // $scope.$on('$stateChangeStart', destroy);
 
     // Dialog - Show player cash in for delete functionality
     $scope.showCash = function(ev,user) {

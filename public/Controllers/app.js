@@ -9,7 +9,7 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
         $rootScope.userLogIn = {};
         toastr.options = {"positionClass": "toast-top-center"};
         toastr.info('Logged out', 'info');
-        $state.go('login');
+        $state.go('/');
     };
 
     groupService.getAllGroups()

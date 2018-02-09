@@ -94,7 +94,6 @@
     };
 
 
-    // TODO
     $scope.getData = function() {
 
         var promise = $q.defer();
@@ -154,7 +153,7 @@
     }
 
     // get all data & set it
-    $scope.showGuestchange = function(){
+    $scope.showGuestchange = function() {
 
         $scope.getData().then(function(data) {
             $scope.setData();

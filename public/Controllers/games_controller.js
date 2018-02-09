@@ -1,4 +1,4 @@
-﻿app.controller('gamesController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope) {
+﻿app.controller('gamesController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope,UserService) {
     
 
     // Table - sort & filter
@@ -100,6 +100,7 @@
             .then(function (res) {
                 toastr.options = {"positionClass": "toast-top-center"};
                 toastr.info('game deleted', 'info');
+                UserService.UpdateUsersStatus();
                 $state.reload();
             });
         }

@@ -153,11 +153,21 @@
     
   }
 
-    if($rootScope.userLogIn){
-      $scope.btnText = 'Go to Balance'
-    } else{
-      $scope.btnText = 'Get started now!';
-    }
+    // if($rootScope.userLogIn && $rootScope.userLogIn.currentUser){
+    //   $scope.btnText = 'Go to Balance'
+    // } else{
+    //   $scope.btnText = 'Get started now!';
+    // }
+
+    $scope.$watch(function() {
+      return $rootScope.userLogIn;
+    }, function() {
+      if($rootScope.userLogIn && $rootScope.userLogIn.currentUser){
+        $scope.btnText = 'Go to Balance'
+      } else{
+        $scope.btnText = 'Get started now!';
+      }
+    }, true);
   
     
 });

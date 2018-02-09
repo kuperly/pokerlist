@@ -46,7 +46,7 @@
 
         },
 
-        getUserGames: function(ID){ // TODO
+        getUserGames: function(ID){ // OK
 
             var requestParam={
             method:'GET',
@@ -57,7 +57,7 @@
             return $http(requestParam);
         },
 
-        getGame: function(ID){ // TODO
+        getGame: function(ID) { // OK
 
             var requestParam={
             method:'GET',
@@ -66,6 +66,7 @@
             }
 
             return $http(requestParam);
-        }
+        },
+
     };
 });

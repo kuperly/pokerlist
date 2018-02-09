@@ -1,4 +1,4 @@
-app.controller('newGameController', function ($scope, gamesService, playerService,amountService,$http, toastr,ngDialog) {
+app.controller('newGameController', function ($scope, gamesService, playerService,amountService,$http, toastr,ngDialog, UserService) {
     
     var defaultCashIn = 50;
     $scope.gameStatusOpen = 'Open';
@@ -70,7 +70,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             var comArr = eval($scope.players);
 
             // find player index in players Array
-            _.remove(comArr, {id: id})
+            // _.remove(comArr, {id: id});
             for (var i = 0; i < comArr.length; i++) {
                 if (comArr[i].id === id) {
                     index = i;
@@ -99,11 +99,29 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
     // Close game in DB
     $scope.closeGame = function() {
 
+        if($scope.balance) {
+
+            // alert("Can't close game with money in cashier");
+
+            toastr.options = {"positionClass": "toast-top-center"};
+            toastr.error("Can't close game with money in cashier", 'Error');
+            return;
+
+        } else if( !$scope.totalCashIn ) {
+            // alert("Can't close game with no deposits");
+
+            toastr.options = {"positionClass": "toast-top-center"};
+            toastr.error("Can't close game with no deposits", 'Error');
+            return;
+        }
+
+
         if (confirm('Are you sure you want to close the game?')) {
             gamesService.closeGame($scope.gameID)
             .then(function (res) {
                 $scope.gameStatusOpen = res.data['game_status'];
             });
+            UserService.UpdateUsersStatus();
         }
     }
 
@@ -113,18 +131,8 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
         if(userName != null) {
 
             var user = findNameIndex($scope.names,'id',userName);
-            // $scope.players[id].playerName = userName.Fname;
-            // $scope.players[id]['id'] = user["_id"];
             $scope.players[id]['fullName'] = $scope.names[user].Fname + " " + $scope.names[user].Lname; // add full name to player
             $scope.names[user].show = false;
-            
-            // Hide player from names DD 
-            // for(var i = 0; i < $scope.names.length; i++){
-            //     if($scope.players[id]['id'] == $scope.names[i]["_id"]) {
-            //         $scope.names[i].show = false;
-            //     }
-            // }
-
         }
     }
 
@@ -205,10 +213,30 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             gamesService.deleteGame($scope.gameID)
             .then(function (res) {
                 toastr.options = {"positionClass": "toast-top-center"};
-                toastr.info('game deleted', 'info');
+                toastr.info('game deleted', 'Info');
+                UserService.UpdateUsersStatus();
             });
+            
         }
     });
+
+    // $scope.destroy = function (e, toState, toParams, fromState, fromParams) {
+    //     e.preventDefault();
+    //     if (!$scope.totalCashIn) {
+
+    //         gamesService.deleteGame($scope.gameID)
+    //         .then(function (res) {
+    //             toastr.options = {"positionClass": "toast-top-center"};
+    //             toastr.info('game deleted', 'Info');
+    //             UserService.UpdateUsersStatus();
+    //             $state.go(toState);
+    //         });
+    //     } else{
+    //         $state.go(toState);
+    //     }
+    // };
+
+    // var destroy = $scope.$on('$stateChangeStart', destroy);
 
 
     // Dialog - Show player cash in for delete functionality
@@ -218,7 +246,7 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             template: 'Templates/dialog_cash_tmpl.html',
             controller: 'userCashinDialog',
             className: 'ngdialog-theme-plain',
-            // scope: $scope.new(),
+            scope: $scope,
             $event: ev,
             data:{'gameID':$scope.gameID,'user': user}
         });
