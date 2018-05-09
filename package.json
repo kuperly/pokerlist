@@ -7,6 +7,7 @@
   "devDependencies": {},
   "dependencies": {
     "angular-animate": "^1.6.5",
+    "angular-chart.js": "^1.1.1",
     "angular-messages": "^1.6.5",
     "angular-toastr": "^2.1.1",
     "angular-ui-bootstrap": "^2.5.0",
@@ -20,6 +21,7 @@
     "express": "^4.15.4",
     "mongoose": "^4.11.6",
     "passport": "*",
+    "passport-facebook": "^2.1.1",
     "passport-http": "*",
     "passport-local": "*"
   },

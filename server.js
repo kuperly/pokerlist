@@ -171,7 +171,7 @@ app.post('/api/authenticate',function(req,res){
 });
 
 // get user by username
-app.post('/api/username',function(req,res){
+app.post('/api/username',function(req,res) {
     
     var username = req.body.username;
     

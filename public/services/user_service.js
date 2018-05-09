@@ -16,6 +16,7 @@
         service.Update = Update;
         service.Delete = Delete;
         service.UpdateUsersStatus = UpdateUsersStatus;
+        
  
         return service;
  
@@ -26,7 +27,8 @@
 //         function GetById(id) {
 //             return $http.get('/api/users/' + id).then(handleSuccess, handleError('Error getting user by id'));
 //         }
- 
+            
+
         function GetByUsername(name) {
             return $http.post('/api/username/', {username:name})
             .then(handleSuccess, handleError('Error getting user by username'));
@@ -110,7 +112,7 @@
                 return promise.promise;
             }
 
-            function setData(){
+            function setData() {
         
                 // player
                 angular.forEach(players,function(player) {
@@ -137,8 +139,6 @@
                             player.gameId.push(cashin.game_id);
                         }
         
-                        
-        
                     })
         
                     // sum of cashOut
@@ -156,8 +156,7 @@
         
                     // present
                     player.present = (player.balance / player.totalCashIn * 100);
-        
-        
+                    
                 })
         
             };

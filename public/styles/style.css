@@ -240,3 +240,102 @@ ul.twPc-Arrange {
   width: 70px;
   margin-bottom: 30px;
 }
+
+
+/* account css */
+
+.card {
+  margin-bottom: 1.5rem;
+  border-radius: 0;
+  position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.card-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.stat-widget-one .stat-icon {
+  vertical-align: top;
+}
+
+.dib {
+  display: inline-block;
+}
+
+.stat-widget-one .stat-icon i {
+  font-size: 30px;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 100px;
+  padding: 15px;
+  font-weight: 900;
+  display: inline-block;
+}
+
+.text-success {
+  color: #28a745!important;
+}
+
+.border-success {
+  border-color: #28a745!important;
+}
+
+.ti-money:before {
+  content: "\e68c";
+}
+
+@font-face {
+	font-family: 'themify';
+	src:url('../fonts/themify.eot');
+	src:url('../fonts/themify.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/themify.woff') format('woff'),
+		url('../fonts/themify.ttf') format('truetype'),
+		url('../fonts/themify.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="ti-"], [class*=" ti-"] {
+	font-family: 'themify';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+.stat-widget-one .stat-content {
+  margin-left: 30px;
+  margin-top: 7px;
+}
+
+.stat-widget-one .stat-text {
+  font-size: 14px;
+  color: #868e96;
+}
+
+.stat-widget-one .stat-digit {
+  font-size: 24px;
+  color: #373757;
+}

@@ -1,56 +1,174 @@
 <div class="container text-center" ng-controller="accountController">
-    <br><br>
-<div class="container-fluid well span6">
+	<br><br>
+	
+	<ul class="nav nav-tabs">
+		<li ng-repeat="tab in tabs" ng-class="{active: tab.isActive}"><a ng-click="setActiveTab($index)">{{tab.name}}</a></li>
+	</ul>
+
+
+<div ng-if="tabs[0].isActive" class="container-fluid well span6">
 	<div class="row-fluid">
-        <div class="span2" >
-		    <img src="https://seeklogo.com/images/W/world-championship-of-poker-logo-B1AF467A52-seeklogo.com.png" class="img-circle">
-        </div>
-        
-        <div class="span8">
-            <h2>{{user.Fname}} {{user.Lname}}</h2>
-            <h5>username: {{user.username}}<h5>
-            <h5>email: {{user.email}}</h5>
-            <h5>phone: {{user.phone}}</h5>
-            <h5>role: {{user.roleS}}</h5>
-            <h5>status: <span ng-class="user.status.toLowerCase() == 'active' ? 'price-green' : user.status.toLowerCase() == 'guest' ? 'price-orange' :'price-red'" >{{user.status}}</span></h5>
-        </div>
-        
-        
-        <div class="span2">
-            <div class="btn-group">
-                <button class="btn btn-info" ng-click="edit()"> <span class="icon-wrench"></span> Edit </button>
-            </div>
-        </div>
-        
-</div>
-    <div class="twPc-divStats">
-			<ul class="twPc-Arrange">
-				<li class="twPc-ArrangeSizeFit">
-					<a ui-sref="games" title="Games">
-						<span class="twPc-StatLabel twPc-block">Games</span>
-						<span class="twPc-StatValue">{{user.totalGames}}</span>
-					</a>
-				</li>
-				<li class="twPc-ArrangeSizeFit">
-					<a ui-sref="balance" title="Cash In">
-						<span class="twPc-StatLabel twPc-block">Cash In</span>
-						<span class="twPc-StatValue">{{user.totalCashIn}}</span>
-					</a>
-				</li>
-				<li class="twPc-ArrangeSizeFit">
-					<a ui-sref="balance" title="Cash Out">
-						<span class="twPc-StatLabel twPc-block">Cash Out</span>
-						<span class="twPc-StatValue">{{user.totalCashOut}}</span>
-					</a>
-				</li>
-				<li class="twPc-ArrangeSizeFit">
-					<a ui-sref="balance" title="Cash Out">
-						<span class="twPc-StatLabel twPc-block">Avarge</span>
-						<span class="twPc-StatValue">{{(user.totalCashOut - user.totalCashIn)/ user.totalGames | number:0}}</span>
-					</a>
-				</li>
-			</ul>
+		<div class="span2">
+			<img src="https://seeklogo.com/images/W/world-championship-of-poker-logo-B1AF467A52-seeklogo.com.png" class="img-circle">
 		</div>
+
+		<div class="span8">
+			<h2>{{user.Fname}} {{user.Lname}}</h2>
+			<h5>username: {{user.username}}
+				<h5>
+					<h5>email: {{user.email}}</h5>
+					<h5>phone: {{user.phone}}</h5>
+					<h5>role: {{user.roleS}}</h5>
+					<h5>status:
+						<span ng-class="user.status.toLowerCase() == 'active' ? 'price-green' : user.status.toLowerCase() == 'guest' ? 'price-orange' :'price-red'">{{user.status}}</span>
+					</h5>
+		</div>
+
+
+		<div class="span2">
+			<div class="btn-group">
+				<button class="btn btn-info" ng-click="edit()">
+					<span class="icon-wrench"></span> Edit </button>
+			</div>
+		</div>
+
+	</div>
+	<div class="twPc-divStats">
+		<ul class="twPc-Arrange">
+			<li class="twPc-ArrangeSizeFit">
+				<a ui-sref="games" title="Games">
+					<span class="twPc-StatLabel twPc-block">Games</span>
+					<span class="twPc-StatValue">{{user.totalGames}}</span>
+				</a>
+			</li>
+			<li class="twPc-ArrangeSizeFit">
+				<a ui-sref="balance" title="Cash In">
+					<span class="twPc-StatLabel twPc-block">Cash In</span>
+					<span class="twPc-StatValue">{{user.totalCashIn}}</span>
+				</a>
+			</li>
+			<li class="twPc-ArrangeSizeFit">
+				<a ui-sref="balance" title="Cash Out">
+					<span class="twPc-StatLabel twPc-block">Cash Out</span>
+					<span class="twPc-StatValue">{{user.totalCashOut}}</span>
+				</a>
+			</li>
+			<li class="twPc-ArrangeSizeFit">
+				<a ui-sref="balance" title="Cash Out">
+					<span class="twPc-StatLabel twPc-block">Avarge</span>
+					<span class="twPc-StatValue">{{(user.totalCashOut - user.totalCashIn)/ user.totalGames | number:0}}</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div ng-if="tabs[1].isActive">
+	<!-- create Directive -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">Profits</div>
+					<div class="panel-body">
+						<canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options"
+						chart-dataset-override="datasetOverride">
+						</canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">Win/Lose</div>
+					<div class="panel-body">
+						<canvas id="doughnut" class="chart chart-pie" chart-data="dataPie" chart-labels="labelsPie">
+						</canvas>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">Doughnut Chart</div>
+					<div class="panel-body">
+						<canvas id="doughnut" class="chart chart-doughnut" chart-data="dataPie" chart-labels="labelsPie">
+						</canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="stat-widget-one">
+							<div class="stat-icon dib">
+								<!-- <i class="ti-money text-success border-success"></i> -->
+								<img style="height:70px;" src="images/money.svg">
+							</div>
+							<div class="stat-content dib">
+								<div class="stat-text">Max Profit</div>
+								<div class="stat-digit">{{maxWin}}</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="stat-widget-one">
+							<div class="stat-icon dib">
+								<!-- <i class="ti-money text-success border-success"></i> -->
+								<img style="height:70px;" src="images/loss.svg">
+							</div>
+							<div class="stat-content dib">
+								<div class="stat-text">Max Lose</div>
+								<div class="stat-digit">{{maxLose}}</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="stat-widget-one">
+							<div class="stat-icon dib">
+								<!-- <i class="ti-money text-success border-success"></i> -->
+								<img style="height:70px;" src="images/coin.svg">
+							</div>
+							<div class="stat-content dib">
+								<div class="stat-text">Max CashIn</div>
+								<div class="stat-digit">{{maxIn}}</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="stat-widget-one">
+							<div class="stat-icon dib">
+								<!-- <i class="ti-money text-success border-success"></i> -->
+								<img style="height:70px;" src="images/give-money.svg">
+							</div>
+							<div class="stat-content dib">
+								<div class="stat-text">Max CashOut</div>
+								<div class="stat-digit">{{maxOut}}</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 </div>

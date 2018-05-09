@@ -15,7 +15,7 @@
             // reset login status
             AuthenticationService.ClearCredentials();
         })();
- 
+
         function login() {
             vm.dataLoading = true;
             AuthenticationService.Login(vm.username.toLowerCase(), vm.password, function (response) {

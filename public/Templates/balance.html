@@ -52,25 +52,20 @@
                         <span ng-show="sortType == 'balance' && sortReverse" class="fa fa-caret-up"></span>
                     </a>
                 </th>
-                <th class="text-center">
+                <!-- <th class="text-center">
                     <a href="" ng-click="sortType = 'average'; sortReverse = !sortReverse">
                         AVG
                         <span ng-show="sortType == 'average' && !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'average' && sortReverse" class="fa fa-caret-up"></span>
                     </a>
-                </th>
-                <th class="text-center">
+                </th> -->
+                <!-- <th class="text-center">
                         <a href="" ng-click="sortType = 'present'; sortReverse = !sortReverse">
                             Yield
                             <span ng-show="sortType == 'present' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'present' && sortReverse" class="fa fa-caret-up"></span>
                         </a>
-                    </th>
-                
-
-
-
-
+                    </th> -->
                 
             </tr>
         </thead>
@@ -81,13 +76,13 @@
                     {{ $index + 1 }} 
                     <!-- <i ng-if="$index == 0" class="fa fa-trophy" aria-hidden="true"></i> -->
                 </td>
-                <td> {{player.Fname}} {{player.Lname}} </td>
+                <td ng-click="setPlayerForStat(player)" style="cursor: pointer;"> {{player.Fname}} {{player.Lname}} </td>
                 <td ng-class="games.length ==  player.totalGames ? 'price-green' : player.totalGames / games.length >= 0.5  ? 'price-orange' : 'price-red'"> {{player.totalGames}} </td>
                 <td> {{player.totalCashIn}} </td>
                 <td> {{player.totalCashOut}} </td>
                 <td ng-class="player.balance > 0 ? 'price-green' : 'price-red'">{{player.balance}} </td>
-                <td ng-class="player.average > 0 ? 'price-green' : 'price-red'">{{player.average}} </td>
-                <td ng-class="player.average > 0 ? 'price-green' : 'price-red'">{{player.present | number:2}}% </td>
+                <!-- <td ng-class="player.average > 0 ? 'price-green' : 'price-red'">{{player.average}} </td> -->
+                <!-- <td ng-class="player.average > 0 ? 'price-green' : 'price-red'">{{player.present | number:2}}% </td> -->
             </tr>
         </tbody>
         <!-- <tfoot>
@@ -107,8 +102,120 @@
         <h4>Cash In: {{allTotalCashIn}} | games: {{games.length}}</h4>
     </div>
 
-</div>
 
+
+<!-- ng-if="showCharts" -->
+<div style="margin-top:3%;" ng-if="showCharts.flag"> 
+    
+    <h4 style="text-align:center"> Statistics for: {{blurPlayerForStat.Fname}} {{blurPlayerForStat.Lname}} </h4>
+    <hr>
+        <!-- create Directive -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6 col-md-offset-1">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Profits</div>
+                        <div class="panel-body">
+                            <canvas id="line" class="chart chart-line" chart-data="blurPlayerForStat.data" chart-labels="blurPlayerForStat.labels" chart-series="blurPlayerForStat.series" chart-options="options"
+                            chart-dataset-override="datasetOverride">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Win/Lose</div>
+                        <div class="panel-body">
+                            <canvas id="doughnut" class="chart chart-pie" chart-data="blurPlayerForStat.dataPie" chart-labels="blurPlayerForStat.labelsPie">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Doughnut Chart</div>
+                        <div class="panel-body">
+                            <canvas id="doughnut" class="chart chart-doughnut" chart-data="dataPie" chart-labels="labelsPie">
+                            </canvas>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib">
+                                    <!-- <i class="ti-money text-success border-success"></i> -->
+                                    <img style="height:70px;" src="images/money.svg">
+                                </div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">Max Profit</div>
+                                    <div class="stat-digit">{{blurPlayerForStat.maxWin}}</div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib">
+                                    <!-- <i class="ti-money text-success border-success"></i> -->
+                                    <img style="height:70px;" src="images/loss.svg">
+                                </div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">Max Lose</div>
+                                    <div class="stat-digit">{{blurPlayerForStat.maxLose}}</div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib">
+                                    <!-- <i class="ti-money text-success border-success"></i> -->
+                                    <img style="height:70px;" src="images/coin.svg">
+                                </div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">Max CashIn</div>
+                                    <div class="stat-digit">{{blurPlayerForStat.maxIn}}</div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="stat-widget-one">
+                                <div class="stat-icon dib">
+                                    <!-- <i class="ti-money text-success border-success"></i> -->
+                                    <img style="height:70px;" src="images/give-money.svg">
+                                </div>
+                                <div class="stat-content dib">
+                                    <div class="stat-text">Max CashOut</div>
+                                    <div class="stat-digit">{{blurPlayerForStat.maxOut}}</div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

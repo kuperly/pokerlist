@@ -1,15 +1,15 @@
-var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','angularjs-dropdown-multiselect','vsGoogleAutocomplete','angular-scroll-animate','countTo','ngDialog'])
+var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap','ngCookies','ngMessages','angularjs-dropdown-multiselect','vsGoogleAutocomplete','angular-scroll-animate','countTo','ngDialog','chart.js'])
 .controller('mainController',function($state,$scope,$rootScope,$cookies,AuthenticationService,toastr,groupService){
     $rootScope.userLogIn = $cookies.getObject('globals');
 
     // $rootScope.selectedGroupID = selectedGroupID;
 
-    $scope.logout = function(){
+    $scope.logout = function() {
         AuthenticationService.ClearCredentials();
         $rootScope.userLogIn = {};
         toastr.options = {"positionClass": "toast-top-center"};
         toastr.info('Logged out', 'info');
-        $state.go('/');
+        $state.go('home');
     };
 
     groupService.getAllGroups()
