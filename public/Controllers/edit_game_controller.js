@@ -224,20 +224,20 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
         }
         event.preventDefault();
         
-        if (!$scope.totalCashIn) {
+        // if (!$scope.totalCashIn) {
 
-            gamesService.deleteGame($scope.gameID)
-                .then(function (res) {
-                    toastr.options = { "positionClass": "toast-top-center" };
-                    toastr.info('game deleted', 'Info');
-                    UserService.UpdateUsersStatus();
-                    $scope.stateRun = true;
-                    $state.go(toState);
-                });
-        } else {
+        //     gamesService.deleteGame($scope.gameID)
+        //         .then(function (res) {
+        //             toastr.options = { "positionClass": "toast-top-center" };
+        //             toastr.info('game deleted', 'Info');
+        //             UserService.UpdateUsersStatus();
+        //             $scope.stateRun = true;
+        //             $state.go(toState);
+        //         });
+        // } else {
             $scope.stateRun = true;
             $state.go(toState);
-        }
+        //}
     });
 
     // Dialog - Show player cash in for delete functionality

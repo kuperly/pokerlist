@@ -227,20 +227,20 @@ app.controller('newGameController', function ($scope, gamesService, playerServic
             }
             event.preventDefault();
             
-            if (!$scope.totalCashIn) {
+            // if (!$scope.totalCashIn) {
 
-                gamesService.deleteGame($scope.gameID)
-                    .then(function (res) {
-                        toastr.options = { "positionClass": "toast-top-center" };
-                        toastr.info('game deleted', 'Info');
-                        UserService.UpdateUsersStatus();
-                        $scope.stateRun = true;
-                        $state.go(toState);
-                    });
-            } else {
+            //     gamesService.deleteGame($scope.gameID)
+            //         .then(function (res) {
+            //             toastr.options = { "positionClass": "toast-top-center" };
+            //             toastr.info('game deleted', 'Info');
+            //             UserService.UpdateUsersStatus();
+            //             $scope.stateRun = true;
+            //             $state.go(toState);
+            //         });
+            // } else {
                 $scope.stateRun = true;
                 $state.go(toState);
-            }
+            //}
         });
 
     // $scope.destroy = function (e, toState, toParams, fromState, fromParams) {
