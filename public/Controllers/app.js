@@ -30,11 +30,6 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
 
 .config(function ($stateProvider, $urlRouterProvider,$locationProvider) {
     $stateProvider
-        //   .state('home', {
-        //       url: '/',
-        //       templateUrl: 'Templates/home.html'
-        //       //controller: 'Ctrl'
-        //   })
             .state('home', {
               url: '/',
               templateUrl: 'Templates/newHome.html',
@@ -109,7 +104,7 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
         
 
     $urlRouterProvider.otherwise('/');
-    // $locationProvider.html5Mode(true);
+    //$locationProvider.html5Mode(true);
     // $locationProvider.hashPrefix('');
 });
 
