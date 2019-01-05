@@ -109,6 +109,7 @@ var app = angular.module('app', ['ui.router','ngAnimate', 'toastr','ui.bootstrap
         
 
     $urlRouterProvider.otherwise('/');
+    $locationProvider.html5Mode(true).hashPrefix('!')
     // $locationProvider.html5Mode(true);
     // $locationProvider.hashPrefix('');
 });
