@@ -268,6 +268,7 @@
 
     // TODO - not ready
     function gameInFirstPlace(firstPlayer) {
+        
         timeInFirst = 1;
         // gamesList reverse
         for(var game=$scope.games.length-1; game>0; game--) {
