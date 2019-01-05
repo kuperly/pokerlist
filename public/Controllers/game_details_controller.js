@@ -43,7 +43,6 @@ app.controller('GameDetailsController', function ($scope, gamesService, playerSe
         gamesService.getGame(id)
         .then(function(res){
             $scope.gameInfo = res.data;
-            console.log(res.data);
             promise.resolve();
         });
         return promise.promise;
@@ -127,8 +126,6 @@ app.controller('GameDetailsController', function ($scope, gamesService, playerSe
                 }
             })
         })
-        console.log("Players:",$scope.players);
-        console.log("gameInfo:",$scope.gameInfo);
     }
 
 });

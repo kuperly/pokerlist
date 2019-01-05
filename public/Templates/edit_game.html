@@ -42,13 +42,13 @@
                 <td>
                     <!-- CashIn -->
                     <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.fullName == '' || (player.cashOut > 0 && userLogIn.currentUser.userRole != 2) || gameStatusOpen.toLowerCase() == 'close'" ng-click="player.activeCashIn = !player.activeCashIn"> {{player.cashIn}} </button>
-                    <input ng-model="sumForCashIn" type="number" step="10" ng-show="player.activeCashIn==true" />
+                    <input ng-model="sumForCashIn" type="number" ng-show="player.activeCashIn==true" />
                     <button ng-show="player.activeCashIn==true" ng-click="CashIn($index, sumForCashIn)" class="btn btn-primary">Add</button>
                 </td>
                 <td>
                     <!-- CashOut -->
                     <button style="padding-top: 0px;" class="btn btn-link" ng-disabled="player.fullName == '' || player.cashIn == 0 || totalCashIn == 0 || gameStatusOpen.toLowerCase()  == 'close'" ng-click="player.activeCashOut = !player.activeCashOut"> {{player.cashOut}} </button>
-                    <input ng-model="sumForCashOut" type="number" step="10" ng-show="player.activeCashOut==true && player.cashIn > 0" />
+                    <input ng-model="sumForCashOut" type="number" ng-show="player.activeCashOut==true && player.cashIn > 0" />
                     <button ng-disabled="player.cashIn == 0 || balance == 0 || gameStatusOpen.toLowerCase() == 'close'" ng-show="player.activeCashOut==true" ng-click="CashOut($index,sumForCashOut)" class="btn btn-primary">Add</button>
                 </td> 
                 <td ng-class="player.total > 0 ? 'price-green' : 'price-red'"> {{player.total}} </td>

@@ -43,6 +43,8 @@
             player.totalGames = 0;
             player.totalCashIn = 0;
             player.totalCashOut = 0;
+            player.firtGameDate = 0;
+            player.availableMaxGames = 0;
             player.gameId = [];
 
             
@@ -65,8 +67,12 @@
                 // sum of games
                 if(cashin.user_id == player['_id'] && $scope.checkGame(cashin.game_id,player)) {
                     
+                    var date = getGameDate(cashin.game_id);
                     player.totalGames += 1;
-                    player.gameId.push(cashin.game_id);
+                    if(!player.firtGameDate) {
+                        player.firtGameDate = date;
+                    } 
+                    player.gameId.push({game_id:cashin.game_id, game_date: date});
 
                     
 
@@ -112,12 +118,18 @@
 
         })
 
-        
-        //$scope.timeInPlace = gameInFirstPlace($scope.firstPlayer);
-
-        console.log('Players:',$scope.players);
-        // console.log('Games:',$scope.games);
     };
+
+    function getGameDate (game_id) {
+
+        for(var i=0; i< $scope.games.length; i++) {
+            if(game_id === $scope.games[i]._id) {
+                return $scope.games[i].game_date;
+            }
+        }
+
+        return
+    }
 
     $scope.setStat = function (player) {
 
@@ -294,7 +306,7 @@
 
         angular.forEach(player.gameId, function(game){
             
-            if(game_id == game){
+            if(game_id == game.game_id){
                 find = true;
             }
         });
@@ -375,12 +387,24 @@
             // remove empty players from array
             angular.forEach($scope.players,function(player){
                 if((player.status.toLowerCase() == 'guest' && $scope.showGuests) ||  player.status.toLowerCase() != 'guest' &&  player.status.toLowerCase() == 'active' && player.totalCashIn != 0){
+                    debugger;
+                    if(!player.availableMaxGames) {
+                        player.availableMaxGames = getPlayerMaxAvalibleGames(player);
+                    }
                     p.push(player);
                 }
             })
             $scope.players = p;
 
         });
+    }
+
+    function getPlayerMaxAvalibleGames (player) {
+    
+        return $filter('filter')($scope.games,function(game) {
+            return game.game_date >= player.firtGameDate;
+        }).length;
+
     }
 
     $scope.showGuestchange();

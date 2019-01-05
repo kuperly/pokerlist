@@ -21,23 +21,13 @@ var key ="80P3JjRAa2EAWYX7Zx9-QlMuOjf2ZLNW";
 mongoose.connect(uri);
 var db = mongoose.connection;
 
-db.on('erroe', console.error.bind(console,'connection error'));
+db.on('error', console.error.bind(console,'connection error'));
 db.once('open', function(){
     console.log('mongo is on');
 })
 
 var app = express();
 var Schema = mongoose.Schema;
-
-// var cors = require('cors');
-// app.options('*', cors()); // include before other routes
-
-// app.all("/*", function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-//   return next();
-// });
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
@@ -357,15 +347,25 @@ app.get('/api/getCashInByGameId',function(req,res){
     
 });
 
-app.get('/api/getCashInByGameIdAndUID',function(req,res) { // OK
+app.get('/api/getCashInAndOutByGameIdAndUID',function(req,res) { // OK
     
-    console.log(req.query);
         var gameID = req.query.id;
         var userID = req.query.uid;
+        var data = {};
         cashInData.find({game_id:gameID, user_id:userID})
-            .then(function(doc) {
-                console.log(doc);
-                res.send(doc);
+            .then(function(_cachIn) {
+                data.cachIn = _cachIn;
+
+                //cach out
+                cashOutData.find({game_id:gameID, user_id:userID})
+                .then(function(_cachOut) {
+
+                    data.cachOut = _cachOut;
+                    
+                    res.send(data);
+                },function(err){
+                    res.send(err);
+                });
             },function(err){
                 res.send(err);
             });
@@ -374,10 +374,25 @@ app.get('/api/getCashInByGameIdAndUID',function(req,res) { // OK
 
 app.post('/api/deleteUserCashIn',function(req,res) { // OK
     
-    // console.log(req.body['id']);
     var query = req.body['id'];
     
     cashInData.findByIdAndRemove(query,
+        function (err, doc) { // callback
+            if (err) {
+                res.json(err);
+            } 
+            res.json(doc);
+        }
+    );
+    
+});
+
+// Delete cashout
+app.post('/api/deleteUserCashOut',function(req,res) { 
+    
+    var query = req.body['id'];
+    
+    cashOutData.findByIdAndRemove(query,
         function (err, doc) { // callback
             if (err) {
                 res.json(err);

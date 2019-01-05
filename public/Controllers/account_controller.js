@@ -148,8 +148,6 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
 
         $scope.data.push(me);
         $scope.data.push(first);
-
-        console.log("statTotal:",$scope.user.statTotal);
     }
 
     $scope.getCashIn = function(id) {
@@ -224,7 +222,6 @@ app.controller('accountController', function ($cookies,AuthenticationService,Use
 
     $scope.save = function(isValid){
 
-        console.log("user to save:",$scope.user);
          UserService.GetByUsername($scope.user.username.toLowerCase())
         .then(function(response){
             

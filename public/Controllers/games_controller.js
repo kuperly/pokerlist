@@ -36,8 +36,6 @@
             })
         })
 
-        console.log("players:",$scope.games);
-
     };
 
     function checkPlayer (user_id, game) {

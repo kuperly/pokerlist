@@ -1,25 +1,40 @@
 <div class="panel panel-primary" style="border-radius:0px; width:auto" >
     <div class="panel-heading" style="border-radius:0px;">
-        {{::fullName}} Cash in
+        {{::fullName}}
     </div>
 
   <div class="panel-body">
-    
-    <div ng-repeat="data in userCash track by $index" >
-      <div class="col-xs-12" >
-          <div class="col-xs-offset-2 col-xs-4" style="text-align:center; font-size: 25px; font-weight: bold;"> {{data.cash_in}} </div>
-          <div class="col-xs-4"> 
-              <button class="btn btn-link" style="color:red" style="text-align:center;" ng-click="daleteCashIn(data['_id'],$index)">
-                  <span class="glyphicon glyphicon-trash"></span>
-              </button>
-          </div>
+      <div class="cash-in-wrapper">
+            <div class="title">
+                    <span>Cach in</span>
+                </div>
+                <div ng-repeat="data in userCashIn track by $index" >
+                  <div class="col-xs-12" >
+                      <div class="col-xs-offset-2 col-xs-4" style="text-align:center; font-size: 25px; font-weight: bold;"> {{data.cash_in}} </div>
+                      <div class="col-xs-4"> 
+                          <button class="btn btn-link" style="color:red" style="text-align:center;" ng-click="daleteCashIn(data['_id'],$index)">
+                              <span class="glyphicon glyphicon-trash"></span>
+                          </button>
+                      </div>
+                  </div>
+                </div>
       </div>
-      <!-- <h4> {{data.cash_in}}</h4>
-      <button class="btn btn-danger" ng-click="daleteCashIn(data['_id'],$index)">
-          <span class="glyphicon glyphicon-trash"></span>
-      </button> -->
+      <div class="cash-out-wrapper">
+            <div class="title">
+                    <span>Cach out</span>
+                </div>
+                <div ng-repeat="data in userCashOut track by $index" >
+                  <div class="col-xs-12" >
+                      <div class="col-xs-offset-2 col-xs-4" style="text-align:center; font-size: 25px; font-weight: bold;"> {{data.cash_out}} </div>
+                      <div class="col-xs-4"> 
+                          <button class="btn btn-link" style="color:red" style="text-align:center;" ng-click="daleteCashOut(data['_id'],$index)">
+                              <span class="glyphicon glyphicon-trash"></span>
+                          </button>
+                      </div>
+                  </div>
+                </div>
+      </div>
 
-    </div>
 
   </div>
   <!-- <div class="panel-footer">

@@ -77,7 +77,7 @@
                     <!-- <i ng-if="$index == 0" class="fa fa-trophy" aria-hidden="true"></i> -->
                 </td>
                 <td ng-click="setPlayerForStat(player)" style="cursor: pointer;"> {{player.Fname}} {{player.Lname}} </td>
-                <td ng-class="games.length ==  player.totalGames ? 'price-green' : player.totalGames / games.length >= 0.5  ? 'price-orange' : 'price-red'"> {{player.totalGames}} </td>
+                <td ng-class="player.availableMaxGames ==  player.totalGames ? 'price-green' : player.totalGames / player.availableMaxGames >= 0.5  ? 'price-orange' : 'price-red'"> {{player.totalGames +'/'+ player.availableMaxGames}} </td>
                 <td> {{player.totalCashIn}} </td>
                 <td> {{player.totalCashOut}} </td>
                 <td ng-class="player.balance > 0 ? 'price-green' : 'price-red'">{{player.balance}} </td>

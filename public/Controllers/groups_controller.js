@@ -1,7 +1,5 @@
 app.controller('groupsController', function ($scope,gamesService,playerService,amountService, $q,toastr,$state,$rootScope,$filter,$log, groupService,coutryService,ngDialog) {
     
-    console.log("groupsController start");
-
     var vm = this;
 
     // Table - sort & filter
@@ -15,7 +13,7 @@ app.controller('groupsController', function ($scope,gamesService,playerService,a
     //vm.cashIn = [];
 
     //test
-    groupService.getUsersByGroupId('598b8420f36d285bd4912b34').then(function(res){
+    groupService.getUsersByGroupId('598b8400f36d286bd4912b97').then(function(res){
         console.log("user by id:",res);
     })
 

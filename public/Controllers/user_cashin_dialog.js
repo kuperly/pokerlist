@@ -4,9 +4,12 @@ app.controller('userCashinDialog', function($scope,amountService,ngDialog) {
     $scope.fullName = user.fullName;
     var game = $scope.ngDialogData.gameID;
     
-    amountService.getUserCashInByGame(game,user.id).then (function(res) {
+    amountService.getUserCashInAndOutByGame(game,user.id).then (function(res) {
         
-        $scope.userCash = res.data;
+        if(res.data) {
+            $scope.userCashIn = res.data.cachIn;
+            $scope.userCashOut = res.data.cachOut;
+        }
 
     });
 
@@ -22,9 +25,9 @@ app.controller('userCashinDialog', function($scope,amountService,ngDialog) {
                 if($scope.$parent.players[$scope.players.indexOf(user)].total){
                     $scope.$parent.players[$scope.players.indexOf(user)].total += res.data.cash_in;
                 }
-                $scope.userCash.splice(index,1);
+                $scope.userCashIn.splice(index,1);
 
-                if(!$scope.userCash.length) {
+                if(needCloseDialog()) {
                     ngDialog.closeAll();
                 }
 
@@ -32,6 +35,34 @@ app.controller('userCashinDialog', function($scope,amountService,ngDialog) {
             
         });
 
+    }
+
+    $scope.daleteCashOut = function (id,index) {
+
+        amountService.deleteUserCashOut (id).then(function(res){
+
+            if(res.status == 200){
+
+                $scope.$parent.players[$scope.players.indexOf(user)].cashOut -= res.data.cash_out;
+                //$scope.$parent.totalCashOut += res.data.cash_out;
+                $scope.$parent.balance += res.data.cash_out;
+                if($scope.$parent.players[$scope.players.indexOf(user)].total){
+                    $scope.$parent.players[$scope.players.indexOf(user)].total -= res.data.cash_out;
+                }
+                $scope.userCashOut.splice(index,1);
+
+                if(needCloseDialog()) {
+                    ngDialog.closeAll();
+                }
+
+            }
+            
+        });
+
+    }
+
+    function needCloseDialog() {
+        return !$scope.userCashOut.length && !$scope.userCashIn.length
     }
     
   });

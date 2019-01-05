@@ -5,8 +5,8 @@
         .module('app')
         .factory('UserService', UserService);
  
-    UserService.$inject = ['$http','gamesService','playerService','amountService','$q','$rootScope'];
-    function UserService($http,gamesService,playerService,amountService,$q,$rootScope) {
+    UserService.$inject = ['$http','gamesService','playerService','amountService','$q','$rootScope','$filter'];
+    function UserService($http,gamesService,playerService,amountService,$q,$rootScope,$filter) {
         var service = {};
  
 //         service.GetAll = GetAll;
@@ -119,6 +119,7 @@
                     player.totalGames = 0;
                     player.totalCashIn = 0;
                     player.totalCashOut = 0;
+                    player.firtGameDate = 0;
                     player.gameId = [];
                     
         
@@ -135,8 +136,14 @@
         
                         if(cashin.user_id == player['_id'] && checkGame(cashin.game_id,player)) {
                             
+                            var date = getGameDate(cashin.game_id);
+
                             player.totalGames += 1;
-                            player.gameId.push(cashin.game_id);
+                            if(!player.firtGameDate) {
+                                player.firtGameDate = date;
+                            }
+                            
+                            player.gameId.push({game_id:cashin.game_id, game_date: date});
                         }
         
                     })
@@ -161,6 +168,17 @@
         
             };
 
+            function getGameDate (game_id) {
+
+                for(var i=0; i< games.length; i++) {
+                    if(game_id === games[i]._id) {
+                        return games[i].game_date;
+                    }
+                }
+
+                return
+            }
+
             function checkGame (game_id, player) {
 
                 if(!player.gameId.length){
@@ -171,7 +189,7 @@
         
                 angular.forEach(player.gameId, function(game){
                     
-                    if(game_id == game){
+                    if(game_id == game.game_id){
                         find = true;
                     }
                 });
@@ -198,10 +216,13 @@
 
                 // set in DB if needed
                 angular.forEach(players,function(player){
-                    if( (player.totalGames / games.length) < 0.5 && player.status.toLowerCase() == 'active' ){
+
+                    var totalgamesFromFirstPlayerGame = getPlayerMaxAvalibleGames(player);
+
+                    if( (player.totalGames < 5 || (player.totalGames / totalgamesFromFirstPlayerGame) < 0.5) && player.status.toLowerCase() == 'active' ){
                         player.status = 'Guest';
                         service.Update(player);
-                    } else if( (player.totalGames / games.length) >= 0.5 && player.status.toLowerCase() != 'active' ){
+                    } else if( player.totalGames >= 5 && (player.totalGames / totalgamesFromFirstPlayerGame) >= 0.5 && player.status.toLowerCase() != 'active' ){
                         player.status = 'Active';
                         service.Update(player);
                     }
@@ -209,9 +230,17 @@
 
             });
 
-
+            function getPlayerMaxAvalibleGames (player) {
+    
+                return $filter('filter')(games,function(game) {
+                    return game.game_date >= player.firtGameDate;
+                }).length;
+    
+            }
 
         }
+
+        
 
         function Delete(userId) {
 

@@ -159,6 +159,12 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
 
     // Set Cash In DB & UI
     $scope.CashIn = function (id,sum) {
+
+        if(sum <=0) {
+            toastr.options = {"positionClass": "toast-top-center"};
+            toastr.error("Number must be positive!", 'info');
+            return;
+        }
         
         var obj = {
             user_id: $scope.players[id]['id'],
@@ -179,6 +185,12 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
 
     // Set Cash Out DB & UI
     $scope.CashOut = function (id,sum) {
+
+        if(sum <=0 ) {
+            toastr.options = {"positionClass": "toast-top-center"};
+            toastr.error("Number must be positive!", 'info');
+            return;
+        }
 
         if($scope.totalCashIn < sum){
             toastr.options = {"positionClass": "toast-top-center"};
@@ -360,8 +372,6 @@ app.controller('editGameController', function ($scope, gamesService, playerServi
                 }
             })
         })
-        console.log("Players:",$scope.players);
-        console.log("gameInfo:",$scope.gameInfo);
     }
     
 
