@@ -1,4 +1,8 @@
-﻿.price-red {
+﻿body {
+  overscroll-behavior: contain;
+}
+
+.price-red {
     color: red;
 }
 

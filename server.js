@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
@@ -26,11 +27,19 @@ db.once('open', function(){
     console.log('mongo is on');
 })
 
+ 
+
+
 var app = express();
 var Schema = mongoose.Schema;
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
+
+// serve angular front end files from root path
+app.use('/', express.static('app', { redirect: false }));
+ 
+
 
 // groups
 var groupsDataScheme = new Schema({
