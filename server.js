@@ -18,7 +18,6 @@ var cities = require('cities');
 MongoClient = require('mongodb').MongoClient
 mongoose.Promise = require('bluebird');
 var uri = 'mongodb://kuperly:kuperly@pokerprod-shard-00-00.p7xwr.mongodb.net:27017,pokerprod-shard-00-01.p7xwr.mongodb.net:27017,pokerprod-shard-00-02.p7xwr.mongodb.net:27017/pokerprod?ssl=true&replicaSet=atlas-iu5te9-shard-0&authSource=admin&retryWrites=true&w=majority';
-var key ="80P3JjRAa2EAWYX7Zx9-QlMuOjf2ZLNW";
 
 mongoose.connect(uri);
 var db = mongoose.connection;
@@ -27,9 +26,6 @@ db.on('error', console.error.bind(console,'connection error'));
 db.once('open', function(){
     console.log('mongo is on');
 })
-
- 
-
 
 var app = express();
 var Schema = mongoose.Schema;
