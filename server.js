@@ -12,14 +12,13 @@ var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var http = require('http');
 var https = require('https');
-
+require('dotenv').config();
 var cities = require('cities');
 
 MongoClient = require('mongodb').MongoClient
 mongoose.Promise = require('bluebird');
-var uri = 'mongodb://kuperly:kuperly@pokerprod-shard-00-00.p7xwr.mongodb.net:27017,pokerprod-shard-00-01.p7xwr.mongodb.net:27017,pokerprod-shard-00-02.p7xwr.mongodb.net:27017/pokerprod?ssl=true&replicaSet=atlas-iu5te9-shard-0&authSource=admin&retryWrites=true&w=majority';
 
-mongoose.connect(uri);
+mongoose.connect(process.env.DB_URI);
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console,'connection error'));
