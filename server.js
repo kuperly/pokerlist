@@ -317,14 +317,14 @@ app.post('/api/deleteGame',function(req,res) { // OK
 });
 
 app.get('/api/getAllGames',function(req,res){
-    res.send({key:'test'});
-    // gameData.find()
-    //     .then(function(doc){
-    //         res.send(doc);
-    //         console.log(doc);
-    //     },function(err){
-    //         res.send(err);
-    //     });
+    // res.send({key:'test'});
+    gameData.find()
+        .then(function(doc){
+            res.send(doc);
+            console.log(doc);
+        },function(err){
+            res.send(err);
+        });
     
 });
 
