@@ -8,6 +8,7 @@
     $scope.allTotalCashOut = 0;
     $scope.firstPlayer = null;
     $scope.timeInFirstPlace = null;
+    $scope.loading = true;
 
     $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
     $scope.options = {
@@ -37,6 +38,7 @@
     $scope.showGuests = false;
 
     $scope.setData = function() {
+        $scope.loading = true;
         $scope.allTotalCashIn = 0;
 
         // player
@@ -134,6 +136,8 @@
             $scope.setStat(player);
 
         })
+
+        $scope.loading = false;
 
     };
 
