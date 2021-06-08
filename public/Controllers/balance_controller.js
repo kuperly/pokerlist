@@ -5,6 +5,7 @@
     $scope.cashIn = [];
     $scope.cashOut = [];
     $scope.allTotalCashIn = 0;
+    $scope.allTotalCashOut = 0;
     $scope.firstPlayer = null;
     $scope.timeInFirstPlace = null;
 
@@ -47,41 +48,58 @@
             player.availableMaxGames = 0;
             player.gameId = [];
 
-            
             // player.series = [];
             player.statIn = [];
             player.statOut = [];
             player.statTotal = [];
+
+
+            var userCashIn = $scope.cashIn.filter( function (item) {
+                return item.user_id === player["_id"];
+            }).map( function (item) {
+                item.game_date = getGameDate(item.game_id);
+                return item;
+            }).sort( function (a, b ) {
+                return a.game_date < b.game_date ? -1 : 1;
+            })
+
+            var userCashOut = $scope.cashOut.filter( function (item) {
+                return item.user_id === player["_id"];
+            }).map( function (item) {
+                item.game_date = getGameDate(item.game_id);
+                return item;
+            }).sort( function (a, b ) {
+                return a.game_date < b.game_date ? -1 : 1;
+            })
+
             
             // sum of cashIn
-            angular.forEach($scope.cashIn,function(cashin) {
+            angular.forEach(userCashIn,function(cashin) {
 
                 // sum of cashIn
-                if(cashin.user_id == player['_id']) {
-                    player.totalCashIn += cashin.cash_in;
+                player.totalCashIn += cashin.cash_in;
 
-                    if($scope.showGuests || (!$scope.showGuests && player.status != 'Guest'))
-                        $scope.allTotalCashIn += cashin.cash_in;
+                if($scope.showGuests || (!$scope.showGuests && player.status != 'Guest')) {
+                    $scope.allTotalCashIn += cashin.cash_in;
                 }
 
                 // sum of games
-                if(cashin.user_id == player['_id'] && $scope.checkGame(cashin.game_id,player)) {
-                    
-                    var date = getGameDate(cashin.game_id);
+                if(!$scope.gameExistInPlayerGameIds(cashin.game_id,player)) {
                     player.totalGames += 1;
                     if(!player.firtGameDate) {
-                        player.firtGameDate = date;
+                        player.firtGameDate = cashin.game_date;
                     } 
-                    player.gameId.push({game_id:cashin.game_id, game_date: date});
+                    player.gameId.push({game_id:cashin.game_id, game_date: cashin.game_date});
+                    player.statIn.push({
+                        game_id: cashin.game_id,
+                        cash_in: cashin.cash_in,
+                        game_date: cashin.game_date,
+                        total: player.totalCashIn
+                    });
+                } else {
 
-                    
-
-                    player.statIn.push({game_id: cashin.game_id, cash_in: cashin.cash_in, total: player.totalCashIn});
-                } else if(cashin.user_id == player['_id'] && !$scope.checkGame(cashin.game_id,player)) {
-                    // update object cashIn
-                    // TODO - get game dates
                     player.statIn[player.totalGames - 1].total = player.totalCashIn;
-                    player.statIn[player.totalGames - 1].cash_in += cashin.cash_in; 
+                    player.statIn[player.totalGames - 1].cash_in += cashin.cash_in;
                 }
 
                 
@@ -89,14 +107,13 @@
             })
 
             // sum of cashOut
-            angular.forEach($scope.cashOut,function(cashout){
-                if(cashout.user_id == player['_id']) {
-                    player.totalCashOut += cashout.cash_out;
-                    $scope.allTotalCashOut += cashout.cash_out;
+            angular.forEach(userCashOut,function(cashout){
+                player.totalCashOut += cashout.cash_out;
+                $scope.allTotalCashOut += cashout.cash_out;
 
-                    // TODO - get game dates
-                    player.statOut.push({game_id: cashout.game_id, cash_out: cashout.cash_out ,total: player.totalCashOut});
-                }
+                // TODO - get game dates
+                player.statOut.push({game_id: cashout.game_id, cash_out: cashout.cash_out ,total: player.totalCashOut});
+
             })
 
 
@@ -121,14 +138,9 @@
     };
 
     function getGameDate (game_id) {
-
-        for(var i=0; i< $scope.games.length; i++) {
-            if(game_id === $scope.games[i]._id) {
-                return $scope.games[i].game_date;
-            }
-        }
-
-        return
+        return $scope.games.find( function (game) {
+            return game["_id"] === game_id;
+        }).game_date;
     }
 
     $scope.setStat = function (player) {
@@ -141,7 +153,14 @@
 
                 if(player.statIn[i].game_id == player.statOut[out].game_id){
                     flag = true;
-                    player.statTotal.push({game_id: player.statIn[i].game_id, cash_in: player.statIn[i].cash_in, cash_out: player.statOut[out].cash_out, totalForGame: (player.statOut[out].cash_out - player.statIn[i].cash_in), total: (player.statOut[out].total - player.statIn[i].total)});
+                    player.statTotal.push({
+                        game_id: player.statIn[i].game_id,
+                        game_date: player.statIn[i].game_date,
+                        cash_in: player.statIn[i].cash_in,
+                        cash_out: player.statOut[out].cash_out,
+                        totalForGame: (player.statOut[out].cash_out - player.statIn[i].cash_in),
+                        total: (player.statOut[out].total - player.statIn[i].total)
+                    });
 
                 }
 
@@ -149,7 +168,12 @@
 
             if (!flag) {
 
-                player.statTotal.push({game_id: player.statIn[i].game_id, cash_in: player.statIn[i].cash_in, cash_out: 0, totalForGame: (0 - player.statIn[i].cash_in), total: player.statTotal.length ? (player.statTotal[player.statTotal.length - 1].total - player.statIn[i].cash_in) : (0-player.statIn[i].cash_in) });
+                player.statTotal.push({
+                    game_id: player.statIn[i].game_id,
+                    game_date: player.statIn[i].game_date,
+                    cash_in: player.statIn[i].cash_in,
+                    cash_out: 0, totalForGame: (0 - player.statIn[i].cash_in),
+                    total: player.statTotal.length ? (player.statTotal[player.statTotal.length - 1].total - player.statIn[i].cash_in) : (0-player.statIn[i].cash_in) });
             }
 
         }
@@ -297,26 +321,11 @@
 
     }
 
-    $scope.checkGame = function(game_id, player) {
+    $scope.gameExistInPlayerGameIds = function(game_id, player) {
 
-        if(!player.gameId.length) {
-            return true;
-        }
-
-        var find = false;
-
-        angular.forEach(player.gameId, function(game){
-            
-            if(game_id == game.game_id){
-                find = true;
-            }
-        });
-        if(!find){
-            return true;
-        } else {
-            return false;
-        }
-        
+        return !!player.gameId.find( function (game) {
+            return game_id === game.game_id;
+        })
 
     };
 

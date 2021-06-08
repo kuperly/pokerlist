@@ -4,14 +4,8 @@
     <div>
         <label for="showGuests">Show Guests </label>
         
-        <!-- <md-checkbox class="md-primary" ng-model="showGuests" ng-change="showGuestchange()"> </md-checkbox> -->
         <input type="checkbox" class="btn btn-default" ng-model="showGuests" ng-change="showGuestchange()">
-        <!-- <button class="btn btn-link" ng-if="showGuests" ng-model="showGuests" ng-click="showGuests = !showGuests" ng-change="showGuestchange()">
-            <span class="glyphicon glyphicon-check"></span>
-        </button>
-        <button class="btn btn-link" ng-if="!showGuests" ng-model="showGuests" ng-click="showGuests = !showGuests" ng-change="showGuestchange()">
-                <span class="glyphicon glyphicon-unchecked"></span>
-        </button> -->
+
     </div>
     <table class="table table-striped">
         <thead>
@@ -52,20 +46,6 @@
                         <span ng-show="sortType == 'balance' && sortReverse" class="fa fa-caret-up"></span>
                     </a>
                 </th>
-                <!-- <th class="text-center">
-                    <a href="" ng-click="sortType = 'average'; sortReverse = !sortReverse">
-                        AVG
-                        <span ng-show="sortType == 'average' && !sortReverse" class="fa fa-caret-down"></span>
-                        <span ng-show="sortType == 'average' && sortReverse" class="fa fa-caret-up"></span>
-                    </a>
-                </th> -->
-                <!-- <th class="text-center">
-                        <a href="" ng-click="sortType = 'present'; sortReverse = !sortReverse">
-                            Yield
-                            <span ng-show="sortType == 'present' && !sortReverse" class="fa fa-caret-down"></span>
-                            <span ng-show="sortType == 'present' && sortReverse" class="fa fa-caret-up"></span>
-                        </a>
-                    </th> -->
                 
             </tr>
         </thead>
@@ -116,8 +96,12 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Profits</div>
                         <div class="panel-body">
-                            <canvas id="line" class="chart chart-line" chart-data="blurPlayerForStat.data" chart-labels="blurPlayerForStat.labels" chart-series="blurPlayerForStat.series" chart-options="options"
-                            chart-dataset-override="datasetOverride">
+                            <canvas id="line" class="chart chart-line"
+                                    chart-data="blurPlayerForStat.data"
+                                    chart-labels="blurPlayerForStat.labels"
+                                    chart-series="blurPlayerForStat.series"
+                                    chart-options="options"
+                                    chart-dataset-override="datasetOverride">
                             </canvas>
                         </div>
                     </div>
