@@ -1,13 +1,11 @@
 ﻿<div class="container" ng-controller="balanceController">
 
     <h1 class="text-center"> Balances </h1>
-    <div ng-if="loading">loading...</div>
-    <div ng-if="!loading">
+    <div ng-show="loading">loading...</div>
+    <div ng-show="!loading">
         <div style="display:flex; align-items:center; gap: 10px">
-            <label style="margin: 0" for="showGuests">Show Guests </label>
-
+            <label style="margin: 0" >Show Guests </label>
             <input style="margin: 0" type="checkbox" class="btn btn-default" ng-model="showGuests" ng-change="showGuestchange()">
-
         </div>
         <table  class="table table-striped">
             <thead>
