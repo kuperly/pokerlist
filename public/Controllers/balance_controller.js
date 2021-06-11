@@ -400,7 +400,6 @@
             var p = [];
             // remove empty players from array
             angular.forEach($scope.players,function(player){
-                debugger;
                 if((player.status.toLowerCase() == 'guest' && $scope.showGuests) ||  player.status.toLowerCase() != 'guest' &&  player.status.toLowerCase() == 'active' && player.totalCashIn != 0){
                     if(!player.availableMaxGames) {
                         player.availableMaxGames = getPlayerMaxAvalibleGames(player);
